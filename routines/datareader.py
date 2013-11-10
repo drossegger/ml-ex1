@@ -2,10 +2,14 @@ def readCSV(path, attributeindexlist, labelindex):
 	csvfile=open(path,'rb')
 	y=[]
 	x=[]
+	z=[]
 	lines=csvfile.read()
 	csvfile.close()
 	lines=lines.splitlines()
-	for line in lines:
+	line = lines[0]
+	line=line.split(';')
+	z= list(columnName for columnName in line)
+	for line in lines[1:]:
 		line=line.split(';')
 		y.append(line[labelindex])
 		attributes=[]
@@ -13,4 +17,4 @@ def readCSV(path, attributeindexlist, labelindex):
 			attributes.append(line[c])
 		x.append(attributes)
 		#x.append()
-	return [y,x]
+	return [y,x,z]

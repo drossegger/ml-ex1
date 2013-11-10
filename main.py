@@ -24,8 +24,11 @@ def Main():
     
     traindata=data[1]
     trainlabel=data[0]
+    trainColumnNames = data[2]
+    
     testdata=test[1]
     testlabel=test[0]
+    testColumnNames = test[2]
     
     traindata=[[a if a!='?' else np.nan for a in instance] for instance in traindata]
     testdata=[[a if a!='?' else np.nan for a in instance] for instance in testdata]
@@ -34,16 +37,16 @@ def Main():
     trainlabel=[float(a) for a in trainlabel]
     testlabel=[float(a) for a in testlabel]
     
-    printResult(CalcBayesianRidgeRegression(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN), 'Bayesian Ridge Regression')
-    printResult(CalcRidgeRegression(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN, alpha=.5), 'Ridge Regression')
-    printResult(CalcRidgeRegressionCV(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN, alphas=[0.1, 1.0, 10.0]), 'Ridge Regression CV')
-    printResult(CalcSGD(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN), 'Stochastic Gradient Descent')
-    printResult(CalcDecisionTree(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN), 'Decision Tree')
+    printResult(CalcBayesianRidgeRegression(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN), 'Bayesian Ridge Regression', trainColumnNames[0])
+    printResult(CalcRidgeRegression(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN, alpha=.5), 'Ridge Regression', trainColumnNames[0])
+    printResult(CalcRidgeRegressionCV(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN, alphas=[0.1, 1.0, 10.0]), 'Ridge Regression CV', trainColumnNames[0])
+    printResult(CalcSGD(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN), 'Stochastic Gradient Descent', trainColumnNames[0])
+    printResult(CalcDecisionTree(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN), 'Decision Tree', trainColumnNames[0])
     printResult(CalcNearestNeighborsRegression(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN, 
-                                   n_neighbors=5, weight='uniform'), 'Nearest Neighbors Regression')#weight=uniform
-    printResult(CalcSupportVectorMachine(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN), 'Support Vector Machine Regression')
+                                   n_neighbors=5, weight='uniform'), 'Nearest Neighbors Regression', trainColumnNames[0])#weight=uniform
+    printResult(CalcSupportVectorMachine(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN), 'Support Vector Machine Regression', trainColumnNames[0])
     printResult(CalcNeuralNetwork(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN, 
-                                  hiddenlayerscount=1, hiddenlayernodescount=30), 'Neural Network')
+                                  hiddenlayerscount=1, hiddenlayernodescount=30), 'Neural Network', trainColumnNames[0])
     
 
 
