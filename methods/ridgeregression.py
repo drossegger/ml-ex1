@@ -15,11 +15,4 @@ def CalcRidgeRegression(traindata, trainlabel, testdata, testlabel, preprocess_m
 	for testrecord in testdata :
 		prediction.append( clf.predict(testrecord))
 		
-	diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
-	diffmean=np.mean(diff)
-	print 'Ridge Regression :'
-	print testlabel
-	print prediction
-	print diff
-	print diffmean
-	return diffmean
+	return [testlabel, prediction]

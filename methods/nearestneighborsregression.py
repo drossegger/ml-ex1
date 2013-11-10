@@ -15,12 +15,4 @@ def CalcNearestNeighborsRegression(traindata, trainlabel, testdata, testlabel, p
 	for testrecord in testdata :
 		prediction.append( knn.predict(testrecord))
 		
-	diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
-	diffmean=np.mean(diff)
-	
-	print 'Nearest Neighbors Regression:'
-	print testlabel
-	print prediction
-	print diff
-	print diffmean
-	return diffmean
+	return [testlabel, prediction]

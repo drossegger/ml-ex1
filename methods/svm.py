@@ -15,12 +15,5 @@ def CalcSupportVectorMachine(traindata, trainlabel, testdata, testlabel, preproc
 	for testrecord in testdata :
 		prediction.append( clf.predict(testrecord))
 		
-	diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
-	diffmean=np.mean(diff)
+	return [testlabel, prediction]
 	
-	print 'Support Vector Machine Regression:'
-	print testlabel
-	print prediction
-	print diff
-	print diffmean
-	return diffmean

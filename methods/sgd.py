@@ -13,9 +13,4 @@ def CalcSGD(traindata, trainlabel, testdata, testlabel, preprocess_method):
 	for testrecord in testdata :
 		prediction.append( clf.predict(testrecord).tolist()[0])
 		
-	print 'Stochastic Gradient Descent :'
-	print prediction
-	print testlabel
-	diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
-	print diff
-	print np.mean(diff)
+	return [testlabel, prediction]

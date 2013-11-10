@@ -15,11 +15,4 @@ def CalcBayesianRidgeRegression(traindata, trainlabel, testdata, testlabel, prep
 	for testrecord in testdata :
 		prediction.append( clf.predict(testrecord))
 		
-	diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
-	diffmean=np.mean(diff)
-	print 'Bayesian Ridge Regression :'
-	print testlabel
-	print prediction
-	print diff
-	print diffmean
-	return diffmean
+	return [testlabel, prediction]
