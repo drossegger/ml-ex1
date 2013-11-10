@@ -1,7 +1,5 @@
 from sklearn import svm
 from routines.preprocess import preprocess_apply
-import numpy as np
-
 
 def CalcSupportVectorMachine(traindata, trainlabel, testdata, testlabel, preprocess_method):
 	

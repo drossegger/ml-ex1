@@ -1,6 +1,5 @@
 from sklearn import tree
 from routines.preprocess import preprocess_apply
-import numpy as np
 
 
 def CalcDecisionTree(traindata, trainlabel, testdata, testlabel, preprocess_method):

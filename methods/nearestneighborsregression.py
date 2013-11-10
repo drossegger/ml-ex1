@@ -1,7 +1,5 @@
 from sklearn import neighbors
 from routines.preprocess import preprocess_apply
-import numpy as np
-
 
 def CalcNearestNeighborsRegression(traindata, trainlabel, testdata, testlabel, preprocess_method, n_neighbors, weight):
 	

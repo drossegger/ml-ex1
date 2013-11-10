@@ -1,6 +1,5 @@
 from sklearn import linear_model
 from routines.preprocess import preprocess_apply
-import numpy as np
 
 
 def CalcBayesianRidgeRegression(traindata, trainlabel, testdata, testlabel, preprocess_method):

@@ -3,18 +3,20 @@ Created on 6 Nov 2013
 
 @author: morte_000
 '''
-from methods.sgd import *
-from methods.bayesianridgeregression import * 
-from methods.ridgeregression import *
-from methods.ridgeregressioncv import *
-from methods.decisiontree import *
-from methods.nearestneighborsregression import *
-from methods.svm import *
-from methods.neuralnetwork import *
+from methods.sgd import CalcSGD
+from methods.bayesianridgeregression import CalcBayesianRidgeRegression 
+from methods.ridgeregression import CalcRidgeRegression
+from methods.ridgeregressioncv import CalcRidgeRegressionCV
+from methods.decisiontree import CalcDecisionTree
+from methods.nearestneighborsregression import CalcNearestNeighborsRegression
+from methods.svm import CalcSupportVectorMachine
+from methods.neuralnetwork import CalcNeuralNetwork
 
 from routines.preprocess import *
 from routines.datareader import readCSV
-from routines.resultprocess import *
+from routines.resultprocess import printResult
+
+import numpy as np
 
 def Main():
     data=readCSV('data/dataset1/auto-mpg.data', range(1,7), 0)

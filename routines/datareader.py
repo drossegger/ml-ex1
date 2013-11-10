@@ -1,10 +1,7 @@
-import numpy as np
-
 def readCSV(path, attributeindexlist, labelindex):
 	csvfile=open(path,'rb')
 	y=[]
 	x=[]
-	instancename=[]
 	lines=csvfile.read()
 	csvfile.close()
 	lines=lines.splitlines()

@@ -1,7 +1,5 @@
 from sklearn import linear_model
 from routines.preprocess import preprocess_apply
-import numpy as np
-
 
 def CalcRidgeRegression(traindata, trainlabel, testdata, testlabel, preprocess_method, alpha):
 	

@@ -1,6 +1,5 @@
 from sklearn.linear_model import SGDClassifier
-from routines.preprocess import *
-import numpy as np
+from routines.preprocess import preprocess_apply
 
 def CalcSGD(traindata, trainlabel, testdata, testlabel, preprocess_method):
 	traindata=preprocess_apply(traindata, preprocess_method)

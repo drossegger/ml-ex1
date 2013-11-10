@@ -1,5 +1,3 @@
-import numpy as np
-from sklearn.linear_model import SGDClassifier
 from sklearn import preprocessing
 from sklearn.preprocessing import Imputer
 
