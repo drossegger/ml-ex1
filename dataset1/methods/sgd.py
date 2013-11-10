@@ -1,20 +1,15 @@
 from sklearn.linear_model import SGDClassifier
 from routines.datareader import readCSV
-from routines.preprocess import preprocess_applymean
+from routines.preprocess import preprocess_apply
 import numpy as np
 
-def CalcSGD():
+def CalcSGD(data_attributeList, data_label, test_attributeList, test_label, preprocess_method):
 	
-	data=readCSV('data/auto-mpg.data', range(1,7), 0)
-	#build model based on features 1 and 2 (horsepower and cylinders)
-	attributes=preprocess_applymean(data[1], 2)
-	#x=[[a[1],a[2]] for a in x]
+	data_attributeList=preprocess_apply(data_attributeList, preprocess_method)
 	clf = SGDClassifier(loss="log", penalty="l2",shuffle=True)
-	clf.fit(attributes,data[0])
+	clf.fit(data_attributeList,data_label)
 		
-	testdata=readCSV('data/auto-mpg-predictors.data', range(1,7), 0)
-		
-	testinputs=preprocess_applymean(testdata[1], 2)
+	testinputs=preprocess_apply(test_attributeList, preprocess_method)
 	prediction=[]
 	for testinput in testinputs :
 		#predict mpg values and print prediction
@@ -22,7 +17,7 @@ def CalcSGD():
 		prediction.append( clf.predict(testinput).tolist()[0])
 	print 'Stochastic Gradient Descent :'
 	print prediction
-	print testdata[0]
-	diff=[float(a)-float(b) for a,b in zip(prediction,testdata[0])]
+	print test_attributeList
+	diff=[float(a)-float(b) for a,b in zip(prediction,test_label)]
 	print diff
 	print np.mean(diff)
