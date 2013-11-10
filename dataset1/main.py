@@ -3,11 +3,12 @@ Created on 6 Nov 2013
 
 @author: morte_000
 '''
-from linearregres import DoWork
+from methods.sgd import *
+from methods.bayesianridge import * 
 
 def Main():
-    DoWork()
-
+    CalcBayesianRidge()
+    CalcSGD()
 
 
 if __name__ == '__main__':
