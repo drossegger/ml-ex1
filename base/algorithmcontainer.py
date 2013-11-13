@@ -26,8 +26,15 @@ class Container(object):
         
     def StartAlgorithms(self):
         for _algorithm in self.algorithms:
-            _algorithm.Initiate(self.traindata, self.trainlabel, self.testdata, self.testlabel, self.preprocess_method, self.traincolumnnames, self.labelindex)
-            _algorithm.StartAlgorithm()
-            _algorithm.print_output()
             
+            try:
+                
+                _algorithm.Initiate(self.traindata, self.trainlabel, self.testdata, self.testlabel, self.preprocess_method, self.traincolumnnames, self.labelindex)
+                _algorithm.StartAlgorithm()
+                _algorithm.print_output()
+            
+            except:
+                print 'Error in ' + _algorithm.algorithmlabel
+                
+        print '...DONE...'
             
