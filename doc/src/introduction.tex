@@ -1,0 +1,29 @@
+\section{Introduction}
+In this assignment, we applied many different machine learning techniques on three datasets provided by UCI Machine Learning Repositories \footnote{http://archive.ics.uci.edu/ml/datasets.html}. The datasets and their characteristics are shown in Table \ref{table:datasets}.
+
+In order to run ML algorithms, we create a ML platform using Python libraries. SciKit-Learn \footnote{http://scikit-learn.org/} and PyBrain  \footnote{http://pybrain.org/} are two main libraries used in the platform. SciKit-Learn provides a vast variety of techniques for preprocessing, data imputing and ML algorithms. In order to fill the lack of Neural Network algorithm for supervised learning in SciKit-Learn, we used PyBrain libraries.
+
+Eight different techniques were implemented in the platform as follows:
+\begin{itemize}
+  \item Ridge Regression
+  \item Ridge Regression Cross Validation
+  \item Bayesian Ridge Regression
+  \item Stochastic Gradient Descent
+  \item Decision Tree
+  \item K-Nearest Neighbors Regression
+  \item Support Vector Machine
+  \item Neural Network  
+\end{itemize}
+
+\begin{center}
+\begin{table}
+    \begin{tabular}{ | p{2.5cm} | p{1cm} | p{1cm} | p{1cm} | p{7cm} |}
+    \hline
+    Name & Instances \# & Attributes \# & Missing Values & Reason for Choosing \\ \hline
+    Auto MPG & 398 & 8 & Yes & Lack of number of attributes as well as existing some missing values makes the dataset interesting for ML. As the first database, it gave us a good opportunity to test and develop our Python-based platform\\ \hline
+    YearPrediction MSD & 515345 & 90 & N/A & In contrast to AutoMPG, the dataset is very big and has many attributes.\\ \hline
+    \end{tabular}
+    \caption{List of datasets selected from UCI Machine Learning Repositories}
+    \label{table:datasets}
+    \end{table}
+\end{center}
