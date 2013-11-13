@@ -4,6 +4,7 @@ Created on 13 Nov 2013
 @author: morte_000
 '''
 from base.algorithm import algorithmbase
+import datetime
 
 class Container(object):
 
@@ -17,7 +18,6 @@ class Container(object):
         self.preprocess_method = preprocess_method
         self.traincolumnnames = traincolumnnames
         self.labelindex = labelindex
-        
 
     def push(self, algorithm):
         self.algorithms.append(algorithm)
@@ -25,13 +25,18 @@ class Container(object):
         
         
     def StartAlgorithms(self):
+        
+        outputversion = datetime.datetime.now()
+        
         for _algorithm in self.algorithms:
             
             try:
                 
                 _algorithm.Initiate(self.traindata, self.trainlabel, self.testdata, self.testlabel, self.preprocess_method, self.traincolumnnames, self.labelindex)
+                _algorithm.set_output_file_version(outputversion)
                 _algorithm.StartAlgorithm()
                 _algorithm.print_output()
+                _algorithm.print_output_file()
             
             except:
                 print 'Error in ' + _algorithm.algorithmlabel

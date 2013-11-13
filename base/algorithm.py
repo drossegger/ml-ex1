@@ -1,5 +1,6 @@
 import numpy as np
 import datetime
+import os
 
 class algorithmbase(object):
 
@@ -38,3 +39,16 @@ class algorithmbase(object):
         print '*******  TOTAL  *******'
         print ' ------------------------\r\n|{0:10} :: {1:10f}|\r\n ------------------------'.format('Diff Mean', diffmean)
         print '----------------------------------------------------'
+        
+        
+    def set_output_file_version(self, outputversion):
+        self.outputversion = outputversion
+        return self
+    
+    
+    def print_output_file(self):
+        if not os.path.exists(self.outputversion):
+            os.makedirs(self.outputversion)
+        
+        file = open(self.outputversion + '/' + self.algorithmlabel  , 'w+')
+        # TODO : writing report to the file
