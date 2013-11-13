@@ -1,17 +1,20 @@
 from sklearn import tree
 from routines.preprocess import preprocess_apply
+from base.algorithm import algorithmbase
 
 
-def CalcDecisionTree(traindata, trainlabel, testdata, testlabel, preprocess_method):
+class DecisionTree(algorithmbase):		
 	
-	traindata=preprocess_apply(traindata, preprocess_method)
-	clf=tree.DecisionTreeRegressor()
-	clf.fit(traindata,trainlabel)
+	def DoWork(self):
 	
-	
-	testdata=preprocess_apply(testdata, preprocess_method)
-	prediction=[]
-	for testrecord in testdata :
-		prediction.append( clf.predict(testrecord))
+		traindata=preprocess_apply(self.traindata, self.preprocess_method)
+		clf=tree.DecisionTreeRegressor()
+		clf.fit(traindata,self.trainlabel)
 		
-	return [testlabel, prediction]
+		
+		testdata=preprocess_apply(self.testdata, self.preprocess_method)
+		prediction=[]
+		for testrecord in testdata :
+			prediction.append( clf.predict(testrecord))
+			
+		self.result = [self.testlabel, prediction]

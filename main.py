@@ -3,20 +3,22 @@ Created on 6 Nov 2013
 
 @author: morte_000
 '''
-from methods.sgd import CalcSGD
-from methods.bayesianridgeregression import CalcBayesianRidgeRegression 
-from methods.ridgeregression import CalcRidgeRegression
-from methods.ridgeregressioncv import CalcRidgeRegressionCV
-from methods.decisiontree import CalcDecisionTree
-from methods.nearestneighborsregression import CalcNearestNeighborsRegression
-from methods.svm import CalcSupportVectorMachine
-from methods.neuralnetwork import CalcNeuralNetwork
 
 from routines.preprocess import *
 from routines.datareader import readCSV
 from routines.resultprocess import printResult
 
 import numpy as np
+from base import algorithmcontainer
+from methods.bayesianridgeregression import BayesianRidgeRegression
+from methods.ridgeregression import RidgeRegression
+from methods.ridgeregressioncv import RidgeRegressionCV
+from methods.sgd import SGD
+from methods.nearestneighborsregression import NearestNeighborsRegression
+from methods.neuralnetwork import NeuralNetwork
+from methods.svm import SupportVectorMachine
+from methods.decisiontree import DecisionTree
+
 
 def Main():
     data=readCSV('data/dataset1/auto-mpg.data', range(1,7), 0)
@@ -37,18 +39,23 @@ def Main():
     trainlabel=[float(a) for a in trainlabel]
     testlabel=[float(a) for a in testlabel]
     
-    printResult(CalcBayesianRidgeRegression(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN), 'Bayesian Ridge Regression', trainColumnNames[0])
-    printResult(CalcRidgeRegression(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN, alpha=.5), 'Ridge Regression', trainColumnNames[0])
-    printResult(CalcRidgeRegressionCV(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN, alphas=[0.1, 1.0, 10.0]), 'Ridge Regression CV', trainColumnNames[0])
-    printResult(CalcSGD(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN), 'Stochastic Gradient Descent', trainColumnNames[0])
-    printResult(CalcDecisionTree(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN), 'Decision Tree', trainColumnNames[0])
-    printResult(CalcNearestNeighborsRegression(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN, 
-                                   n_neighbors=5, weight='uniform'), 'Nearest Neighbors Regression', trainColumnNames[0])#weight=uniform
-    printResult(CalcSupportVectorMachine(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN), 'Support Vector Machine Regression', trainColumnNames[0])
-    printResult(CalcNeuralNetwork(traindata, trainlabel, testdata, testlabel, MISSING_VALUE_METHOD_MEAN, 
-                                  hiddenlayerscount=1, hiddenlayernodescount=30), 'Neural Network', trainColumnNames[0])
+    preprocess_method = MISSING_VALUE_METHOD_MEAN
+    traincolumnnames = trainColumnNames
+    labelindex = 0
     
-
+    _container = algorithmcontainer.Container(traindata, trainlabel, testdata, testlabel, preprocess_method, traincolumnnames, labelindex)
+    
+    _container.push(BayesianRidgeRegression().SetAlgorithmName('BayesianRidgeRegression'))
+    _container.push(RidgeRegression().ExtraParams(alpha=.5).SetAlgorithmName('RidgeRegression'))
+    _container.push(RidgeRegressionCV().ExtraParams(alphas=[0.1, 1.0, 10.0]).SetAlgorithmName('RidgeRegressionCV'))
+    _container.push(SGD())
+   # _container.push(DecisionTree().SetAlgorithmName('DecisionTree'))
+    _container.push(NearestNeighborsRegression().ExtraParams(n_neighbors=5, weight='uniform').SetAlgorithmName('NearestNeighborsRegression'))
+    _container.push(SupportVectorMachine().SetAlgorithmName('SupportVectorMachine'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=30).SetAlgorithmName('NeuralNetwork'))
+    
+    _container.StartAlgorithms()
+    
 
 if __name__ == '__main__':
     Main()

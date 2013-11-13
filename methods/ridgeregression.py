@@ -1,16 +1,25 @@
 from sklearn import linear_model
 from routines.preprocess import preprocess_apply
+from base.algorithm import algorithmbase
 
-def CalcRidgeRegression(traindata, trainlabel, testdata, testlabel, preprocess_method, alpha):
+class RidgeRegression(algorithmbase):		
 	
-	traindata=preprocess_apply(traindata, preprocess_method)
-	clf = linear_model.Ridge(alpha = alpha)
-	clf.fit(traindata,trainlabel)
+	def ExtraParams(self, alpha):
+		self.alpha = alpha
+		return self
 	
 	
-	testdata=preprocess_apply(testdata, preprocess_method)
-	prediction=[]
-	for testrecord in testdata :
-		prediction.append( clf.predict(testrecord))
+	
+	def DoWork(self):
+	
+		traindata=preprocess_apply(self.traindata, self.preprocess_method)
+		clf = linear_model.Ridge(alpha = self.alpha)
+		clf.fit(traindata,self.trainlabel)
 		
-	return [testlabel, prediction]
+		
+		testdata=preprocess_apply(self.testdata, self.preprocess_method)
+		prediction=[]
+		for testrecord in testdata :
+			prediction.append( clf.predict(testrecord))
+			
+		self.result = [self.testlabel, prediction]
