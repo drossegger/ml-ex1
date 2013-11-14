@@ -18,6 +18,7 @@ class NearestNeighborsRegression(algorithmbase):
 		knn=neighbors.KNeighborsRegressor(self.n_neighbors, weights=self.weight)
 		knn.fit(self.traindata,self.trainlabel)
 		
+		
 		testdata=preprocess_apply(self.testdata, self.preprocess_method)
 	
 		prediction=[]

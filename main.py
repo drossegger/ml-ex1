@@ -10,14 +10,14 @@ from routines.resultprocess import printResult
 
 import numpy as np
 from base import algorithmcontainer
-from methods.bayesianridgeregression import BayesianRidgeRegression
+from methods._bayesianridgeregression import BayesianRidgeRegression
 from methods.ridgeregression import RidgeRegression
-from methods.ridgeregressioncv import RidgeRegressionCV
+from methods._ridgeregressioncv import RidgeRegressionCV
 from methods.sgd import SGD
 from methods.nearestneighborsregression import NearestNeighborsRegression
-from methods.neuralnetwork import NeuralNetwork
+from methods._neuralnetwork import NeuralNetwork
 from methods.svm import SupportVectorMachine
-from methods.decisiontree import DecisionTree
+from methods._decisiontree import DecisionTree
 
 
 def Main():

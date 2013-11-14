@@ -28,6 +28,9 @@ class Container(object):
         
     def StartAlgorithms(self):
         outputversion = 'reports/' + time.strftime("%Y%m%d%H%M%S", time.localtime())
+        print  '{0:40}, {1:20}, {2:20}'.format('Algorithm' , 'DiffMean',  'RunningTime')
+        print ''
+        
         
         for _algorithm in self.algorithms:
             
@@ -40,7 +43,9 @@ class Container(object):
                 _algorithm.print_output_file()
             
             except Exception, e:
+                print '----------------------------------------------------------------------'
                 print 'Error in ' + _algorithm.algorithmlabel + ' : ' + str(e)
+                print '----------------------------------------------------------------------'
                 
         print '...DONE...'
             

@@ -10,7 +10,6 @@ class SupportVectorMachine(algorithmbase):
 		clf = svm.SVR()
 		clf.fit(self.traindata,self.trainlabel)
 		
-		
 		testdata=preprocess_apply(self.testdata, self.preprocess_method)
 		prediction=[]
 		for testrecord in testdata :
