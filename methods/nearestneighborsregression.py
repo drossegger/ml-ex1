@@ -23,6 +23,6 @@ class NearestNeighborsRegression(algorithmbase):
 	
 		prediction=[]
 		for testrecord in testdata :
-			prediction.append( knn.predict(testrecord))
+			prediction.append( knn.predict(testrecord)[0])
 			
 		self.result = [self.testlabel, prediction]
