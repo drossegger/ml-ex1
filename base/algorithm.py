@@ -33,20 +33,25 @@ class algorithmbase(object):
         prediction= self.result[1]
         diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
         diffmean =  np.mean(diff)
+        output = '{0:<40}, {1:<20}, {2:<20}'.format(self.algorithmlabel , diffmean,  self.runningtime) 
+        print  output
+        self.finaloutputfile.write(output + '\n')
+        self.finaloutputfile.flush()
         
-        print  '{0:<40}, {1:<20}, {2:<20}'.format(self.algorithmlabel , diffmean,  self.runningtime)
-            
         
         
     def set_output_file_version(self, outputversion):
         self.outputversion = str(outputversion)
         return self
     
+    def set_final_output_file(self, finaloutputfile):
+        self.finaloutputfile = finaloutputfile
+        return self
     
     def print_output_file(self):
         if not os.path.exists(self.outputversion):
           os.makedirs(self.outputversion)
-        file = open(self.outputversion + '/' + self.algorithmlabel  , 'w+')
+        file = open(self.outputversion + '/' + self.algorithmlabel + '.csv'  , 'w+')
         testlabel=self.result[0]
         prediction=self.result[1]
         diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
