@@ -6,9 +6,9 @@ class SupportVectorMachine(algorithmbase):
 	
 	def DoWork(self):
 		
-		traindata=preprocess_apply(self.traindata, self.preprocess_method)
+		self.traindata=preprocess_apply(self.traindata, self.preprocess_method)
 		clf = svm.SVR()
-		clf.fit(traindata,self.trainlabel)
+		clf.fit(self.traindata,self.trainlabel)
 		
 		
 		testdata=preprocess_apply(self.testdata, self.preprocess_method)
@@ -17,4 +17,3 @@ class SupportVectorMachine(algorithmbase):
 			prediction.append( clf.predict(testrecord))
 			
 		self.result = [self.testlabel, prediction]
-	

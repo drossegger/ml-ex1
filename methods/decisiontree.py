@@ -7,9 +7,9 @@ class DecisionTree(algorithmbase):
 	
 	def DoWork(self):
 	
-		traindata=preprocess_apply(self.traindata, self.preprocess_method)
+		self.traindata=preprocess_apply(self.traindata, self.preprocess_method)
 		clf=tree.DecisionTreeRegressor()
-		clf.fit(traindata,self.trainlabel)
+		clf.fit(self.traindata,self.trainlabel)
 		
 		
 		testdata=preprocess_apply(self.testdata, self.preprocess_method)

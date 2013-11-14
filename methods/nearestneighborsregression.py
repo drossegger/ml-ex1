@@ -14,9 +14,9 @@ class NearestNeighborsRegression(algorithmbase):
 	
 	def DoWork(self):
 		
-		traindata=preprocess_apply(self.traindata, self.preprocess_method)
+		self.traindata=preprocess_apply(self.traindata, self.preprocess_method)
 		knn=neighbors.KNeighborsRegressor(self.n_neighbors, weights=self.weight)
-		knn.fit(traindata,self.trainlabel)
+		knn.fit(self.traindata,self.trainlabel)
 		
 		testdata=preprocess_apply(self.testdata, self.preprocess_method)
 	

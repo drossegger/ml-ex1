@@ -7,7 +7,7 @@ class BayesianRidgeRegression(algorithmbase):
 	
 	def DoWork(self):
 		
-		traindata = preprocess_apply(self.traindata, self.preprocess_method)
+		self.traindata = preprocess_apply(self.traindata, self.preprocess_method)
 		
 		clf = linear_model.BayesianRidge()
 		clf.fit(self.traindata ,self.trainlabel)
