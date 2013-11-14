@@ -27,7 +27,7 @@ class Container(object):
         
         
     def StartAlgorithms(self):
-        outputversion = time.strftime("%Y%m%d%H%M%S", time.localtime())
+        outputversion = 'reports/' + time.strftime("%Y%m%d%H%M%S", time.localtime())
         
         for _algorithm in self.algorithms:
             
