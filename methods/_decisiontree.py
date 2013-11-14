@@ -15,6 +15,6 @@ class DecisionTree(algorithmbase):
 		
 		prediction=[]
 		for testrecord in testdata :
-			prediction.append( clf.predict(testrecord))
+			prediction.append( clf.predict(testrecord)[0])
 			
 		self.result = [self.testlabel, prediction]
