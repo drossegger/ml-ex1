@@ -4,9 +4,12 @@ from base.algorithm import algorithmbase
 
 class SGD(algorithmbase):
 	
+	def ExtraParams(self,loss='hinge'):
+		self.loss=loss
+		return self
 	def DoWork(self):
 		self.traindata=preprocess_apply(self.traindata, self.preprocess_method)
-		clf = SGDClassifier(loss="log", penalty="l2",shuffle=True)
+		clf = SGDClassifier(loss=self.loss, penalty="l2",shuffle=True)
 		self.trainlabel=[repr(a) for a in self.trainlabel]
 		clf.fit(self.traindata,self.trainlabel)
 			

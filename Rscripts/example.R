@@ -1,0 +1,6 @@
+png('boxplot.png')
+x <- read.table('exampleData/RRa.1',sep=';')
+y <- read.table('exampleData/RRa.1',sep=';')
+boxplot(data.frame(x$V3,y$V3),xlab='Algorithms',ylab='Difference from the actual year',xaxt='no')
+axis(1,at=c(1,2),labels=c('alpha 10','alpha 0.1'))
+savehistory('example.R')
