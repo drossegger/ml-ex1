@@ -28,6 +28,7 @@ class algorithmbase(object):
         
     
     def print_output(self):
+        #self.print_output_file()
         testlabel= self.result[0]
         prediction= self.result[1]
         diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
@@ -42,13 +43,18 @@ class algorithmbase(object):
         
         
     def set_output_file_version(self, outputversion):
-        self.outputversion = outputversion
+        self.outputversion = str(outputversion)
         return self
     
     
     def print_output_file(self):
         if not os.path.exists(self.outputversion):
-            os.makedirs(self.outputversion)
-        
+          os.makedirs(self.outputversion)
         file = open(self.outputversion + '/' + self.algorithmlabel  , 'w+')
-        # TODO : writing report to the file
+        testlabel=self.result[0]
+        prediction=self.result[1]
+        diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
+        for i in range(0,len(testlabel)):
+            file.write( '%s,%s,%s\n'%(testlabel[i],prediction[i][0],diff[i]) )
+        file.close()
+        return self
