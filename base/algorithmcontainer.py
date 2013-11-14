@@ -5,6 +5,8 @@ Created on 13 Nov 2013
 '''
 from base.algorithm import algorithmbase
 import datetime
+import sys
+import time
 
 class Container(object):
 
@@ -25,8 +27,7 @@ class Container(object):
         
         
     def StartAlgorithms(self):
-        
-        outputversion = datetime.datetime.now()
+        outputversion = time.strftime("%Y%m%d%H%M%S", time.localtime())
         
         for _algorithm in self.algorithms:
             
@@ -38,8 +39,8 @@ class Container(object):
                 _algorithm.print_output()
                 _algorithm.print_output_file()
             
-            except:
-                print 'Error in ' + _algorithm.algorithmlabel
+            except Exception, e:
+                print 'Error in ' + _algorithm.algorithmlabel + ' : ' + str(e)
                 
         print '...DONE...'
             
