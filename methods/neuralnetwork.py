@@ -22,10 +22,10 @@ class  NeuralNetwork(algorithmbase):
 	def DoWork(self):
 		attributescount=len(self.traindata[0])
 		
-		traindata=preprocess_apply(self.traindata, self.preprocess_method)
+		self.traindata=preprocess_apply(self.traindata, self.preprocess_method)
 		ds = SupervisedDataSet(attributescount, 1)
-		for i in range(len(traindata)):
-			ds.appendLinked(traindata[i], self.trainlabel[i])
+		for i in range(len(self.traindata)):
+			ds.appendLinked(self.traindata[i], self.trainlabel[i])
 		
 		#creating network structure
 		net = FeedForwardNetwork()

@@ -5,10 +5,10 @@ from base.algorithm import algorithmbase
 class SGD(algorithmbase):
 	
 	def DoWork(self):
-		traindata=preprocess_apply(self.traindata, self.preprocess_method)
+		self.traindata=preprocess_apply(self.traindata, self.preprocess_method)
 		clf = SGDClassifier(loss="log", penalty="l2",shuffle=True)
 		trainlabel=[repr(a) for a in self.trainlabel]
-		clf.fit(traindata,trainlabel)
+		clf.fit(self.traindata,self.trainlabel)
 			
 		testdata=preprocess_apply(self.testdata, self.preprocess_method)
 		prediction=[]
