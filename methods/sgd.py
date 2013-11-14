@@ -7,7 +7,7 @@ class SGD(algorithmbase):
 	def DoWork(self):
 		self.traindata=preprocess_apply(self.traindata, self.preprocess_method)
 		clf = SGDClassifier(loss="log", penalty="l2",shuffle=True)
-		trainlabel=[repr(a) for a in self.trainlabel]
+		self.trainlabel=[repr(a) for a in self.trainlabel]
 		clf.fit(self.traindata,self.trainlabel)
 			
 		testdata=preprocess_apply(self.testdata, self.preprocess_method)

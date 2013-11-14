@@ -17,4 +17,3 @@ class SupportVectorMachine(algorithmbase):
 			prediction.append( clf.predict(testrecord))
 			
 		self.result = [self.testlabel, prediction]
-	
