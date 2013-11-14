@@ -21,8 +21,8 @@ from methods.decisiontree import DecisionTree
 
 
 def Main():
-    data=readCSV('data/dataset1/auto-mpg.data', range(1,7), 0)
-    test=readCSV('data/dataset1/auto-mpg-predictors.data', range(1,7), 0)
+    data=readCSV('data/dataset1/auto-mpg.data', range(1,7), 0,';')
+    test=readCSV('data/dataset1/auto-mpg-predictors.data', range(1,7), 0,';')
     
     traindata=data[1]
     trainlabel=data[0]
