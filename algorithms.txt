@@ -1,0 +1,8 @@
+Algorithms:
+- Support Vector Machines
+- Ridge Regression
+	- alpha=.5,.1,1,10 
+- Stochastic Gradient Descent
+	- loss=hinge,log
+- K-Nearest Neighbor
+	- neighbors=5,2,10

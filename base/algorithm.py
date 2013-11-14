@@ -51,6 +51,6 @@ class algorithmbase(object):
         prediction=self.result[1]
         diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
         for i in range(0,len(testlabel)):
-            file.write( '%s,%s,%s\n'%(testlabel[i],prediction[i],diff[i]) )
+            file.write( '%s;%s;%s\n'%(testlabel[i],prediction[i],diff[i]) )
         file.close()
         return self
