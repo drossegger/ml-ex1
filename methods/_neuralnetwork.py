@@ -20,16 +20,18 @@ class  NeuralNetwork(algorithmbase):
 	
 	
 	def DoWork(self):
+		'''
+		Deprecated
+		'''
 		attributescount=len(self.traindata[0])
 		
-		self.traindata=preprocess_apply(self.traindata, self.preprocess_method)
 		ds = SupervisedDataSet(attributescount, 1)
 		for i in range(len(self.traindata)):
 			ds.appendLinked(self.traindata[i], self.trainlabel[i])
 		
 		#creating network structure
 		net = FeedForwardNetwork()
-		inLayer = LinearLayer(attributescount)
+		inLayer = LinearLayer(len(self.traindata[0]))
 		net.addInputModule(inLayer)
 		hiddenLayers=[]
 		for i in range(self.hiddenlayerscount):
