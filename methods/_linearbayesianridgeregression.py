@@ -2,7 +2,7 @@ from sklearn import linear_model
 from routines.preprocess import preprocess_apply
 from base.algorithm import algorithmbase
 
-class BayesianRidgeRegression(algorithmbase):
+class LinearBayesianRidgeRegression(algorithmbase):
 		
 	
 	def DoWork(self):

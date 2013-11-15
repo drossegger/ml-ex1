@@ -19,5 +19,6 @@ def preprocess_apply(data, missingvaluemethod):
 	#scale data
 	scaler=preprocessing.StandardScaler().fit(data)
 	data=scaler.transform(data)
+	
 	return data	
 	

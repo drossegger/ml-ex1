@@ -10,9 +10,9 @@ from routines.resultprocess import printResult
 
 import numpy as np
 from base import algorithmcontainer
-from methods._bayesianridgeregression import BayesianRidgeRegression
-from methods.ridgeregression import RidgeRegression
-from methods._ridgeregressioncv import RidgeRegressionCV
+from methods._linearbayesianridgeregression import LinearBayesianRidgeRegression
+from methods.linearridgeregression import LinearRidgeRegression
+from methods._linearridgeregressioncv import LinearRidgeRegressionCV
 from methods.sgd import SGD
 from methods.nearestneighborsregression import NearestNeighborsRegression
 from methods._neuralnetwork import NeuralNetwork
@@ -21,8 +21,8 @@ from methods._decisiontree import DecisionTree
 
 
 def Main():
-    data=readCSV('data/dataset1/auto-mpg.data', range(1,7), 0,';')
-    test=readCSV('data/dataset1/auto-mpg-predictors.data', range(1,7), 0,';')
+    data=readCSV('data/dataset1/auto-mpg.data', range(1,8), 0,';')
+    test=readCSV('data/dataset1/auto-mpg-predictors.data', range(1,8), 0,';')
     
     traindata=data[1]
     trainlabel=data[0]
@@ -39,16 +39,16 @@ def Main():
     trainlabel=[float(a) for a in trainlabel]
     testlabel=[float(a) for a in testlabel]
     
-    preprocess_method = MISSING_VALUE_METHOD_MEAN
+    preprocess_method = MISSING_VALUE_METHOD_MEDIAN
     traincolumnnames = trainColumnNames
     labelindex = 0
     
     _container = algorithmcontainer.Container(traindata, trainlabel, testdata, testlabel, preprocess_method, traincolumnnames, labelindex)
     
-    _container.push(BayesianRidgeRegression().SetAlgorithmName('BayesianRidgeRegression'))
-    _container.push(RidgeRegression().ExtraParams(alpha=.5).SetAlgorithmName('RidgeRegression'))
-    _container.push(RidgeRegressionCV().ExtraParams(alphas=[0.1, 1.0, 10.0]).SetAlgorithmName('RidgeRegressionCV'))
-    _container.push(SGD().SetAlgorithmName('SGD'))
+    _container.push(LinearBayesianRidgeRegression().SetAlgorithmName('LinearBayesianRidgeRegression'))
+    _container.push(LinearRidgeRegression().ExtraParams(alpha=.5).SetAlgorithmName('LinearRidgeRegression'))
+    _container.push(LinearRidgeRegressionCV().ExtraParams(alphas=[0.1, 1.0, 10.0]).SetAlgorithmName('LinearRidgeRegressionCV'))
+    _container.push(SGD().ExtraParams(loss='hinge').SetAlgorithmName('SGD'))
     _container.push(DecisionTree().SetAlgorithmName('DecisionTree'))
     _container.push(NearestNeighborsRegression().ExtraParams(n_neighbors=5, weight='uniform').SetAlgorithmName('NearestNeighborsRegression'))
     _container.push(SupportVectorMachine().SetAlgorithmName('SupportVectorMachine'))
