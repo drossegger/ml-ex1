@@ -20,12 +20,11 @@ class algorithmbase(object):
         return self
     
     
-    def StartAlgorithm(self):
+    def StartFitting(self, savedmodel=None):
         _algstart = datetime.datetime.utcnow()
-        self.DoWork()
+        self.PrepareModel(savedmodel)
         _algend = datetime.datetime.utcnow()
         self.runningtime = _algend - _algstart
-        
     
     def print_output(self):
         #self.print_output_file()
