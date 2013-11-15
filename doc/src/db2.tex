@@ -1,8 +1,25 @@
-\section{second dataset}
+\section{YearPredictionMSD dataset}
 \subsection{Description}
+The YearPredictionMSD~\cite{ds:YearPredictionMSD} is made of $515345$ instances, each categorized by numeric $90$ features. The instances describe songs specifying the year it was published as well as different features describing the sound of the song. We tried to predict the year of songs based on there features using $463715$ instances as training data and the last $51630$ instances as test data as suggested by the dataset description.
 \subsection{Preprocessing}
+Imputation of the data was not necessary, since it does not contain any missing values. To scale the features we used scaling by mean, substracting the mean of the feature and then dividing it by the standard deviation as we did with the AutoMPG dataset.
 \subsection{Linear Ridge Regression}
+We did experiments with $4$ different configurations of linear ridge regression, each of the configurations having different $\alpha$-values $\{.1,.5,1,10\}$. An overview of the results of our experiments can be seen in Table~\ref{ypmsd:table:lrrresults}. We used the difference of the expected and guessed year to determine the quality of the model. The runtime of the algorithm is the time needed to fit training data in the model and does not include the preprocessing and reading/writing of the data.\par
+As can be seen in Table~\ref{ypmsd:table:lrrresults} the quality of the model is the same for all $\alpha$, the only value changing is the runtime.This could be expected, since the algorithm will come to the same minimum coefficients, regardless of the size of the steps. The only difference is that the number of steps needed to get the minimum is different for every $\alpha$. For the big $\alpha=\{1,10\}$ it will jump around the minimum a lot more than for small $\alpha$-values, therefore it will take longer for the algorithm to halt. For $\alpha$-values to small it could still happen that the algorithm needs a lot of steps since the progress it has to get to the minimum is very small in one step.
+\begin{table}[p]
+	\begin{center}
+\begin{tabular}{l|l|l|l|l}
+	&\textbf{mean}&\textbf{1st quartile}&\textbf{3rd quartile}&\textbf{runtime(s)}\\
+$\alpha=.1$&$-1.7070$&$-5.9060$&$3.3120$&$38.901$\\
+$\alpha=.5$&$-1.7070$&$-5.9060$&$3.3120$&$39.939$\\
+$\alpha=1$&$-1.7070$&$-5.9060$&$3.3120$&$40.159$\\
+$\alpha=10$&$-1.7070$&$-5.9060$&$3.3120$&$44.091$\\
+\end{tabular}
+\end{center}
+\caption{Results of Linear Ridge Regression on the YearPredictionMSD dataset\label{ypmsd:table:lrrresults}}
+\end{table}
 \subsection{Nearest Neighbor}
 \subsection{Support Vector Machine}
 \subsection{Statistic Gradient Descent}
+
 \subsection{Comparison}
