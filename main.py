@@ -46,21 +46,20 @@ def Main():
     traincolumnnames = trainColumnNames
     labelindex = 0
     
-    '''
+    
     #creating polynomial data 
-    numberofpolynomials=25
+    numberofpolynomials=22
     traindata=CreatePolynomial(traindata, numberofpolynomials)
     testdata=CreatePolynomial(testdata, numberofpolynomials)
-    '''
+    
     
     _container = algorithmcontainer.Container(traindata, trainlabel, testdata, testlabel, preprocess_method, traincolumnnames, labelindex)
     
-    _container.push(LinearRidgeRegression().ExtraParams(alpha=.1).SetAlgorithmName('PolynomialRidgeRegression_MEAN_.1'))
-    #_container.push(LinearRidgeRegression().ExtraParams(alpha=.1).SetAlgorithmName('LinearRidgeRegression_MEAN_.1'))
-    #_container.push(LinearRidgeRegression().ExtraParams(alpha=.5).SetAlgorithmName('LinearRidgeRegression_MEAN_.5'))
-    #_container.push(LinearRidgeRegression().ExtraParams(alpha=1).SetAlgorithmName('LinearRidgeRegression_MEAN_1'))
-    #_container.push(LinearRidgeRegression().ExtraParams(alpha=10).SetAlgorithmName('LinearRidgeRegression_MEAN_10'))
-    #_container.push(LinearRidgeRegressionCV().ExtraParams(alphas=[0.1, 1.0, 10.0]).SetAlgorithmName('LinearRidgeRegressionCV_MEAN'))
+    _container.push(LinearRidgeRegression().ExtraParams(alpha=.1).SetAlgorithmName('PolynomialRidgeRegression_MEAN_' + str(numberofpolynomials) + '_.1'))
+    _container.push(LinearRidgeRegression().ExtraParams(alpha=.5).SetAlgorithmName('PolynomialRidgeRegression_MEAN_' + str(numberofpolynomials) + '_.5'))
+    _container.push(LinearRidgeRegression().ExtraParams(alpha=1).SetAlgorithmName('PolynomialRidgeRegression_MEAN_' + str(numberofpolynomials) + '_1'))
+    _container.push(LinearRidgeRegression().ExtraParams(alpha=10).SetAlgorithmName('PolynomialRidgeRegression_MEAN_' + str(numberofpolynomials) + '_10'))
+    #_container.push(LinearRidgeRegressionCV().ExtraParams(alphas=[0.1, 1.0, 10.0]).SetAlgorithmName('PolynomialRidgeRegression_MEAN_' + str(numberofpolynomials)))
     #_container.push(LinearBayesianRidgeRegression().SetAlgorithmName('LinearBayesianRidgeRegression_MEAN'))
     #_container.push(NearestNeighborsRegression().ExtraParams(n_neighbors=2, weight='uniform').SetAlgorithmName('NearestNeighborsRegression_MEAN_2'))
     #_container.push(SupportVectorMachine().SetAlgorithmName('SupportVectorMachine_MEAN'))

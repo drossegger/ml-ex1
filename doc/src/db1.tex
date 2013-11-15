@@ -1,6 +1,6 @@
 \section{Auto MPG dataset}
 \subsection{Description}
-Auto MPG \footnote{http://scikit-learn.org/} contains 8 attributes of 398 cars  and their corresponding MPG (Miles Per Gallon) value. The dataset has some missing value in forth column (horsepower). Shortage of data as well as existing some missing values makes the dataset distinct and interesting for ML. Furthermore because of short execution time, it provides us the opportunity to apply all developed algorithms as well as imputation techniques.
+Auto MPG contains 8 attributes of 398 cars  and their corresponding MPG (Miles Per Gallon) value. The dataset has some missing value in forth column (horsepower). Shortage of data as well as existing some missing values makes the dataset distinct and interesting for ML. Furthermore because of short execution time, it provides us the opportunity to apply all developed algorithms as well as imputation techniques.
 
 \subsection{Preprocessing}
 In order to standardized data, we used standard scale which first transforms the data to center it by removing the mean value of each feature and then scales it by dividing non-constant features by their standard deviation \cite{scikitstandardization}.
@@ -11,7 +11,8 @@ In order to impute missing values, we applied three different techniques contain
 \subsubsection{Linear Regression}
 The results of different Linear Regression algorithms with different imputation techniques are shown in Table \ref{table:db1-linearregression} in Appendix A. Ridge Regression was tested by different values for alpha (0.1, 0.5, 1 and 10) and 0.1 seems to be the best value. The final results were very similar. As it shown all the values are rather the same and very biased. By reducing the number of instances in Train Data the final bias reduced significantly. In order to improve the results, we used Multinomial Regressions in the next step.
 
-\subsubsection{Multinomial Regression}
+\subsubsection{Polynomial Ridge Regression}
+By adding more attributes to the linear algorithm, we could apply the data on Polynomial Ridge Regression. Regarding to very short execution time, we tryed many different powers and achieved novel results. As it shown in \ref{table:db1-polynomialregression}, till power five there is no big difference between linear and polynomial model. In contrast to the powers around ten, power ten creates a surprisingly good model. It happens again in some other numbers like twenty two such that we achieved to a very good results in thirty two. One interesting point is that when the results is very biased (like power fifteen), the more alpha is, the more rational results are.
 
 \subsection{Nearest Neighbor}
 In the first three runs, one, five and ten were selected as the number of neighbors. Since by increasing the neighbor numbers, the final result seems to be better, we continue increasing the value and found eighteen as a reasonable value. The results for different imputation techniques are depicted in Table \ref{table:db1-nearestneighbor}. In this case, mean value for imputation seems better than other techniques.
@@ -26,3 +27,13 @@ As SGD algorithm uses a portion of data for regression, we run every parameter f
 As the last part, we also apply neural network model on the dataset. We picked Mean value as imputation technique and as it is shown in Table \ref{table:db1-NeuralNetwork}, different hidden layers and node counts were applied. Based on achieved results, regardless to number of layers, having ten to twenty nodes usually leads to the best results. Using one hidden layer seems to be the best model. In current data one layer and twenty nodes seems to be the best model. It should also be considered that different runs return different results while not very diverse.
 
 \subsection{Comparison}
+Table \ref{table:db1-results} shows the comparison between best results of each algorithm.
+
+Based on the results following conclusions can be obtained:
+\begin{itemize}
+  \item Polynomial Ridge Regression has the best results and SVM creates the second best one.
+  \item While good results in Polynomial Ridge Regression, standard deviation of bias between results and real values is rather high. Between all algorithms, SVM seems more stable.
+  \item Regarding to amount of data, SGD is a very inappropriate model.
+  \item Although all the algorithms are executing less than one second, Neural Network has the longest execution time.
+  \item Mean is the best Imputation technique among the implemented ones.
+\end{itemize}
