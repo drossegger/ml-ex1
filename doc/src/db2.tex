@@ -8,17 +8,33 @@ We did experiments with $4$ different configurations of linear ridge regression,
 As can be seen in Table~\ref{ypmsd:table:lrrresults} the quality of the model is the same for all $\alpha$, the only value changing is the runtime.This could be expected, since the algorithm will come to the same minimum coefficients, regardless of the size of the steps. The only difference is that the number of steps needed to get the minimum is different for every $\alpha$. For the big $\alpha=\{1,10\}$ it will jump around the minimum a lot more than for small $\alpha$-values, therefore it will take longer for the algorithm to halt. For $\alpha$-values to small it could still happen that the algorithm needs a lot of steps since the progress it has to get to the minimum is very small in one step.
 \begin{table}[p]
 	\begin{center}
-\begin{tabular}{|c|c|c|c|c|}
-\hline	&mean&1st quartile&3rd quartile&runtime(s)\\
-\hline$\alpha=.1$&$-1.7070$&$-5.9060$&$3.3120$&$38.901$\\
-\hline$\alpha=.5$&$-1.7070$&$-5.9060$&$3.3120$&$39.939$\\
-\hline$\alpha=1$&$-1.7070$&$-5.9060$&$3.3120$&$40.159$\\
-\hline$\alpha=10$&$-1.7070$&$-5.9060$&$3.3120$&$44.091$\\
+		\begin{tabular}{|c|c|c|c|c|c|}
+			\hline	\backslashbox{alpha}{}&mean&standard deviaton&1st quartile&3rd quartile&runtime(s)\\
+\hline$.1$&$-1.7070$&$9.512$&$-5.9060$&$3.3120$&$38.901$\\
+\hline$.5$&$-1.7070$&$9.512$&$-5.9060$&$3.3120$&$39.939$\\
+\hline$1$&$-1.7070$&$9.512$&$-5.9060$&$3.3120$&$40.159$\\
+\hline$10$&$-1.7070$&$9.512$&$-5.9060$&$3.3120$&$44.091$\\\hline
 \end{tabular}
 \end{center}
-\caption{Results of Linear Ridge Regression on the YearPredictionMSD dataset\label{ypmsd:table:lrrresults}}
+\caption{YearPredictionMSD - Linear Ridge Regression\label{ypmsd:table:lrrresults}}
 \end{table}
 \subsection{Nearest Neighbor}
+We applied to nearest neighbor with two different values for $k$, $2$ and $5$. The algorithms took, compared to other algorithms on the dataset, quite a long time to compute (over two hours, compared to $40$ seconds used by Ridge Regression). Since we could not figure out which gave the best result by simply looking at the statistical summary, we printed a boxplot of the distribution of the difference between guessed and expected year, which can be seen in Figure~\ref{ypmsd:fig:nnrresults}. In the plot it can be seen that both have nearly the same mean value ($.05$ difference) but nearest neighbor with $k=5$ has a smaller interquartile range and also the extreme values are less drastic. Therefore we conclude that choosing higher $k$ improves the performance of nearest neighbor on this dataset.
+%\begin{table}[p]
+%	\begin{center}
+%		\begin{tabular}{|c|c|c|c|c|c|c|}
+%			\hline	\backslashbox{k}{}&mean&standard deviaton&1st quartile&median&3rd quartile&runtime(s)\\
+%\hline $2$&$-0.1358$&$11.4126$&$-6.0000$&$-0.5000$&$5.0000$&$7951.775$\\
+%\hline $5$&$-0.1716$&$10.2283$&$-6.0000$&$1.4000$&$4.0000$&$8070.128$\\\hline
+%\end{tabular}
+%\end{center}
+%\caption{YearPredictionMSD - Nearest Neighbor\label{ypmsd:table:nnrresults}}
+%\end{table}
+\begin{figure}[p]
+	\center
+	\includegraphics[scale=\figurescaling]{figures/ypmsd_nnr.png}
+	\caption{YearPredictionMSD - Nearest Neighbor\label{ypmsd:fig:nnrresults}}
+\end{figure}
 \subsection{Support Vector Machine}
 \subsection{Statistic Gradient Descent}
 
