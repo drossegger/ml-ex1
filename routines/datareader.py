@@ -10,7 +10,12 @@ def readCSV(path, attributeindexlist, labelindex,delim):
 	line=line.split(delim)
 	z= list(columnName for columnName in line)
 	for line in lines[1:]:
+	 	if line.strip() == '':
+	 		continue
 		line=line.split(delim)
+		if line[labelindex].strip() == 'NaN':
+			continue
+		
 		y.append(line[labelindex])
 		attributes=[]
 		for c in attributeindexlist:
