@@ -14,6 +14,15 @@ The results of different Linear Regression algorithms with different imputation 
 \subsubsection{Multinomial Regression}
 
 \subsection{Nearest Neighbor}
+In the first three runs, one, five and ten were selected as the number of neighbors. Since by increasing the neighbor numbers, the final result seems to be better, we continue increasing the value and found eighteen as a reasonable value. The results for different imputation techniques are depicted in Table \ref{table:db1-nearestneighbor}. In this case, mean value for imputation seems better than other techniques.
+
 \subsection{Support Vector Machine}
+We applied SVM algorithm with default parameters presented by Sci-kit. The default mode of the algorithm uses epsilon equal to 0.1, gamma equal to zero and RBF as kernel. The results for three different imputation techniques is shown in Table \ref{table:db1-SVM}. Changing imputation technique doesn't seem to make any considerable affect on results.
+
 \subsection{Statistic Gradient Descent}
+As SGD algorithm uses a portion of data for regression, we run every parameter four times and calculate the mean value. There is a rather considerable difference between the different results for each parameter. The reason is probably because dataset has small size. The results for three different imputation techniques is shown in Table \ref{table:db1-SGD}. In the final result, Log seems to be the best Loss Function and Mean the best imputation technique while The results are changing very radically and are not reliable.
+
+\subsection{Neural Network}
+As the last part, we also apply neural network model on the dataset. We picked Mean value as imputation technique and as it is shown in Table \ref{table:db1-NeuralNetwork}, different hidden layers and node counts were applied. Based on achieved results, regardless to number of layers, having ten to twenty nodes usually leads to the best results. Using one hidden layer seems to be the best model. In current data one layer and twenty nodes seems to be the best model. It should also be considered that different runs return different results while not very diverse.
+
 \subsection{Comparison}

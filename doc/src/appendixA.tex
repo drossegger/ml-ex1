@@ -1,0 +1,87 @@
+\section{Appendix A}
+
+\begin{center}
+\begin{table}
+\begin{tabular}{|c|c|p{3cm}|p{3cm}|p{3cm}|}
+\hline \multicolumn{2}{ |c| }{Algorithm} & Ridge Regression alpha=0.1 & Ridge Regression Cross Validation & Bayesian Ridge Regression \\
+
+\hline \multicolumn{1}{ |c| }{\multirow{3}{*}{Imputation} } & Mean & \minibox{\textbf{9.152}\\ 3.891\\ 00.027} & \minibox{9.152\\ 3.899\\ 00.027}& \minibox{9.152\\ 3.907\\ 00.025} \\
+
+\cline{2-5} & Median & \minibox{9.152\\ 3.898\\ 00.035} & \minibox{9.152\\ 3.907\\ 00.038}& \minibox{9.152\\ 3.915 \\ 00.056} \\
+
+\cline{2-5} & Most Frequent & \minibox{9.152 \\ 3.899 \\ 00.077} & \minibox{9.152 \\ 3.908 \\ 00.077}& \minibox{9.152 \\ 3.916 \\ 00.116} \\
+\hline
+\end{tabular}
+
+    \caption{Auto MPG dataset - Linear Regressions (Mean, Standard deviation, Execution time)}
+    \label{table:db1-linearregression}
+    \end{table}
+\end{center}
+
+\begin{center}
+\begin{table}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline \backslashbox{Imputation}{Number of Neighbors} & 2 & 5 & 8 & 10 & 18 & 20 \\
+
+\hline Mean & \minibox{6.85 \\ 3.78 \\ 00.026} & \minibox{6.97 \\ 3.67 \\ 00.03} & \minibox{6.87 \\ 3.51 \\ 00.019} & \minibox{6.72 \\ 3.42 \\ 00.019} & \minibox{\textbf{6.62} \\ 3.36 \\ 00.020} & \minibox{6.609 \\ 3.39 \\ 00.023} \\
+
+\hline Median & \minibox{6.85 \\ 3.78 \\ 00.039} & \minibox{6.97 \\ 3.67 \\ 00.033} & \minibox{6.87 \\ 3.51 \\ 00.036} & \minibox{6.72 \\ 3.42 \\ 00.033} & \minibox{6.63 \\ 3.36 \\ 00.033} & \minibox{6.62 \\ 3.39 \\ 00.033} \\
+
+\hline Most Frequent & \minibox{6.85 \\ 3.78 \\ 00.039} & \minibox{6.97 \\ 3.67 \\ 00.033} & \minibox{6.87 \\ 3.51 \\ 00.036} & \minibox{6.72 \\ 3.42 \\ 00.033} & \minibox{6.63 \\ 3.36 \\ 00.033} & \minibox{6.62 \\ 3.39 \\ 00.033} \\
+\hline
+\end{tabular}
+    \caption{Auto MPG dataset - Nearest Neighbor (Mean, Standard deviation, Execution time)}
+    \label{table:db1-nearestneighbor}
+    \end{table}
+\end{center}
+
+\begin{center}
+\begin{table}
+\begin{tabular}{|c|c|}
+\hline Imputation & Results \\
+
+\hline Mean & \minibox{\textbf{5.76} \\ 2.044 \\ 00.118} \\
+
+\hline Median & \minibox{5.765 \\ 2.044 \\ 00.122} \\
+
+\hline Most Frequent & \minibox{5.765 \\ 2.044 \\ 00.155} \\
+\hline
+\end{tabular}
+    \caption{Auto MPG dataset - SVM (Mean, Standard deviation, Execution time)}
+    \label{table:db1-SVM}
+    \end{table}
+\end{center}
+
+\begin{center}
+\begin{table}
+\begin{tabular}{|c|c|c|}
+\hline \backslashbox{Imputation}{Loss Function} & Hinge & Log \\
+
+\hline Mean & \minibox{7.89 \\ 2.24 \\ 00.23} & \minibox{\textbf{7.26} \\ 3.034 \\ 00.29} \\
+
+\hline Median & \minibox{7.49 \\ 2.63 \\ 00.243} & \minibox{7.63 \\ 2.19 \\ 00.299} \\
+
+\hline Median & \minibox{7.53 \\ 2.69 \\ 00.273} & \minibox{7.33 \\ 2.14 \\ 00.31} \\
+\hline
+\end{tabular}
+    \caption{Auto MPG dataset - SGD (Mean, Standard deviation, Execution time)}
+    \label{table:db1-SGD}
+    \end{table}
+\end{center}
+
+\begin{center}
+\begin{table}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline \backslashbox{Hidden Layers}{Nodes Count} & 5 & 10 & 15 & 20 & 30 & 40 \\
+
+\hline 1 & \minibox{6.34 \\ 3.96 \\ 00.835} & \minibox{7.12 \\ 3.50 \\ 00.82} & \minibox{7.23 \\ 3.16 \\ 00.82} & \minibox{\textbf{6.25} \\ 3.47 \\ 00.83} & \minibox{8.97 \\ 3.26 \\ 00.83} & \minibox{6.39 \\ 3.05 \\ 00.82} \\
+
+\hline 2 & \minibox{9.21 \\ 2.14 \\ 00.946} & \minibox{8.105 \\ 2.14 \\ 00.972} & \minibox{8.67 \\ 2.14 \\ 00.981} & \minibox{9.302 \\ 2.14 \\ 00.981} & \minibox{11.29 \\ 2.14 \\ 00.999} & \minibox{8.46 \\ 2.14 \\ 00.99} \\
+
+\hline 3 & \minibox{8.96 \\ 2.14 \\ 01.03} & \minibox{8.71 \\ 2.14 \\ 01.07} & \minibox{9.46 \\ 2.14 \\ 01.07} & \minibox{8.10 \\ 2.14 \\ 01.09} & \minibox{7.81 \\ 2.14 \\ 01.10} & \minibox{6.84 \\ 2.14 \\ 01.11} \\
+\hline
+\end{tabular}
+    \caption{Auto MPG dataset - Neural Network (Mean, Standard deviation, Execution time)}
+    \label{table:db1-NeuralNetwork}
+    \end{table}
+\end{center}

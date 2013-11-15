@@ -39,7 +39,7 @@ def Main():
     trainlabel=[float(a) for a in trainlabel]
     testlabel=[float(a) for a in testlabel]
     
-    preprocess_method = MISSING_VALUE_METHOD_MOST_FREQUENT
+    preprocess_method = MISSING_VALUE_METHOD_MEAN
     traincolumnnames = trainColumnNames
     labelindex = 0
     
@@ -51,11 +51,48 @@ def Main():
     #_container.push(LinearRidgeRegression().ExtraParams(alpha=10).SetAlgorithmName('LinearRidgeRegression_MOST_FREQUENT_10'))
     #_container.push(LinearRidgeRegressionCV().ExtraParams(alphas=[0.1, 1.0, 10.0]).SetAlgorithmName('LinearRidgeRegressionCV_MOST_FREQUENT'))
     #_container.push(LinearBayesianRidgeRegression().SetAlgorithmName('LinearBayesianRidgeRegression_MOST_FREQUENT'))
-    #_container.push(SGD().ExtraParams(loss='hinge').SetAlgorithmName('SGD'))
+    #_container.push(NearestNeighborsRegression().ExtraParams(n_neighbors=2, weight='uniform').SetAlgorithmName('NearestNeighborsRegression_MOST_FREQUENT_2'))
+    #_container.push(NearestNeighborsRegression().ExtraParams(n_neighbors=5, weight='uniform').SetAlgorithmName('NearestNeighborsRegression_MOST_FREQUENT_5'))
+    #_container.push(NearestNeighborsRegression().ExtraParams(n_neighbors=8, weight='uniform').SetAlgorithmName('NearestNeighborsRegression_MOST_FREQUENT_2'))
+    #_container.push(NearestNeighborsRegression().ExtraParams(n_neighbors=10, weight='uniform').SetAlgorithmName('NearestNeighborsRegression_MOST_FREQUENT_10'))
+    #_container.push(NearestNeighborsRegression().ExtraParams(n_neighbors=18, weight='uniform').SetAlgorithmName('NearestNeighborsRegression_MOST_FREQUENT_18'))
+    #_container.push(NearestNeighborsRegression().ExtraParams(n_neighbors=20, weight='uniform').SetAlgorithmName('NearestNeighborsRegression_MOST_FREQUENT_20'))
+    #_container.push(SupportVectorMachine().SetAlgorithmName('SupportVectorMachine_MOST_FREQUENT'))
+    #_container.push(SGD().ExtraParams(loss='hinge').SetAlgorithmName('SGD_MEDIAN_hinge'))
+    #_container.push(SGD().ExtraParams(loss='hinge').SetAlgorithmName('SGD_MEDIAN_hinge'))
+    #_container.push(SGD().ExtraParams(loss='hinge').SetAlgorithmName('SGD_MEDIAN_hinge'))
+    #_container.push(SGD().ExtraParams(loss='hinge').SetAlgorithmName('SGD_MEDIAN_hinge'))
+    #_container.push(SGD().ExtraParams(loss='log').SetAlgorithmName('SGD_MEDIAN_log'))
+    #_container.push(SGD().ExtraParams(loss='log').SetAlgorithmName('SGD_MEDIAN_log'))
+    #_container.push(SGD().ExtraParams(loss='log').SetAlgorithmName('SGD_MEDIAN_log'))
+    #_container.push(SGD().ExtraParams(loss='log').SetAlgorithmName('SGD_MEDIAN_log'))
     #_container.push(DecisionTree().SetAlgorithmName('DecisionTree'))
-    #_container.push(NearestNeighborsRegression().ExtraParams(n_neighbors=5, weight='uniform').SetAlgorithmName('NearestNeighborsRegression'))
-    #_container.push(SupportVectorMachine().SetAlgorithmName('SupportVectorMachine'))
-    #_container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=30).SetAlgorithmName('NeuralNetwork'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=5).SetAlgorithmName('NeuralNetwork_1_5'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=10).SetAlgorithmName('NeuralNetwork_1_10'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=15).SetAlgorithmName('NeuralNetwork_1_15'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=20).SetAlgorithmName('NeuralNetwork_1_20'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=30).SetAlgorithmName('NeuralNetwork_1_30'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=40).SetAlgorithmName('NeuralNetwork_1_40'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=2, hiddenlayernodescount=5).SetAlgorithmName('NeuralNetwork_2_5'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=2, hiddenlayernodescount=10).SetAlgorithmName('NeuralNetwork_2_10'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=2, hiddenlayernodescount=15).SetAlgorithmName('NeuralNetwork_2_15'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=2, hiddenlayernodescount=20).SetAlgorithmName('NeuralNetwork_2_20'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=2, hiddenlayernodescount=30).SetAlgorithmName('NeuralNetwork_2_30'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=2, hiddenlayernodescount=40).SetAlgorithmName('NeuralNetwork_2_40'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=3, hiddenlayernodescount=5).SetAlgorithmName('NeuralNetwork_3_5'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=3, hiddenlayernodescount=10).SetAlgorithmName('NeuralNetwork_3_10'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=3, hiddenlayernodescount=15).SetAlgorithmName('NeuralNetwork_3_15'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=3, hiddenlayernodescount=20).SetAlgorithmName('NeuralNetwork_3_20'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=3, hiddenlayernodescount=30).SetAlgorithmName('NeuralNetwork_3_30'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=3, hiddenlayernodescount=40).SetAlgorithmName('NeuralNetwork_3_40'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=3, hiddenlayernodescount=50).SetAlgorithmName('NeuralNetwork_3_50'))
+    
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=4, hiddenlayernodescount=5).SetAlgorithmName('NeuralNetwork_4_5'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=4, hiddenlayernodescount=10).SetAlgorithmName('NeuralNetwork_4_10'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=4, hiddenlayernodescount=15).SetAlgorithmName('NeuralNetwork_4_15'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=4, hiddenlayernodescount=20).SetAlgorithmName('NeuralNetwork_4_20'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=4, hiddenlayernodescount=30).SetAlgorithmName('NeuralNetwork_4_30'))
+    _container.push(NeuralNetwork().ExtraParams(hiddenlayerscount=4, hiddenlayernodescount=40).SetAlgorithmName('NeuralNetwork_4_40'))
     
     _container.StartAlgorithms()
     
