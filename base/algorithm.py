@@ -32,7 +32,8 @@ class algorithmbase(object):
         prediction= self.result[1]
         diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
         diffmean =  np.mean(diff)
-        output = '{0:<40}, {1:<20}, {2:<20}'.format(self.algorithmlabel , diffmean,  self.runningtime) 
+        diffstd =  np.std(diff)
+        output = '{0:<40}, {1:<20}, {2:<20}, {3:<20}'.format(self.algorithmlabel, diffmean, diffstd, self.runningtime) 
         print  output
         self.finaloutputfile.write(output + '\n')
         self.finaloutputfile.flush()
