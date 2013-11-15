@@ -7,7 +7,11 @@ In order to standardized data, we used standard scale which first transforms the
 
 In order to impute missing values, we applied three different techniques containing calculating Mean, Median and Most-Frequent value.
 
-\subsection{Linear Ridge Regression}
+\subsection{Regression}
+\subsubsection{Linear Regression}
+The results of different Linear Regression algorithms with different imputation techniques are shown in Table \ref{table:db1-linearregression} in Appendix A. Ridge Regression was tested by different values for alpha (0.1, 0.5, 1 and 10) and 0.1 seems to be the best value. The final results were very similar. As it shown all the values are rather the same and very biased. By reducing the number of instances in Train Data the final bias reduced significantly. In order to improve the results, we used Multinomial Regressions in the next step.
+
+\subsubsection{Multinomial Regression}
 
 \subsection{Nearest Neighbor}
 \subsection{Support Vector Machine}
