@@ -59,8 +59,6 @@ class  NeuralNetwork(algorithmbase):
 			prediction.append( net.activate(testrecord)[0])
 			
 		self.result = [self.testlabel, prediction]
-<<<<<<< master
-=======
 		
 		
 	def PreProcessTrainData(self):
@@ -117,4 +115,3 @@ class  NeuralNetwork(algorithmbase):
 		
 	def GetModel(self):
 		return self.trainer
->>>>>>> local
