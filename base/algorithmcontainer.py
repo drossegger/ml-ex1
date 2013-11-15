@@ -40,7 +40,7 @@ class Container(object):
         
         outputversion = 'reports/' + time.strftime("%Y%m%d%H%M%S", time.localtime())
         
-        finalresultcolumns = '{0:40}, {1:20}, {2:20}'.format('Algorithm' , 'DiffMean',  'RunningTime')
+        finalresultcolumns = '{0:40}, {1:20}, {2:20}, {3:20}'.format('Algorithm', 'DiffMean', 'DiffStd', 'RunningTime')
         
         finalresultfile = self.MakeResultFile(outputversion, finalresultcolumns)
         
