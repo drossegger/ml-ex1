@@ -13,7 +13,7 @@
 \hline
 \end{tabular}
 
-    \caption{Auto MPG dataset - Linear Regressions (Mean, Standard deviation, Execution time)}
+    \caption{Auto MPG - Linear Regressions (Mean, Standard deviation, Execution time)}
     \label{table:db1-linearregression}
 \end{center}
     \end{table}
@@ -38,7 +38,7 @@
 \hline
 \end{tabular}
 
-    \caption{Auto MPG dataset - Polynomial Ridge Regressions (Mean, Standard deviation, Execution time)}
+    \caption{Auto MPG - Polynomial Ridge Regressions (Mean, Standard deviation, Execution time)}
     \label{table:db1-polynomialregression}
 \end{center}
     \end{table}
@@ -55,7 +55,7 @@
 \hline Most Frequent & \minibox{6.85 \\ 3.78 \\ 00.039} & \minibox{6.97 \\ 3.67 \\ 00.033} & \minibox{6.87 \\ 3.51 \\ 00.036} & \minibox{6.72 \\ 3.42 \\ 00.033} & \minibox{6.63 \\ 3.36 \\ 00.033} & \minibox{6.62 \\ 3.39 \\ 00.033} \\
 \hline
 \end{tabular}
-    \caption{Auto MPG dataset - Nearest Neighbor (Mean, Standard deviation, Execution time)}
+    \caption{Auto MPG - Nearest Neighbor (Mean, Standard deviation, Execution time)}
     \label{table:db1-nearestneighbor}
 \end{center}
     \end{table}
@@ -72,7 +72,7 @@
 \hline Most Frequent & \minibox{5.765 \\ 2.044 \\ 00.155} \\
 \hline
 \end{tabular}
-    \caption{Auto MPG dataset - SVM (Mean, Standard deviation, Execution time)}
+    \caption{Auto MPG - SVM (Mean, Standard deviation, Execution time)}
     \label{table:db1-SVM}
 \end{center}
     \end{table}
@@ -80,16 +80,16 @@
 		\begin{table}[p]
 \begin{center}
 \begin{tabular}{|c|c|c|}
-\hline \backslashbox{Imputation}{Loss Function} & Hinge & Log \\
+\hline \backslashbox{Imputation}{Loss Function} & Huber epsilon=100 & SquaredLoss \\
 
-\hline Mean & \minibox{7.89 \\ 2.24 \\ 00.23} & \minibox{\textbf{7.26} \\ 3.034 \\ 00.29} \\
+\hline Mean & \minibox{8.690 \\ 4.280 \\ 00.003} & \minibox{\textbf{8.682} \\ 3.87 \\ 00.003} \\
 
-\hline Median & \minibox{7.49 \\ 2.63 \\ 00.243} & \minibox{7.63 \\ 2.19 \\ 00.299} \\
+\hline Median & \minibox{8.685 \\ 4.272 \\ 00.003} & \minibox{8.698 \\ 4.297 \\ 00.003} \\
 
-\hline Median & \minibox{7.53 \\ 2.69 \\ 00.273} & \minibox{7.33 \\ 2.14 \\ 00.31} \\
+\hline Most Frequent & \minibox{8.719 \\ 4.278 \\ 00.003} & \minibox{8.692 \\ 4.309 \\ 00.003} \\
 \hline
 \end{tabular}
-    \caption{Auto MPG dataset - SGD (Mean, Standard deviation, Execution time)}
+    \caption{Auto MPG - SGD (Mean, Standard deviation, Execution time)}
     \label{table:db1-SGD}
 \end{center}
     \end{table}
