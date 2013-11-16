@@ -53,7 +53,7 @@ class Container(object):
         
         for _algorithm in self.algorithms:
             
-            try:
+            #try:
                 
                 _algorithm.Initiate(self.traindata, self.trainlabel, self.testdata, self.testlabel, self.preprocess_method, self.traincolumnnames, self.labelindex)
                 _algorithm.set_output_file_version(outputversion)
@@ -85,10 +85,10 @@ class Container(object):
                 _algorithm.print_output()
                 _algorithm.print_output_file()
             
-            except Exception, e:
-                print '----------------------------------------------------------------------'
-                print 'Error in ' + _algorithm.algorithmlabel + ' : ' + str(e)
-                print '----------------------------------------------------------------------'
+            #except Exception, e:
+            #    print '----------------------------------------------------------------------'
+            #    print 'Error in ' + _algorithm.algorithmlabel + ' : ' + str(e)
+            #    print '----------------------------------------------------------------------'
                 
         finalresultfile.close()
         print '...DONE...'
