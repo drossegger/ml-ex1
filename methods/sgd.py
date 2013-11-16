@@ -4,8 +4,9 @@ from base.algorithm import algorithmbase
 
 class SGD(algorithmbase):
 	
-	def ExtraParams(self,loss='squared_loss'):
+	def ExtraParams(self,loss='squared_loss',epsilon=10):
 		self.loss=loss
+		self.epsilon=epsilon
 		return self
 	
 	
@@ -35,7 +36,10 @@ class SGD(algorithmbase):
 		if savedmodel != None:
 			self.clf = savedmodel
 		else:
-			self.clf=SGDRegressor(loss=self.loss, penalty="l2",shuffle=True)
+			if self.loss=='squared_loss':
+				self.clf=SGDRegressor(loss=self.loss, penalty="l2",shuffle=True)
+			else:
+				self.clf=SGDRegressor(loss=self.loss,epsilon=self.epsilon, penalty="l2",shuffle=True)
 			self.clf.fit(self.traindata ,self.trainlabel)
 		
 		
