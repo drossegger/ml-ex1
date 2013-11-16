@@ -19,14 +19,13 @@ from methods.nearestneighborsregression import NearestNeighborsRegression
 from methods._neuralnetwork import NeuralNetwork
 from methods.svm import SupportVectorMachine
 from methods._decisiontree import DecisionTree
-from methods._polynomialridgeregression import PolyNomialRidgeRegression
 
 
 
 def Main():
-    data=readCSV('data/dataset1/auto-mpg.data', range(1,8), 0,';')
-    test=readCSV('data/dataset1/auto-mpg-predictors.data', range(1,8), 0,';')
-    
+    data=readCSV('data/dataset2/base.txt', range(1,90), 0,',')
+    test=readCSV('data/dataset2/target.txt', range(1,90), 0,',')
+ 
     traindata=data[1]
     trainlabel=data[0]
     trainColumnNames = data[2]
@@ -35,8 +34,8 @@ def Main():
     testlabel=test[0]
     testColumnNames = test[2]
     
-    traindata=[[a if a!='?' else np.nan for a in instance] for instance in traindata]
-    testdata=[[a if a!='?' else np.nan for a in instance] for instance in testdata]
+    #traindata=[[a if a!='?' else np.nan for a in instance] for instance in traindata]
+    #testdata=[[a if a!='?' else np.nan for a in instance] for instance in testdata]
     
     
     trainlabel=[float(a) for a in trainlabel]
