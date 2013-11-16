@@ -37,3 +37,34 @@ Based on the results following conclusions can be obtained:
   \item Although all the algorithms are executing less than one second, Neural Network has the longest execution time.
   \item Mean is the best Imputation technique among the implemented ones.
 \end{itemize}
+
+		\begin{table}
+\begin{center}
+\begin{tabular}{|p{4cm}|c|c|c|c|}
+\hline Algorithm and Parameters & Imputation & Bias Mean & Bias Std & Execution Time(s)\\
+
+\hline Linear Ridge Regression, alpha=0.1 & Mean & 9.152 & 3.891 & 00.027 \\
+
+\hline Polynomial Ridge Regression, highest power=32, alpha=0.1 & Mean & \textbf{1.127} & 2.895 & 00.155  \\
+
+\hline Nearest Neighborhood k=18 & Mean & 6.62 & 3.36 & \textbf{00.02}  \\
+
+\hline SVM & Mean & 5.76 & \textbf{2.044} & 00.118  \\
+
+\hline SGD, Loss Function=Log & Mean & 7.26 & 3.034 & 00.29  \\
+
+\hline Neural Network, Hidden Layers=1, Nodes Count=20 & Mean & 6.25 & 3.47 & 00.83  \\
+
+\hline
+\end{tabular}
+    \caption{Auto MPG - Comparison between best results}
+    \label{table:db1-results}
+\end{center}
+    \end{table}
+
+
+\begin{figure}
+	\center
+	\includegraphics[scale=\figurescaling]{figures/mpg_bestresults.png}
+	\caption{Auto MPG - Comparison between best results\label{fig:db1-mpg_bestresults}}
+\end{figure}
