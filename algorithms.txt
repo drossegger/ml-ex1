@@ -3,6 +3,6 @@ Algorithms:
 - Ridge Regression
 	- alpha=.5,.1,1,10 
 - Stochastic Gradient Descent
-	- loss=hinge,log
+	- loss=huber,squared_loss
 - K-Nearest Neighbor
 	- neighbors=5,2,10
