@@ -34,7 +34,7 @@ Based on the results following conclusions can be obtained:
   \item Polynomial Ridge Regression has the best results and SVM creates the second best one.
   \item While good results in Polynomial Ridge Regression, standard deviation of bias between results and real values is rather high. Between all algorithms, SVM seems more stable.
   \item Regarding to amount of data, SGD is an inappropriate model.
-  \item Although all the algorithms are executing less than one second, Neural Network has the longest execution time.
+  \item Although all the algorithms are executing less than one second, Neural Network has the longest execution time and SGD the shortest.
   \item Mean is the best Imputation technique among the implemented ones.
 \end{itemize}
 
@@ -47,11 +47,11 @@ Based on the results following conclusions can be obtained:
 
 \hline Polynomial Ridge Regression, highest power=32, alpha=0.1 & Mean & \textbf{1.127} & 2.895 & 00.155  \\
 
-\hline Nearest Neighborhood k=18 & Mean & 6.62 & 3.36 & \textbf{00.02}  \\
+\hline Nearest Neighborhood k=18 & Mean & 6.62 & 3.36 & 00.02  \\
 
 \hline SVM & Mean & 5.76 & \textbf{2.044} & 00.118  \\
 
-\hline SGD, Loss Function=Log & Mean & 7.26 & 3.034 & 00.29  \\
+\hline SGD, Loss Function=SquaredLoss & Mean & 8.682 & 3.87 & \textbf{00.003}  \\
 
 \hline Neural Network, Hidden Layers=1, Nodes Count=20 & Mean & 6.25 & 3.47 & 00.83  \\
 
