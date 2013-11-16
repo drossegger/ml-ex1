@@ -1,10 +1,10 @@
-from sklearn.linear_model import SGDClassifier
+from sklearn.linear_model import SGDRegressor
 from routines.preprocess import preprocess_apply
 from base.algorithm import algorithmbase
 
 class SGD(algorithmbase):
 	
-	def ExtraParams(self,loss='hinge'):
+	def ExtraParams(self,loss='squared_loss'):
 		self.loss=loss
 		return self
 	
@@ -14,7 +14,7 @@ class SGD(algorithmbase):
 		Deprecated
 		'''
 		self.traindata=preprocess_apply(self.traindata, self.preprocess_method)
-		clf = SGDClassifier(loss=self.loss, penalty="l2",shuffle=True)
+		clf = SGDRegressor(loss=self.loss, penalty="l2",shuffle=True)
 		self.trainlabel=[repr(a) for a in self.trainlabel]
 		clf.fit(self.traindata,self.trainlabel)
 			
@@ -35,7 +35,7 @@ class SGD(algorithmbase):
 		if savedmodel != None:
 			self.clf = savedmodel
 		else:
-			self.clf=SGDClassifier(loss=self.loss, penalty="l2",shuffle=True)
+			self.clf=SGDRegressor(loss=self.loss, penalty="l2",shuffle=True)
 			self.clf.fit(self.traindata ,self.trainlabel)
 		
 		
