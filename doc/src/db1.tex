@@ -12,7 +12,7 @@ In order to impute missing values, we applied three different techniques contain
 The results of different Linear Regression algorithms with different imputation techniques are shown in Table~\ref{table:db1-linearregression} in Appendix A. Ridge Regression was tested by different values for alpha (0.1, 0.5, 1 and 10) and 0.1 seems to be the best value. The final results were very similar. As it shown all the values are rather the same and very biased. By reducing the number of instances in Train Data the final bias reduced significantly. In order to improve the results, we used Multinomial Regressions in the next step.
 
 \subsubsection{Polynomial Ridge Regression}
-By adding more attributes to the linear algorithm, we could apply the data on Polynomial Ridge Regression. Regarding to very short execution time, we tryed many different powers and achieved novel results. As it shown in Table~\ref{table:db1-polynomialregression}, till power five there is no big difference between linear and polynomial model. In contrast to the powers around ten, power ten creates a surprisingly good model. It happens again in some other numbers like twenty two such that we achieved to a very good results in thirty two. One interesting point is that when the results is very biased (like power fifteen), the more alpha is, the more rational results are.
+By adding more attributes to the linear algorithm, we could apply the data on Polynomial Ridge Regression. Regarding to very short execution time, we tried many different exponent values and achieved novel results. As it shown in Table~\ref{table:db1-polynomialregression}, till exponent value five there is no big difference between linear and polynomial model. In contrast to the exponent values around ten, value ten creates a surprisingly good model. It happens again in some other numbers like twenty two such that we achieved to a very good results in thirty two. One interesting point is that when the results is very biased (like fifteen), the more alpha is, the more rational results are.
 
 \subsection{Nearest Neighbor}
 In the first three runs, one, five and ten were selected as the number of neighbors. Since by increasing the neighbor numbers, the final result seems to be better, we continue increasing the value and found eighteen as a reasonable value. The results for different imputation techniques are depicted in Table~\ref{table:db1-nearestneighbor}. In this case, mean value for imputation seems better than other techniques.
@@ -45,7 +45,7 @@ Based on the results following conclusions can be obtained:
 
 \hline Linear Ridge Regression, alpha=0.1 & Mean & 9.152 & 3.891 & 00.027 \\
 
-\hline Polynomial Ridge Regression, highest power=32, alpha=0.1 & Mean & \textbf{1.127} & 2.895 & 00.155  \\
+\hline Polynomial Ridge Regression, highest exponent=32, alpha=0.1 & Mean & \textbf{1.127} & 2.895 & 00.155  \\
 
 \hline Nearest Neighborhood k=18 & Mean & 6.62 & 3.36 & 00.02  \\
 
