@@ -23,8 +23,8 @@ We applied SVM algorithm with default parameters presented by Sci-kit. The defau
 \subsection{Statistic Gradient Descent}
 We applied Huber and SquaredLoss as loss functions on SGD algorithm. Four epsilon values from the range of $100$ to $2000$ were selected for Huber loss function. The results applied for three different imputation techniques is shown in Table~\ref{table:db1-SGD}. In the final result, SquaredLoss seems to be the best Loss Function and Mean the best imputation technique.
 
-\subsection{Neural Network}
-As the last part, we also apply neural network model on the dataset. We picked Mean value as imputation technique and as it is shown in Table~\ref{table:db1-NeuralNetwork}, different hidden layers and node counts were applied. Based on achieved results, regardless to number of layers, having ten to twenty nodes usually leads to the best results. Using one hidden layer seems to be the best model. In current data one layer and twenty nodes seems to be the best model. It should also be considered that different runs return different results while not very diverse.
+\subsection{Neural Networks}
+As the last part, we also apply neural networks model on the dataset. We picked Mean value as imputation technique and as it is shown in Table~\ref{table:db1-NeuralNetwork}, different hidden layers and node counts were applied. Based on achieved results, regardless to number of layers, having ten to twenty nodes usually leads to the best results. Using one hidden layer seems to be the best model. In current data one layer and twenty nodes seems to be the best model. It should also be considered that different runs return different results while not very diverse.
 
 \subsection{Comparison}
 Table~\ref{table:db1-results} shows the comparison between best results of each algorithm.
@@ -34,7 +34,7 @@ Based on the results following conclusions can be obtained:
   \item Polynomial Ridge Regression has the best results and SVM creates the second best one.
   \item While good results in Polynomial Ridge Regression, standard deviation of bias between results and real values is rather high. Between all algorithms, SVM seems more stable.
   \item Regarding to amount of data, SGD is an inappropriate model.
-  \item Although all the algorithms are executing less than one second, Neural Network has the longest execution time and SGD the shortest.
+  \item Although all the algorithms are executing less than one second, Neural Networks has the longest execution time and SGD the shortest.
   \item Mean is the best Imputation technique among the implemented ones.
 \end{itemize}
 
@@ -53,7 +53,7 @@ Based on the results following conclusions can be obtained:
 
 \hline SGD, Loss Function=SquaredLoss & Mean & 8.682 & 3.87 & \textbf{00.003}  \\
 
-\hline Neural Network, Hidden Layers=1, Nodes Count=20 & Mean & 6.25 & 3.47 & 00.83  \\
+\hline Neural Networks, Hidden Layers=1, Nodes Count=20 & Mean & 6.25 & 3.47 & 00.83  \\
 
 \hline
 \end{tabular}
