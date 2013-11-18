@@ -2,9 +2,11 @@
 In this chapter, we explain the four main algorithms which are applied on all the datasets. As well as main algorithms, two essential additional ones are briefly described.
 
 \subsection{Linear Ridge Regression}
-\subsection{Nearest Neighbor}
+\subsection{$k$-nearest neighbors}
+is a simple learning algorithm which can be used both for regression and classification. For regression it determines the result by simply taking the average of the values of the $k$-nearest neighbors. In most implementations the averages have a weight, thus the algorithm prefers choices nearer to the dataset. The result is strongly affected by the choice of $k$ and for datasets with many features the algorithm is known to have problems. The runtime of the algorithm is highly dependent on its implementations, the most naive implementation needs to compute distances between the target instance and all samples in the dataset and is therefore bound by $\mathcal{O}(dn^2)$ with $d$ being the dimension of the dataset (number of features) and $n$ the number of samples. Better implementations using specialized tree datastructures run in $\mathcal{O}(d\log n)$~\cite{alg:knn}.
 \subsection{Support Vector Machine}
 \subsection{Stochastic Gradient Descent}
+
 \subsection{Additional Algorithms}
 \subsubsection{Polynomial Ridge Regression}
 By altering Linear Ridge Regression algorithm and adding more attributes based on exponent value, we prepared Polynomial Ridge Regression.
