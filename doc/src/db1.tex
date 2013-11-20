@@ -20,7 +20,7 @@ In the first three runs, $1, 5$ and $10$ were selected as the number of neighbor
 \subsection{Support Vector Machine}
 We applied the SVM algorithm with default parameters presented by sci-kit. The default mode of the algorithm uses $\epsilon$ equal to $0.1$, $\gamma$ equal to $0$ and RBF as kernel. The results for three different imputation techniques is shown in Table~\ref{table:db1-SVM}. Changing the imputation technique doesn't seem to have any considerable effect on the results.
 
-\subsection{Statistic Gradient Descent}
+\subsection{Stochastic Gradient Descent}
 We used Huber and Squared Loss as loss functions for the SGD algorithm. Four $\epsilon$ values from the range of $100$ to $2000$ were selected for Huber loss function. The results applied for three different imputation techniques is shown in Table~\ref{table:db1-SGD}. In the final result, Squared Loss seemed to be the best Loss Function and Mean the best imputation technique.
 
 \subsection{Neural Networks}
