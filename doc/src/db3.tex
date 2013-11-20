@@ -102,15 +102,13 @@ What's more, as it is noticable, {\it squared\_loss} needs relatively more time
 for building its model.
 
 \subsection{Normalisation}
-It was mentioned before that there wa an idea floating around to normalise
-and scale Epoch numbers used rather than date .Most impacts are
+It was mentioned before that there was an idea floating around to normalise
+and scale Epoch numbers used instead of dates. Most impacts were
 expected to happen to algorithms which rely on distances between instances such
 as $k-$Nearest Neighbors. Surprisingly not only it didn't
 improve any result, but also in most cases caused models to make more mistakes
-and to provide worse results. In Table TODO results of the algorithm
-statistic gradient descent with three different ranges of data as date, one Epoch, another
-scaled and normalized using MaxMin and the last one scaled and normalized using
-Z-Core mentioned.
+and to provide worse results. Thus normalisation was discarded for this
+dataset.
 
 \subsection{Comparison}
 
@@ -248,33 +246,6 @@ Regression\label{ypmsd:table:ds3lrrresults}}
 \caption{Electric power consumption dataset - Statistic Gradient Descent\label{ypmsd:table:ds3sgdresults}}
 
 \end{table}
-
-
-
-
-\begin{table}[p]
-\begin{center} 
-\begin{tabular}{|c|c|c|c|c|}
-			\hline \multirow{3}{*}{Normalisation} &&& $1^{st}$ quartile
-			&\\&Mean&Standard Deviation&Median& Runtime (s)\\&&& $3^{rd}$ quartile &\\
-			\hline \multirow{3}{*}{-}&&&$-2.23407$&\\
-			& $0.80390$ & $6.81799$  & $2.02225$ & $4.388$\\
-			&&&$1.93741$& \\
-			\hline \multirow{3}{*}{MinMax}&&&$-3.1139$ &\\
-			& $0.1055$ & $6.81825$  & $-0.1738$ & $4.435$\\
-			&&&	$1.8640$& \\
-			\hline \multirow{3}{*}{Z-Core}&&&	$-3.21330$ &\\
-			& $0.02817$ & $6.81875$  & $0.01763$ & $5.295$\\
-			&&&	$2.02225$& \\
-			\hline
-
-		\end{tabular}
-	\end{center}
-\caption{Electric power consumption dataset - Statistic Gradient Descent with
-normalisation of data in date attribute\label{ypmsd:table:ds3sgdnormal}}
-
-\end{table}
-
 
 
 
