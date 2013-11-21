@@ -1,27 +1,27 @@
 \section{Electric power consumption dataset}
 \subsection{Description}
-The third dataset again grabbed from the same resource as two datasets before.
+The third dataset was again grabbed from the same resource as two datasets before.
 The dataset is called 'Individual household electric power consumption Data
-Set\cite{ds:household}' and its data illustrate measurments of
-one-minute-sampling electric power consumpotion in households over almost $4$
+Set\cite{ds:household}' and its data illustrate measurements of
+one-minute-sampling electric power consumption in households over almost $4$
 years. Originally, the dataset contains $2075259$ data instances gathered since
 December $2006$ to November $2010$. In addition, each instance contains three
-sub-metering values each corresponds to power consumption of some specific types
-of home appliences and electrical equipments used in the house for which the
+sub-metering values each corresponding to power consumption of some specific types
+of home appliances and electrical equipments used in the house for which the
 data relates. The dataset contains some missing values in the measurements.
-Reffering to the information attached to the data set, nearly $1.25\%$ of
-instances contain missing values. Detailed description of data columns could be
+Refering to the information attached to the data set, nearly $1.25\%$ of
+instances contain missing values. Detailed description of data columns can be
 found in Table~\ref{ypmsd:table:ds3attributes}.\\
 However they are not used as they can be seen in the table. In the other words,
 the data set used for prediction has some changes in the number of attributes
-and thier types and values.
-This diversity comes from combining last three attributes in order to acquire consumption by union of all devices
+and their types and values.
+This diversity comes from combining the last three attributes in order to acquire consumption by union of all devices
 belonging to each specific group of metering and some mappings to new
 environments.
-Thus rather than three attributes for metering, one attribute substituted, produced by summing all three. Also the
+Thus rather than three attributes for metering, one attribute is substituted, produced by summing all three. Also the
 goal defined for prediction by regression in fact aims to give a predicted value
 of metering consumption by all stated devices while having other parameters.
-More on data mappings, you can find in section \ref{ds3:Preprocessing}.
+You can find more on data mappings in section \ref{ds3:Preprocessing}.
 
 
 
@@ -32,66 +32,66 @@ More on data mappings, you can find in section \ref{ds3:Preprocessing}.
 
 \subsection{Preprocessing\label{ds3:Preprocessing}}
 
-In order to use data for regression, some steps required to prepare data. These
-steps include a mapping from two first attributes, date and time, to numeric
-values unless they are useless in regression. Very first approach, and partially
+In order to use data for regression, some steps are required to prepare data. These
+steps include a mapping from the two first attributes, date and time, to numeric
+values, if not they are useless in regression. The very first approach, and partially
 the best so far, is to use Epoch\cite{ritchie1971unix} for both date and time.
 However due to dependency of some regression algorithms intended to use for
 regression on this data to distances between values of attribute instances, it
 makes sense to either normalize time or use another type of mapping.
-Consequenly, using a linear function which maps time to its corresponding total
+Consequently, using a linear function which maps time to its corresponding total
 seconds, time is mapped to a new range of values. Nonetheless, Epoch still is
-used to represent a date.\\
+used to represent a date.\par
 Next, we have to combine three last attributes and generate a new one based on
 these three. Since there are some missing values in meterings and regarding the
-fact that at most $1.25\%$ of data is missing, all instances which has a missing
-value in any of these three attributes is eliminated. So far, the new data set
+fact that at most $1.25\%$ of data is missing, all instances which have a missing
+value in any of these three attributes are eliminated. So far, the new data set
 built on electric power consumption dataset is ready to be fed to regression
-algorithms. \\
-Nevertheless, another idea bounces around is if normalisation of
-date also affects the result of algorithms which is discussed later in this
-article.\\
+algorithms. \par
+Nevertheless, another idea that bounces around is if normalisation of
+data also affects the result of algorithms which is discussed later in this
+article.\par
 Besides, a portion of this data is cut to be used as test data. In the results
-which follow, all experiments carried out with randomly-chosen $10\%$ of data
+which follow, all experiments are carried out with randomly-chosen $10\%$ of data
 cut out as test data.
 
 \subsection{Linear Ridge Regression}
 
-Following the principle in previous two datasets, the same about linear ridge
+Following the principle of the previous two datasets, the same about linear ridge
 regression is tried on current dataset meaning four different variations of
-linear ridge regression obtained by replacing $\alpha$-Value. Detailed
+linear ridge regression obtained by replacing  the $\alpha$-value. Detailed
 information and results are depicted in Table~\ref{ypmsd:table:ds3lrrresults}.
 \\
-As it is noticable in the table, there is no touchable improvement earned while
-playing with alpha in this dataset. Thus the same interpretation of gained
-result in section~\ref{ds2:lrr} could also be made here. Nevertheless dealing
-with such a dataset, also runtime of making model relatively stays the same for all
+As it is noticeable in the table, there is no touchable improvement earned while
+playing with $\alpha$ in this dataset. Thus the same interpretation of gained
+results in section~\ref{ds2:lrr} could also be made here. Nevertheless dealing
+with such a dataset, also the runtime for making the model stays more or less the same for all
 $\alpha$ values.
 
 
 
-\subsection{Nearest Neighbors}
+\subsection{$k$-nearest neighbors}
 
-Again following the method of applying $k-$nearest neighbors to previous two
-datasets, three different variations of $k-$nearest neighbors with
-$k\in\{2, 5, 10\}$ are selected to be applied against current dataset. Detailed
+Again following the method the previous two
+datasets, three different variations of $k$-nearest neighbors with
+$k\in\{2, 5, 10\}$ are selected to be applied against the current dataset. Detailed
 results are depicted in Table~\ref{ypmsd:table:ds3knnresults}.\\
 According to these results, choosing $k$ as 2 has the lowest standard deviation
 among all three. Meanwhile, choosing $k$ as 10 leads to a slighly better mean.
-However, difference is not noteworthy.
+However, the difference is not noteworthy.
 
 
 \subsection{Support Vector Machine}
 
-As described in section \ref{ds2:svm}, support vector machine suffers a time
-difficulty in bulding a model for large datasets. As a result, this method is skipped in
+As described in section~\ref{ds2:svm}, support vector machine suffers a time
+difficulty in building a model for large datasets. As a result, this method is skipped in
 this section. Hence, no result is shown regarding applying support vector
 machine on current dataset.
 
 \subsection{Stochastic Gradient Descent}
 
-Applying statistics gradient descent with two different loss functions, {\it
-squared\_loss} and {\it huber}, each one with two variant having $\epsilon \in
+Applying stochastic gradient descent with two different loss functions, {\it
+squared\_loss} and {\it huber}, each one with two variants $\epsilon \in
 \{0.1, 1000\}$ results what is depicted in
 Table~\ref{ypmsd:table:ds3sgdresults}. What is interesting is observing superior
 outcome with smaller $\epsilon$ regardless of selecting loss function in terms
@@ -105,19 +105,19 @@ for building its model.
 It was mentioned before that there was an idea floating around to normalise
 and scale Epoch numbers used instead of dates. Most impacts were
 expected to happen to algorithms which rely on distances between instances such
-as $k-$Nearest Neighbors. Surprisingly not only it didn't
+as $k$-nearest neighbors. Surprisingly not only it didn't
 improve any result, but also in most cases caused models to make more mistakes
 and to provide worse results. Thus normalisation was discarded for this
 dataset.
 
 \subsection{Comparison}
 
-As a conclusion to this section, a comparison among best
-configuration of each algorithm applied on the dataset is provided. As you can
-see in the the Table~\ref{ypmsd:table:ds3comparison}, each algorithm has its own
+As a conclusion to this section, a comparison among the best
+configurations of each algorithm applied on the dataset is provided. As you can
+see in Table~\ref{ypmsd:table:ds3comparison}, each algorithm has its own
 benefits and selecting one as the best strictly depends on expectations.
 While Linear ridge regression provides us with considerably lower model-building runtime
-among all three, more precise results of $k-$Nearest Neighbors is undeniable.
+among all three, more precise results of $k$-nearest neighbors is undeniable.
 
 
 
