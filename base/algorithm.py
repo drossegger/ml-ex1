@@ -46,7 +46,7 @@ class algorithmbase(object):
             print  output
             testlabel_prediction_distinct=list(set(testlabel_prediction))
             for i in range(0,len(testlabel_prediction_distinct)):
-                output = '{0} => {1} : {2:<20}'.format(testlabel_prediction_distinct[i][0], testlabel_prediction_distinct[i][1], testlabel_prediction.count(testlabel_prediction_distinct[i])) 
+                output = '{0:<20}, {1:<20}, {2:<20}, {3:<20}'.format(testlabel_prediction_distinct[i][0], testlabel_prediction_distinct[i][1], testlabel_prediction.count(testlabel_prediction_distinct[i]), self.runningtime) 
                 print  output
                 self.finaloutputfile.write(output + '\n')
             
@@ -74,10 +74,8 @@ class algorithmbase(object):
             for i in range(0,len(testlabel)):
                 file.write( '%s;%s;%s\n'%(testlabel[i],prediction[i],diff[i]) )
         elif (self.mlmethod == Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION):
-            file.write(self.algorithmlabel + '\n')
             testlabel_prediction_distinct=list(set(testlabel_prediction))
             for i in range(0,len(testlabel_prediction_distinct)):
-                output = '{0} => {1} : {2:<20}'.format(testlabel_prediction_distinct[i][0], testlabel_prediction_distinct[i][1], testlabel_prediction.count(testlabel_prediction_distinct[i])) 
-                file.write(output + '\n')
+                file.write('%s;%s;%s\n'%(testlabel_prediction_distinct[i][0], testlabel_prediction_distinct[i][1], testlabel_prediction.count(testlabel_prediction_distinct[i])))
         file.close()
         return self

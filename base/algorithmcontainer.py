@@ -1,9 +1,5 @@
-'''
-Created on 13 Nov 2013
-
-@author: morte_000
-'''
 from base.algorithm import algorithmbase
+from base.constants import Constants
 import datetime
 import sys
 import time
@@ -40,7 +36,11 @@ class Container(object):
         
         outputversion = 'reports/' + time.strftime("%Y%m%d%H%M%S", time.localtime())
         
-        finalresultcolumns = '{0:40}, {1:20}, {2:20}, {3:20}'.format('Algorithm', 'DiffMean', 'DiffStd', 'RunningTime')
+        if self.mlmethod==Constants.MACHINE_LEARNING_METHOD_REGRESSION:
+            finalresultcolumns = '{0:40}, {1:20}, {2:20}, {3:20}'.format('Algorithm', 'DiffMean', 'DiffStd', 'RunningTime')
+        elif self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
+            finalresultcolumns = '{0:40}'.format('Algorithm') + "\r\n"
+            finalresultcolumns += '{0:20}, {1:20}, {2:20}, {3:20}'.format('Label', 'Prediction', 'Count', 'RunningTime')
         
         finalresultfile = self.MakeResultFile(outputversion, finalresultcolumns)
         

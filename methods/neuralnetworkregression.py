@@ -9,7 +9,7 @@ from routines.preprocess import preprocess_apply
 import numpy as np
 from base.algorithm import algorithmbase
 
-class  NeuralNetwork(algorithmbase):		
+class  NeuralNetworkRegression(algorithmbase):		
 	
 	def ExtraParams(self, hiddenlayerscount, hiddenlayernodescount):
 		
@@ -17,52 +17,6 @@ class  NeuralNetwork(algorithmbase):
 		self.hiddenlayernodescount = hiddenlayernodescount
 		return self
 	
-	
-	
-	def DoWork(self):
-		'''
-		Deprecated
-		'''
-		attributescount=len(self.traindata[0])
-		
-		ds = SupervisedDataSet(attributescount, 1)
-		for i in range(len(self.traindata)):
-			ds.appendLinked(self.traindata[i], self.trainlabel[i])
-		
-		#creating network structure
-		net = FeedForwardNetwork()
-		inLayer = LinearLayer(len(self.traindata[0]))
-		net.addInputModule(inLayer)
-		hiddenLayers=[]
-		for i in range(self.hiddenlayerscount):
-			hiddenLayer=SigmoidLayer(self.hiddenlayernodescount)
-			hiddenLayers.append(hiddenLayer)
-			net.addModule(hiddenLayer)
-		outLayer = LinearLayer(1)
-		net.addOutputModule(outLayer)
-	
-		layers_connections=[]
-		layers_connections.append(FullConnection(inLayer, hiddenLayers[0]))
-		for i in range(self.hiddenlayerscount-1):
-			layers_connections.append(FullConnection(hiddenLayers[i-1], hiddenLayers[i]))
-		layers_connections.append(FullConnection(hiddenLayers[-1], outLayer))
-	
-		for layers_connection in layers_connections:
-			net.addConnection(layers_connection)
-		net.sortModules()
-		
-		#training the network
-		trainer = BackpropTrainer(net, ds)
-		trainer.train()
-		
-		testdata=preprocess_apply(self.testdata, self.preprocess_method)
-		prediction=[]
-		for testrecord in testdata :
-			prediction.append( net.activate(testrecord)[0])
-			
-		self.result = [self.testlabel, prediction]
-		
-		
 	def PreProcessTrainData(self):
 		self.traindata = preprocess_apply(self.traindata, self.preprocess_method)
 		attributescount=len(self.traindata[0])
@@ -77,16 +31,16 @@ class  NeuralNetwork(algorithmbase):
 		if savedmodel != None:
 			self.trainer = savedmodel
 		else:
-			net = FeedForwardNetwork()
+			self.net = FeedForwardNetwork()
 			inLayer = LinearLayer(len(self.traindata[0]))
-			net.addInputModule(inLayer)
+			self.net.addInputModule(inLayer)
 			hiddenLayers=[]
 			for i in range(self.hiddenlayerscount):
 				hiddenLayer=SigmoidLayer(self.hiddenlayernodescount)
 				hiddenLayers.append(hiddenLayer)
-				net.addModule(hiddenLayer)
+				self.net.addModule(hiddenLayer)
 			outLayer = LinearLayer(1)
-			net.addOutputModule(outLayer)
+			self.net.addOutputModule(outLayer)
 		
 			layers_connections=[]
 			layers_connections.append(FullConnection(inLayer, hiddenLayers[0]))
@@ -95,11 +49,11 @@ class  NeuralNetwork(algorithmbase):
 			layers_connections.append(FullConnection(hiddenLayers[-1], outLayer))
 		
 			for layers_connection in layers_connections:
-				net.addConnection(layers_connection)
-			net.sortModules()
+				self.net.addConnection(layers_connection)
+			self.net.sortModules()
 			
-			#training the network
-			self.trainer = BackpropTrainer(net, self.ds)
+			#training the self.network
+			self.trainer = BackpropTrainer(self.net, self.ds)
 			self.trainer.train()
 		
 		
@@ -110,7 +64,7 @@ class  NeuralNetwork(algorithmbase):
 	def Predict(self):
 		prediction=[]
 		for testrecord in self.testdata :
-			prediction.append( self.trainer.predict(testrecord)[0])
+			prediction.append( self.net.activate(testrecord)[0])
 			
 		self.result = 	[self.testlabel, prediction]
 		
