@@ -14,14 +14,14 @@ class Container(object):
 
     algorithms = []
 
-    def __init__(self, traindata, trainlabel, testdata, testlabel, preprocess_method, traincolumnnames, labelindex):
+    def __init__(self, traindata, trainlabel, testdata, testlabel, preprocess_method, traincolumnnames, mlmethod):
         self.traindata = traindata
         self.trainlabel = trainlabel
         self.testdata = testdata
         self.testlabel = testlabel
         self.preprocess_method = preprocess_method
         self.traincolumnnames = traincolumnnames
-        self.labelindex = labelindex
+        self.mlmethod = mlmethod
 
     def push(self, algorithm):
         self.algorithms.append(algorithm)
@@ -55,7 +55,7 @@ class Container(object):
             
             #try:
                 
-                _algorithm.Initiate(self.traindata, self.trainlabel, self.testdata, self.testlabel, self.preprocess_method, self.traincolumnnames, self.labelindex)
+                _algorithm.Initiate(self.traindata, self.trainlabel, self.testdata, self.testlabel, self.preprocess_method, self.traincolumnnames, self.mlmethod)
                 _algorithm.set_output_file_version(outputversion)
                 _algorithm.set_final_output_file(finalresultfile)
                 

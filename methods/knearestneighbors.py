@@ -1,38 +1,15 @@
 from sklearn import neighbors
 from routines.preprocess import preprocess_apply
 from base.algorithm import algorithmbase
+from base.constants import Constants
 
-
-class NearestNeighborsRegression(algorithmbase):		
+class KNearestNeighbors(algorithmbase):		
 	
 	def ExtraParams(self, n_neighbors, weight):
 		self.n_neighbors = n_neighbors
 		self.weight = weight
 		return self
 	
-	
-	
-	def DoWork(self):
-		'''
-		Deprecated
-		'''
-		
-		self.traindata=preprocess_apply(self.traindata, self.preprocess_method)
-		knn=neighbors.KNeighborsRegressor(self.n_neighbors, weights=self.weight)
-		knn.fit(self.traindata,self.trainlabel)
-		
-		
-		testdata=preprocess_apply(self.testdata, self.preprocess_method)
-	
-		prediction=[]
-		for testrecord in testdata :
-			prediction.append( knn.predict(testrecord)[0])
-			
-		self.result = [self.testlabel, prediction]
-
-
-
-
 	def PreProcessTrainData(self):
 		self.traindata = preprocess_apply(self.traindata, self.preprocess_method)
 		
@@ -42,7 +19,11 @@ class NearestNeighborsRegression(algorithmbase):
 		if savedmodel != None:
 			self.knn = savedmodel
 		else:
-			self.knn=neighbors.KNeighborsRegressor(self.n_neighbors, weights=self.weight)
+			if self.mlmethod==Constants.MACHINE_LEARNING_METHOD_REGRESSION: 
+				self.knn=neighbors.KNeighborsRegressor(self.n_neighbors, weights=self.weight)
+			elif self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
+				self.knn=neighbors.KNeighborsClassifier(self.n_neighbors, weights=self.weight)
+			
 			self.knn.fit(self.traindata ,self.trainlabel)
 		
 		
@@ -55,7 +36,7 @@ class NearestNeighborsRegression(algorithmbase):
 		for testrecord in self.testdata :
 			prediction.append( self.knn.predict(testrecord)[0])
 			
-		self.result = 	[self.testlabel, prediction]
+		self.result = [self.testlabel, prediction]
 		
 		
 	def GetModel(self):

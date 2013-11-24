@@ -1,10 +1,9 @@
 from routines.datareader import readCSV
-from routines.preprocess import MISSING_VALUE_METHOD_MEAN
 from routines.polynomial import CreatePolynomial
 from base import algorithmcontainer
 from methods.linearridgeregression import LinearRidgeRegression
 from methods._linearbayesianridgeregression import LinearBayesianRidgeRegression
-from methods.sgd import SGD
+from methods.sgdregression import SGDRegression
 from methods.nearestneighborsregression import NearestNeighborsRegression
 
 
@@ -29,7 +28,6 @@ def Main():
     
     preprocess_method = MISSING_VALUE_METHOD_MEAN
     traincolumnnames = trainColumnNames
-    labelindex = 0
     
     
     #creating polynomial data 
@@ -38,7 +36,7 @@ def Main():
     #testdata=CreatePolynomial(testdata, numberofpolynomials)
     
     
-    _container = algorithmcontainer.Container(traindata, trainlabel, testdata, testlabel, preprocess_method, traincolumnnames, labelindex)
+    _container = algorithmcontainer.Container(traindata, trainlabel, testdata, testlabel, preprocess_method, traincolumnnames)
     
     _container.push(LinearRidgeRegression().ExtraParams(alpha=.1).SetAlgorithmName('LinearRidgeRegression_MEAN_' + str(numberofpolynomials) + '_.1'))
     _container.push(LinearRidgeRegression().ExtraParams(alpha=.5).SetAlgorithmName('LinearRidgeRegression_MEAN_' + str(numberofpolynomials) + '_.5'))

@@ -1,19 +1,21 @@
 import numpy as np
 import datetime
 import os
+from base.constants import Constants
 
 class algorithmbase(object):
 
     result = []
 
-    def Initiate(self, traindata, trainlabel, testdata, testlabel, preprocess_method, traincolumnnames, labelindex):
+    
+    def Initiate(self, traindata, trainlabel, testdata, testlabel, preprocess_method, traincolumnnames, mlmethod):
         self.traindata = traindata
         self.trainlabel = trainlabel
         self.testdata = testdata
         self.testlabel = testlabel
         self.preprocess_method = preprocess_method
         self.traincolumnnames = traincolumnnames
-        self.labelindex = labelindex
+        self.mlmethod = mlmethod;
         
     def SetAlgorithmName(self, algorithmlabel):
         self.algorithmlabel = algorithmlabel
@@ -27,18 +29,28 @@ class algorithmbase(object):
         self.runningtime = _algend - _algstart
     
     def print_output(self):
-        #self.print_output_file()
         testlabel= self.result[0]
         prediction= self.result[1]
-        diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
-        diffmean =  np.mean(diff)
-        diffstd =  np.std(diff)
-        output = '{0:<40}, {1:<20}, {2:<20}, {3:<20}'.format(self.algorithmlabel, diffmean, diffstd, self.runningtime) 
-        print  output
-        self.finaloutputfile.write(output + '\n')
+        testlabel_prediction=zip(testlabel,prediction)
+            
+        if (self.mlmethod == Constants.MACHINE_LEARNING_METHOD_REGRESSION):
+            diff=[float(b)-float(a) for a,b in testlabel_prediction]
+            diffmean =  np.mean(diff)
+            diffstd =  np.std(diff)
+            output = '{0:<40}, {1:<20}, {2:<20}, {3:<20}'.format(self.algorithmlabel, diffmean, diffstd, self.runningtime) 
+            print  output
+            self.finaloutputfile.write(output + '\n')
+        elif (self.mlmethod == Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION):
+            output=self.algorithmlabel
+            self.finaloutputfile.write(output + '\n')
+            print  output
+            testlabel_prediction_distinct=list(set(testlabel_prediction))
+            for i in range(0,len(testlabel_prediction_distinct)):
+                output = '{0} => {1} : {2:<20}'.format(testlabel_prediction_distinct[i][0], testlabel_prediction_distinct[i][1], testlabel_prediction.count(testlabel_prediction_distinct[i])) 
+                print  output
+                self.finaloutputfile.write(output + '\n')
+            
         self.finaloutputfile.flush()
-        
-        
         
     def set_output_file_version(self, outputversion):
         self.outputversion = str(outputversion)
@@ -52,10 +64,20 @@ class algorithmbase(object):
         if not os.path.exists(self.outputversion):
           os.makedirs(self.outputversion)
         file = open(self.outputversion + '/' + self.algorithmlabel + '.csv'  , 'w+')
-        testlabel=self.result[0]
-        prediction=self.result[1]
-        diff=[float(a)-float(b) for a,b in zip(prediction,testlabel)]
-        for i in range(0,len(testlabel)):
-            file.write( '%s;%s;%s\n'%(testlabel[i],prediction[i],diff[i]) )
+        
+        testlabel= self.result[0]
+        prediction= self.result[1]
+        testlabel_prediction=zip(testlabel,prediction)
+        
+        if (self.mlmethod == Constants.MACHINE_LEARNING_METHOD_REGRESSION):
+            diff=[float(b)-float(a) for a,b in testlabel_prediction]
+            for i in range(0,len(testlabel)):
+                file.write( '%s;%s;%s\n'%(testlabel[i],prediction[i],diff[i]) )
+        elif (self.mlmethod == Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION):
+            file.write(self.algorithmlabel + '\n')
+            testlabel_prediction_distinct=list(set(testlabel_prediction))
+            for i in range(0,len(testlabel_prediction_distinct)):
+                output = '{0} => {1} : {2:<20}'.format(testlabel_prediction_distinct[i][0], testlabel_prediction_distinct[i][1], testlabel_prediction.count(testlabel_prediction_distinct[i])) 
+                file.write(output + '\n')
         file.close()
         return self

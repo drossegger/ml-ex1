@@ -1,4 +1,4 @@
-def readCSV(path, attributeindexlist, labelindex,delim):
+def readCSV(path, attributeindexlist, labelindex, delim):
 	csvfile=open(path,'rb')
 	y=[]
 	x=[]
@@ -20,10 +20,10 @@ def readCSV(path, attributeindexlist, labelindex,delim):
 		if line[labelindex].strip() == 'NaN':
 			continue
 		
-		y.append(line[labelindex])
+		y.append(float(line[labelindex]))
 		attributes=[]
 		for c in attributeindexlist:
-			attributes.append(line[c])
+			attributes.append(float(line[c]))
 		x.append(attributes)
 		#x.append()
 	return [y,x,z]

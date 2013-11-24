@@ -1,6 +1,8 @@
 from sklearn.linear_model import SGDRegressor
+from sklearn.linear_model import SGDClassifier
 from routines.preprocess import preprocess_apply
 from base.algorithm import algorithmbase
+from base.constants import Constants
 
 class SGD(algorithmbase):
 	
@@ -10,23 +12,6 @@ class SGD(algorithmbase):
 		return self
 	
 	
-	def DoWork(self):
-		'''
-		Deprecated
-		'''
-		self.traindata=preprocess_apply(self.traindata, self.preprocess_method)
-		clf = SGDRegressor(loss=self.loss, penalty="l2",shuffle=True)
-		self.trainlabel=[repr(a) for a in self.trainlabel]
-		clf.fit(self.traindata,self.trainlabel)
-			
-		testdata=preprocess_apply(self.testdata, self.preprocess_method)
-		prediction=[]
-		for testrecord in testdata :
-			prediction.append( clf.predict(testrecord))
-			
-		self.result = [self.testlabel, prediction]
-
-
 	def PreProcessTrainData(self):
 		self.traindata = preprocess_apply(self.traindata, self.preprocess_method)
 		self.trainlabel=[repr(a) for a in self.trainlabel]
@@ -36,10 +21,16 @@ class SGD(algorithmbase):
 		if savedmodel != None:
 			self.clf = savedmodel
 		else:
-			if self.loss=='squared_loss':
-				self.clf=SGDRegressor(loss=self.loss, penalty="l2",shuffle=True)
-			else:
-				self.clf=SGDRegressor(loss=self.loss,epsilon=self.epsilon, penalty="l2",shuffle=True)
+			if self.mlmethod==Constants.MACHINE_LEARNING_METHOD_REGRESSION: 
+				if self.loss=='squared_loss':
+					self.clf=SGDRegressor(loss=self.loss, penalty="l2",shuffle=True)
+				else:
+					self.clf=SGDRegressor(loss=self.loss,epsilon=self.epsilon, penalty="l2",shuffle=True)
+			elif self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
+				if self.loss=='squared_loss':
+					self.clf=SGDClassifier(loss=self.loss, penalty="l2",shuffle=True)
+				else:
+					self.clf=SGDClassifier(loss=self.loss,epsilon=self.epsilon, penalty="l2",shuffle=True)
 			self.clf.fit(self.traindata ,self.trainlabel)
 		
 		
@@ -49,8 +40,13 @@ class SGD(algorithmbase):
 
 	def Predict(self):
 		prediction=[]
-		for testrecord in self.testdata :
-			prediction.append( self.clf.predict(testrecord))
+
+		if self.mlmethod==Constants.MACHINE_LEARNING_METHOD_REGRESSION: 
+			for testrecord in self.testdata :
+				prediction.append( self.clf.predict(testrecord))
+		elif self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
+			for testrecord in self.testdata :
+				prediction.append( self.clf.predict(testrecord)[0])
 			
 		self.result = 	[self.testlabel, prediction]
 		
