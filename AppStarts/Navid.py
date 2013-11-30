@@ -13,8 +13,8 @@ from methods.knearestneighbors import KNearestNeighbors
 
 
 def Main():
-    data=readCSV('C:/Users/Navid/Documents/GitHub/vectorized-music/app/resource/tokens/english/gutenberg/books17_train2', range(1,7), 7,';')
-    test=readCSV('C:/Users/Navid/Documents/GitHub/vectorized-music/app/resource/tokens/english/gutenberg/books17_test2', range(1,7), 7,';')
+    data=readCSV('C:/Users/Navid/Documents/GitHub/vectorized-music/app/resource/tokens/english/gutenberg/small/books17_train', range(1,7), 7,';')
+    test=readCSV('C:/Users/Navid/Documents/GitHub/vectorized-music/app/resource/tokens/english/gutenberg/small/books17_test', range(1,7), 7,';')
  
     traindata=data[1]
     trainlabel=data[0]
@@ -41,12 +41,17 @@ def Main():
     _container = algorithmcontainer.Container(traindata, trainlabel, testdata, testlabel, preprocess_method, traincolumnnames, Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION)
     
     #_container.push(Ridge().ExtraParams(alpha=.1).SetAlgorithmName('Ridge_.1'))
+    #_container.push(Ridge().ExtraParams(alpha=1).SetAlgorithmName('Ridge_1'))
     #_container.push(RidgeCV().ExtraParams(alphas=[0.1, 1.0, 10.0]).SetAlgorithmName('RidgeCV_[0.1, 1.0, 10.0]'))
-    #_container.push(LogisticRegression().ExtraParams(C=1.0).SetAlgorithmName('LogisticRegression_1.0'))
+    #_container.push(LogisticRegression().ExtraParams(C=0.5).SetAlgorithmName('LogisticRegression_0.5'))
+    #_container.push(LogisticRegression().ExtraParams(C=2).SetAlgorithmName('LogisticRegression_2'))
+    #_container.push(LogisticRegression().ExtraParams(C=5).SetAlgorithmName('LogisticRegression_5'))
+    #_container.push(SGD().ExtraParams(loss='hinge').SetAlgorithmName('SGD_hinge'))
+    #_container.push(SGD().ExtraParams(loss='modified_huber', epsilon=500).SetAlgorithmName('SGD_huber_1000'))
+    #_container.push(SGD().ExtraParams(loss='log').SetAlgorithmName('SGD_log'))
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=5, weight='uniform').SetAlgorithmName('KNearestNeighbors_5'))
-    #_container.push(SupportVectorMachine().ExtraParams(kernel='rbf',C=0.1).SetAlgorithmName('SupportVectorMachine_rbf_0.1'))
-    #_container.push(SGD().ExtraParams(loss='huber', epsilon=1000).SetAlgorithmName('SGD_huber_1000'))
-    _container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=5).SetAlgorithmName('NeuralNetwork_1_5'))
+    _container.push(SupportVectorMachine().ExtraParams(kernel='rbf',C=0.1).SetAlgorithmName('SupportVectorMachine_rbf_0.1'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=12).SetAlgorithmName('NeuralNetwork_1_5'))
     
     _container.StartAlgorithms()
     

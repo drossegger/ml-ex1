@@ -46,7 +46,7 @@ class SGD(algorithmbase):
 				prediction.append( self.clf.predict(testrecord))
 		elif self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
 			for testrecord in self.testdata :
-				prediction.append( self.clf.predict(testrecord)[0])
+				prediction.append( float(self.clf.predict(testrecord)[0]))
 			
 		self.result = 	[self.testlabel, prediction]
 		

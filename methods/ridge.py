@@ -35,7 +35,7 @@ class Ridge(algorithmbase):
 			if self.mlmethod==Constants.MACHINE_LEARNING_METHOD_REGRESSION: 
 				prediction.append( self.clf.predict(testrecord))
 			elif self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
-				prediction.append( self.clf.predict(testrecord)[0])
+				prediction.append(float(self.clf.predict(testrecord)[0]))
 			
 		self.result = 	[self.testlabel, prediction]
 		

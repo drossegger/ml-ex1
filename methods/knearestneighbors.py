@@ -34,7 +34,7 @@ class KNearestNeighbors(algorithmbase):
 	def Predict(self):
 		prediction=[]
 		for testrecord in self.testdata :
-			prediction.append( self.knn.predict(testrecord)[0])
+			prediction.append( float(self.knn.predict(testrecord)[0]))
 			
 		self.result = [self.testlabel, prediction]
 		

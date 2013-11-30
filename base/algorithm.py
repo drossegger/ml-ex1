@@ -2,6 +2,8 @@ import numpy as np
 import datetime
 import os
 from base.constants import Constants
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
 
 class algorithmbase(object):
 
@@ -49,7 +51,12 @@ class algorithmbase(object):
                 output = '{0:<20}, {1:<20}, {2:<20}, {3:<20}'.format(testlabel_prediction_distinct[i][0], testlabel_prediction_distinct[i][1], testlabel_prediction.count(testlabel_prediction_distinct[i]), self.runningtime) 
                 print  output
                 self.finaloutputfile.write(output + '\n')
-            
+            output = 'precision:{0:<20}'.format(precision_score(testlabel, prediction, average='micro'))
+            print  output
+            self.finaloutputfile.write(output + '\n')
+            output = 'recall:{0:<20}'.format(recall_score(testlabel, prediction, average='micro'))
+            print  output
+            self.finaloutputfile.write(output + '\n')
         self.finaloutputfile.flush()
         
     def set_output_file_version(self, outputversion):

@@ -32,7 +32,7 @@ class LogisticRegression(algorithmbase):
 		prediction=[]
 		for testrecord in self.testdata :
 			if self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
-				prediction.append( self.clf.predict(testrecord)[0])
+				prediction.append( float(self.clf.predict(testrecord)[0]))
 			
 		self.result = [self.testlabel, prediction]
 		
