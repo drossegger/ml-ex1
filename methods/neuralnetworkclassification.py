@@ -27,7 +27,8 @@ class  NeuralNetworkClassification(algorithmbase):
 			self.trainer = savedmodel
 		else:
 			attributescount=len(self.traindata[0])
-			self.ds = ClassificationDataSet(attributescount, target=len(set(self.trainlabel)), nb_classes=len(set(self.trainlabel)), class_labels=list(set(self.trainlabel)))
+			nrclass = len(set(self.trainlabel))
+			self.ds = ClassificationDataSet(attributescount, target=nrclass, nb_classes=nrclass, class_labels=list(set(self.trainlabel)))
 				
 			for i in range(len(self.traindata)):
 				self.ds.appendLinked(self.traindata[i], [self.trainlabel[i]])
@@ -41,9 +42,9 @@ class  NeuralNetworkClassification(algorithmbase):
 				hiddenLayer=SigmoidLayer(self.hiddenlayernodescount)
 				hiddenLayers.append(hiddenLayer)
 				self.net.addModule(hiddenLayer)
-			outLayer = SoftmaxLayer(2) #LinearLayer(1)
+			outLayer = SoftmaxLayer(nrclass)
 			self.net.addOutputModule(outLayer)
-		
+			
 			layers_connections=[]
 			layers_connections.append(FullConnection(inLayer, hiddenLayers[0]))
 			for i in range(self.hiddenlayerscount-1):
@@ -67,7 +68,8 @@ class  NeuralNetworkClassification(algorithmbase):
 		prediction=[]
 		
 		attributescount=len(self.testdata[0])
-		dstraindata = ClassificationDataSet(attributescount, target=1, nb_classes=2, class_labels=list(set(self.testlabel)))
+		nrclass = len(set(self.testlabel))
+		dstraindata = ClassificationDataSet(attributescount, target=nrclass, nb_classes=nrclass, class_labels=list(set(self.testlabel)))
 		for i in range(len(self.testdata)):
 			dstraindata.appendLinked(self.testdata[i], self.testlabel[i])
 		dstraindata._convertToOneOfMany()

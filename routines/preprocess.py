@@ -27,6 +27,13 @@ def preprocess_apply(data, missingvaluemethod, preprocessingmethods):
 		elif preprocessingmethods[i]==Constants.SCALING_METHOD_STANDARDIZATION:
 			scaler=preprocessing.StandardScaler().fit(field)
 			field=scaler.transform(field)
+		elif preprocessingmethods[i]==Constants.SCALING_METHOD_MINMAX:
+			scaler=preprocessing.MinMaxScaler().fit_transform(field)
+			field=scaler.transform(field)			
+		elif preprocessingmethods[i]==Constants.SCALING_METHOD_CATEGORICAL:
+			enc = preprocessing.OneHotEncoder()
+			enc.fit(field)
+			field=enc.transform(field).toarray()
 			
 		if i==0:
 			res = field
@@ -41,9 +48,3 @@ def preprocess_splitset(attributes,labels,validationsize=0.25):
 		test_attrib,test_label=attributes[test_i],labels[test_i]
 		train_attrib,train_label=attributes[train_i],labels[train_i]
 	return np.array([[train_label,train_attrib],[test_label,test_attrib]])
-	
-
-
-
-	
-
