@@ -2,6 +2,7 @@ import numpy as np
 from routines.datareader import readCSV
 from routines.polynomial import CreatePolynomial
 from routines.preprocess import preprocess_apply
+from routines.preprocess import preprocess_splitset
 from routines.dimensionreduction import pca_apply
 from base import algorithmcontainer
 from base.constants import Constants
@@ -17,7 +18,7 @@ from methods.decisiontree import DecisionTree
 
 def Main():
     data=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc.data', range(0,9), 9,',')
-    test=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc_test.data', range(0,9), 9,',')
+    test=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc.data', range(0,9), 9,',')
  
     traindata=data[1]
     trainlabel=data[0]
@@ -53,13 +54,14 @@ def Main():
                            Constants.SCALING_METHOD_CATEGORICAL];
     '''                       
     #dimension reduction
-    
+    '''
     res = preprocess_apply(traindata, missingvaluemethod, preprocessingmethods)
     res = pca_apply(res, 2);
     res = np.concatenate((res, np.asarray([[x] for x in trainlabel])), axis=1)
     np.savetxt('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc.twodim', res, fmt='%.5f', delimiter=",")
+    '''
     
-    
+    traindata,trainlabel=preprocess_splitset(traindata,trainlabel,validationsize=0.25);
     
     #creating polynomial data 
     '''
