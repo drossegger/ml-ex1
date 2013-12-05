@@ -1,0 +1,83 @@
+\section{YearPredictionMSD dataset}
+\label{db:sec:ds2}
+\subsection{Description}
+The YearPredictionMSD~\cite{ds:YearPredictionMSD} is made of $515345$ instances, each categorized by numeric $90$ features. The instances describe songs specifying the year it was published as well as different features describing the sound of the song. We tried to predict the year of songs based on there features using $463715$ instances as training data and the last $51630$ instances as test data as suggested by the dataset description.
+\subsection{Preprocessing}
+Imputation of the data was not necessary, since it does not contain any missing values. To scale the features we used scaling by mean, substracting the mean of the feature and then dividing it by the standard deviation as we did with the AutoMPG dataset.
+\subsection{Linear Ridge Regression}\label{ds2:lrr}
+We did experiments with $4$ different configurations of linear ridge regression, each of the configurations having different $\alpha$-values $\{.1,.5,1,10\}$. An overview of the results of our experiments can be seen in Table~\ref{ypmsd:table:lrrresults}. We used the difference of the expected and guessed year to determine the quality of the model. The runtime of the algorithm is the time needed to fit training data in the model and does not include the preprocessing and reading/writing of the data.\par
+As can be seen in Table~\ref{ypmsd:table:lrrresults} the quality of the model is the same for all $\alpha$, the only value changing is the runtime.This could be expected, since the algorithm will come to the same minimum coefficients, regardless of the size of the steps. The only difference is that the number of steps needed to get the minimum is different for every $\alpha$. For the big $\alpha=\{1,10\}$ it will jump around the minimum a lot more than for small $\alpha$-values, therefore it will take longer for the algorithm to halt. For $\alpha$-values to small it could still happen that the algorithm needs a lot of steps since the progress it has to get to the minimum is very small in one step.
+\begin{table}[p]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|}
+			\hline	$\alpha$&mean&standard deviaton&1st quartile&3rd quartile&runtime(s)\\
+\hline$.1$&$-1.7070$&$9.512$&$-5.9060$&$3.3120$&$38.901$\\
+\hline$.5$&$-1.7070$&$9.512$&$-5.9060$&$3.3120$&$39.939$\\
+\hline$1$&$-1.7070$&$9.512$&$-5.9060$&$3.3120$&$40.159$\\
+\hline$10$&$-1.7070$&$9.512$&$-5.9060$&$3.3120$&$44.091$\\\hline
+\end{tabular}
+\end{center}
+\caption{YearPredictionMSD - Linear Ridge Regression\label{ypmsd:table:lrrresults}}
+\end{table}
+\subsection{$k$-nearest neighbors}
+We applied $k$-nearest neighbors with two different values for $k$, $2$ and $5$. The algorithms took, compared to other algorithms on the dataset, quite a long time to compute (over two hours, compared to $40$ seconds used by Ridge Regression). Since we could not figure out which gave the best result by simply looking at the statistical summary, we printed a boxplot of the distribution of the difference between guessed and expected year, which can be seen in Figure~\ref{ypmsd:fig:nnrresults}. In the plot it can be seen that both have nearly the same mean values ($.05$ difference) but nearest neighbor with $k=5$ has a smaller interquartile range and also the extreme values are less drastic. Therefore we conclude that choosing higher $k$ improves the performance of nearest neighbor on this dataset.
+%\begin{table}[p]
+%	\begin{center}
+%		\begin{tabular}{|c|c|c|c|c|c|c|}
+%			\hline	\backslashbox{k}{}&mean&standard deviaton&1st quartile&median&3rd quartile&runtime(s)\\
+%\hline $2$&$-0.1358$&$11.4126$&$-6.0000$&$-0.5000$&$5.0000$&$7951.775$\\
+%\hline $5$&$-0.1716$&$10.2283$&$-6.0000$&$1.4000$&$4.0000$&$8070.128$\\\hline
+%\end{tabular}
+%\end{center}
+%\caption{YearPredictionMSD - Nearest Neighbor\label{ypmsd:table:nnrresults}}
+%\end{table}
+\begin{figure}[p]
+	\center
+	\includegraphics[scale=\figurescaling]{figures/ypmsd_nnr.png}
+	\caption{YearPredictionMSD - Nearest Neighbor\label{ypmsd:fig:nnrresults}}
+\end{figure}
+\subsection{Support Vector Machine}\label{ds2:svm}
+We terminated the execution of the support vector machine algorithm after $16$ hours. We thought that this algorithm would not be picked for this dataset in practice anyway even if the quality of its predictions would be very good, since it is not reasonable in our opinion to use an algorithm that needs $2^4$ times the time to terminate than nearest neighbor, which was the follow up regarding bad runtime.
+The bad runtime of the algorithm in practice can be explained by its time complexity which is bound by $\mathcal{O}(n_{features}*n_{samples}^3)$. Since the YearPredictionMSD dataset has over $500000$ instances and $90$ features for each instance, this results in a bad runtime by the theoretical runtime as well.
+\subsection{Stochastic Gradient Descent}
+We applied stochastic gradient descent with two different loss functions $squared\_loss$ and $huber$. The runtime of them differed only marginally and was for both of them very low, around $1$ second. For $huber$ we observed that the choice of a good $\epsilon$ is critical in the quality of the model. We did experiments with $\epsilon$ ranging from $0.1$ to $1000$ and observed that the quality of the model increases with large $\epsilon$, with means ranging from $-1940$ for small $\epsilon$ to $0.5$ for high $\epsilon$.The distribution of the differences between expected and guessed year can be seen in Figure~\ref{ypmsd:fig:sgdresults}. It can be seen, that both different configurations achieve very good results, with $squared\_loss$ being slightly better for this dataset with a mean of the difference of $0.01$ in the best run. Both algorithms had nearly similar standard deviation around $9.5$. Please note that stochastic gradient descent is a randomized algorithm and therefore we made our observations based on the best result of several runs.
+\begin{figure}[p]
+	\center
+	\includegraphics[scale=\figurescaling]{figures/ypmsd_sgd.png}
+	\caption{YearPredictionMSD - Stochastic Gradient Descent\label{ypmsd:fig:sgdresults}}
+\end{figure}
+\subsection{Comparison}
+We compared the best configurations of all algorithms. Since we have no results for support vector machines, we will only analyse nearest neighbor with $k=5$, ridge regression with $\alpha=0.5$ and stochastic gradient descent with $squared\_loss$ function. In Figure~\ref{ypmsd:fig:conclusion} a comparison between the distribution of the expected and guessed values can be seen. By looking at the plots it can be seen that stochastic gradient descent and nearest neighbor produce a quite similar quality of results while nearest neighbor seems to perform worse. To further outline the differences between the algorithms look at Table~\ref{ypmsd:table:conclusion}. The following conclusion can be derived from the table:
+\begin{itemize}
+	\item Stochastic Gradient Descent has the best runtime of all algorithms and also produces very good results. Therefore we would prefer this algorithm over the others.
+	\item Nearest Neighbor is too slow for this amount of data and is also the worst of the three compared algorithms regarding the quality of the results.
+	\item Linear Ridge Regression is a lot slower than Stochastic Gradient Descent but still has reasonable runtime on this dataset. The quality is a of the results seems a little bit worse compared to Stochastic Gradient Descent but we need to mention that SGD is a randomized algorithm and in a lot of runs Linear Ridge Regression beat SGD. Linear Ridge Regression is an overall good choice but for even larger datasets SGD will pull ahead in terms of runtime.
+\end{itemize}
+\begin{figure}[p]
+	\center
+	\includegraphics[scale=\figurescaling]{figures/ypmsd_conclusion.png}
+	\caption{YearPredictionMSD - Ridge Regression vs Nearest Neighbor vs Stochastic Gradient Descent \label{ypmsd:fig:conclusion}}
+\end{figure}
+\begin{table}[p]
+
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline \multirow{3}{*}{Algorithms} &					&												 & $1^{st}$ quartile & \\
+																				 &	Mean 		&		Standard 	Deviation	 & Median						 & Runtime (s)\\
+																				 &					&												 & $3^{rd}$ quartile & \\
+    	\hline \multirow{3}{*}{Linear Ridge $\alpha=0.5$}&						&						&	$-5.9060$ &\\
+																				& $-0.1905$ & $9.5122$  & $-1.7070$ & $39.9399$\\
+																										&						&						&	$3.3120$& \\
+			\hline \multirow{3}{*}{Nearest Neighbor $k=5$}&						&						&	$-6.0000$ &\\
+																				& $-0.1716$ & $10.2283$  & $-1.4000$ & $8070.12$\\
+																										&						&						&	$4.0000$& \\
+			\hline \multirow{3}{*}{SGD $squared\_loss$}&						&						&	$-5.80100$ &\\
+																									& $0.00162$ & $9.6652$  & $-1.45400$ & $1.6416$\\
+																										&						&						&	$3.69600$& \\
+																										\hline
+
+		\end{tabular}
+	\end{center}
+	\caption{YearPredictionMSD - Comparison between the algorithms\label{ypmsd:table:conclusion}}
+\end{table}
+
