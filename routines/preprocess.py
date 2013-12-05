@@ -28,8 +28,7 @@ def preprocess_apply(data, missingvaluemethod, preprocessingmethods):
 			scaler=preprocessing.StandardScaler().fit(field)
 			field=scaler.transform(field)
 		elif preprocessingmethods[i]==Constants.SCALING_METHOD_MINMAX:
-			scaler=preprocessing.MinMaxScaler().fit_transform(field)
-			field=scaler.transform(field)			
+			field=preprocessing.MinMaxScaler().fit_transform(field)
 		elif preprocessingmethods[i]==Constants.SCALING_METHOD_CATEGORICAL:
 			enc = preprocessing.OneHotEncoder()
 			enc.fit(field)

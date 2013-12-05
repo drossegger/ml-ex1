@@ -1,5 +1,8 @@
+import numpy as np
 from routines.datareader import readCSV
 from routines.polynomial import CreatePolynomial
+from routines.preprocess import preprocess_apply
+from routines.dimensionreduction import pca_apply
 from base import algorithmcontainer
 from base.constants import Constants
 from methods.ridge import Ridge
@@ -13,7 +16,7 @@ from methods.knearestneighbors import KNearestNeighbors
 from methods.decisiontree import DecisionTree
 
 def Main():
-    data=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc_train.data', range(0,9), 9,',')
+    data=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc.data', range(0,9), 9,',')
     test=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc_test.data', range(0,9), 9,',')
  
     traindata=data[1]
@@ -29,6 +32,33 @@ def Main():
     
     missingvaluemethod = Constants.MISSING_VALUE_METHOD_NONE
     traincolumnnames = trainColumnNames
+    preprocessingmethods = [Constants.SCALING_METHOD_STANDARDIZATION,
+                           Constants.SCALING_METHOD_CATEGORICAL,
+                           Constants.SCALING_METHOD_CATEGORICAL,
+                           Constants.SCALING_METHOD_STANDARDIZATION,
+                           Constants.SCALING_METHOD_CATEGORICAL,
+                           Constants.SCALING_METHOD_CATEGORICAL,
+                           Constants.SCALING_METHOD_CATEGORICAL,
+                           Constants.SCALING_METHOD_CATEGORICAL,
+                           Constants.SCALING_METHOD_CATEGORICAL];
+    '''
+    preprocessingmethods = [Constants.SCALING_METHOD_STANDARDIZATION,
+                           Constants.SCALING_METHOD_CATEGORICAL,
+                           Constants.SCALING_METHOD_CATEGORICAL,
+                           Constants.SCALING_METHOD_STANDARDIZATION,
+                           Constants.SCALING_METHOD_CATEGORICAL,
+                           Constants.SCALING_METHOD_CATEGORICAL,
+                           Constants.SCALING_METHOD_CATEGORICAL,
+                           Constants.SCALING_METHOD_CATEGORICAL,
+                           Constants.SCALING_METHOD_CATEGORICAL];
+    '''                       
+    #dimension reduction
+    
+    res = preprocess_apply(traindata, missingvaluemethod, preprocessingmethods)
+    res = pca_apply(res, 2);
+    res = np.concatenate((res, np.asarray([[x] for x in trainlabel])), axis=1)
+    np.savetxt('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc.twodim', res, fmt='%.5f', delimiter=",")
+    
     
     
     #creating polynomial data 
@@ -38,16 +68,8 @@ def Main():
     testdata=CreatePolynomial(testdata, numberofpolynomials)
     '''
     
-    _container = algorithmcontainer.Container(traindata, trainlabel, testdata, testlabel, missingvaluemethod, traincolumnnames, Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION,
-                                              [Constants.SCALING_METHOD_STANDARDIZATION,
-                                               Constants.SCALING_METHOD_CATEGORICAL,
-                                               Constants.SCALING_METHOD_CATEGORICAL,
-                                               Constants.SCALING_METHOD_STANDARDIZATION,
-                                               Constants.SCALING_METHOD_CATEGORICAL,
-                                               Constants.SCALING_METHOD_CATEGORICAL,
-                                               Constants.SCALING_METHOD_CATEGORICAL,
-                                               Constants.SCALING_METHOD_CATEGORICAL,
-                                               Constants.SCALING_METHOD_CATEGORICAL])
+    _container = algorithmcontainer.Container(traindata, trainlabel, testdata, testlabel, missingvaluemethod, 
+                                              traincolumnnames, Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION, preprocessingmethods)
     
     #_container.push(Ridge().ExtraParams(alpha=.1).SetAlgorithmName('Ridge_.1'))
     #_container.push(Ridge().ExtraParams(alpha=1).SetAlgorithmName('Ridge_1'))
