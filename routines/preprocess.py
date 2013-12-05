@@ -1,5 +1,6 @@
 from sklearn import preprocessing
 from sklearn.preprocessing import Imputer
+from sklearn.cross_validation import StratifiedShuffleSplit
 from base.constants import Constants
 import numpy as np
 
@@ -22,3 +23,16 @@ def preprocess_apply(data, missingvaluemethod):
 		data=np.asarray(data)
 	return data	
 	
+def preprocess_splitset(attributes,labels,validationsize=0.25):
+	sss=StratifiedShuffleSplit(labels,1,test_size=validationsize)
+	test_attrib,test_label,train_attrib,train_label
+	for train_i, test_i in sss:
+		test_attrib,test_label=attributes[test_i],labels[test_i]
+		train_attrib,train_label=attributes[train_i],labels[train_i]
+	return np.array([[train_label,train_attrib],[test_label,test_attrib]])
+	
+
+
+
+	
+
