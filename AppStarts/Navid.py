@@ -10,11 +10,11 @@ from methods.logisticregression import LogisticRegression
 from methods.sgd import SGD
 from methods.svm import SupportVectorMachine
 from methods.knearestneighbors import KNearestNeighbors
-
+from methods.decisiontree import DecisionTree
 
 def Main():
-    data=readCSV('C:/Users/Navid/Documents/GitHub/vectorized-music/app/resource/tokens/english/gutenberg/small/books17_train', range(1,7), 7,';')
-    test=readCSV('C:/Users/Navid/Documents/GitHub/vectorized-music/app/resource/tokens/english/gutenberg/small/books17_test', range(1,7), 7,';')
+    data=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc_train.data', range(0,9), 9,',')
+    test=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc_test.data', range(0,9), 9,',')
  
     traindata=data[1]
     trainlabel=data[0]
@@ -50,7 +50,8 @@ def Main():
     #_container.push(SGD().ExtraParams(loss='modified_huber', epsilon=500).SetAlgorithmName('SGD_huber_1000'))
     #_container.push(SGD().ExtraParams(loss='log').SetAlgorithmName('SGD_log'))
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=5, weight='uniform').SetAlgorithmName('KNearestNeighbors_5'))
-    _container.push(SupportVectorMachine().ExtraParams(kernel='rbf',C=0.1).SetAlgorithmName('SupportVectorMachine_rbf_0.1'))
+    #_container.push(SupportVectorMachine().ExtraParams(kernel='rbf',C=0.1).SetAlgorithmName('SupportVectorMachine_rbf_0.1'))
+    _container.push(DecisionTree().SetAlgorithmName('DecisionTree'))
     #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=12).SetAlgorithmName('NeuralNetwork_1_5'))
     
     _container.StartAlgorithms()

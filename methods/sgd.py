@@ -41,11 +41,10 @@ class SGD(algorithmbase):
 	def Predict(self):
 		prediction=[]
 
-		if self.mlmethod==Constants.MACHINE_LEARNING_METHOD_REGRESSION: 
-			for testrecord in self.testdata :
+		for testrecord in self.testdata :
+			if self.mlmethod==Constants.MACHINE_LEARNING_METHOD_REGRESSION: 
 				prediction.append( self.clf.predict(testrecord))
-		elif self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
-			for testrecord in self.testdata :
+			elif self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
 				prediction.append( float(self.clf.predict(testrecord)[0]))
 			
 		self.result = 	[self.testlabel, prediction]
