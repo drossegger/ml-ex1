@@ -40,7 +40,7 @@ class Container(object):
             finalresultcolumns = '{0:40}, {1:20}, {2:20}, {3:20}'.format('Algorithm', 'DiffMean', 'DiffStd', 'RunningTime')
         elif self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
             finalresultcolumns = '{0:40}'.format('Algorithm') + "\r\n"
-            finalresultcolumns += '{0:20}, {1:20}, {2:20}, {3:20}'.format('Label', 'Prediction', 'Count', 'RunningTime')
+            finalresultcolumns += '{0:20}, {1:20}, {2:20}'.format('Label', 'Prediction', 'Count')
         
         finalresultfile = self.MakeResultFile(outputversion, finalresultcolumns)
         
@@ -80,7 +80,7 @@ class Container(object):
                     print 'Error in pickling : ' + str(e)
                 
                 _algorithm.PreProcessTestDate()
-                _algorithm.Predict()
+                _algorithm.StartPredicting()
                 
                 _algorithm.print_output()
                 _algorithm.print_output_file()

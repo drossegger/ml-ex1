@@ -28,7 +28,13 @@ class algorithmbase(object):
         _algstart = datetime.datetime.utcnow()
         self.PrepareModel(savedmodel)
         _algend = datetime.datetime.utcnow()
-        self.runningtime = _algend - _algstart
+        self.trainingtime = _algend - _algstart
+    
+    def StartPredicting(self, savedmodel=None):
+        _algstart = datetime.datetime.utcnow()
+        self.Predict()
+        _algend = datetime.datetime.utcnow()
+        self.predictiontime = _algend - _algstart
     
     def print_output(self):
         testlabel= self.result[0]
@@ -39,7 +45,7 @@ class algorithmbase(object):
             diff=[float(b)-float(a) for a,b in testlabel_prediction]
             diffmean =  np.mean(diff)
             diffstd =  np.std(diff)
-            output = '{0:<40}, {1:<20}, {2:<20}, {3:<20}'.format(self.algorithmlabel, diffmean, diffstd, self.runningtime) 
+            output = '{0:<40}, {1:<20}, {2:<20}, {3:<20}'.format(self.algorithmlabel, diffmean, diffstd, self.trainingtime) 
             print  output
             self.finaloutputfile.write(output + '\n')
         elif (self.mlmethod == Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION):
@@ -48,13 +54,20 @@ class algorithmbase(object):
             print  output
             testlabel_prediction_distinct=list(set(testlabel_prediction))
             for i in range(0,len(testlabel_prediction_distinct)):
-                output = '{0:<20}, {1:<20}, {2:<20}, {3:<20}'.format(testlabel_prediction_distinct[i][0], testlabel_prediction_distinct[i][1], testlabel_prediction.count(testlabel_prediction_distinct[i]), self.runningtime) 
+                output = '{0:<10}, {1:<10}, {2:<10}'.format(testlabel_prediction_distinct[i][0], testlabel_prediction_distinct[i][1], testlabel_prediction.count(testlabel_prediction_distinct[i])) 
                 print  output
                 self.finaloutputfile.write(output + '\n')
-            output = 'precision:{0:<20}'.format(precision_score(testlabel, prediction, average='micro'))
+                
+            output = 'training time:{0:<20}'.format(self.trainingtime)
             print  output
             self.finaloutputfile.write(output + '\n')
-            output = 'recall:{0:<20}'.format(recall_score(testlabel, prediction, average='micro'))
+            output = 'prediction time:{0:<20}'.format(self.predictiontime)
+            print  output
+            self.finaloutputfile.write(output + '\n')
+            output = 'precision=> micro:{0:<20} macro:{0:<20}'.format(precision_score(testlabel, prediction, average='micro'), precision_score(testlabel, prediction, average='macro'))
+            print  output
+            self.finaloutputfile.write(output + '\n')
+            output = 'recall=> micro:{0:<20} macro:{0:<20}'.format(recall_score(testlabel, prediction, average='micro'), recall_score(testlabel, prediction, average='macro'))
             print  output
             self.finaloutputfile.write(output + '\n')
         self.finaloutputfile.flush()
