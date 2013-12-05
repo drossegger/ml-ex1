@@ -11,7 +11,7 @@ class LogisticRegression(algorithmbase):
 	
 		
 	def PreProcessTrainData(self):
-		self.traindata = preprocess_apply(self.traindata, self.preprocess_method)
+		self.traindata = preprocess_apply(self.traindata, self.missingvaluemethod, self.preprocessingmethods)
 		
 		
 	def PrepareModel(self, savedmodel = None):
@@ -25,7 +25,7 @@ class LogisticRegression(algorithmbase):
 		
 		
 	def PreProcessTestDate(self):
-		self.testdata=preprocess_apply(self.testdata, self.preprocess_method)
+		self.testdata=preprocess_apply(self.testdata, self.missingvaluemethod, self.preprocessingmethods)
 			
 
 	def Predict(self):

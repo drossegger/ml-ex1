@@ -11,7 +11,7 @@ class SupportVectorMachine(algorithmbase):
 		return self
 	
 	def PreProcessTrainData(self):
-		self.traindata = preprocess_apply(self.traindata, self.preprocess_method)
+		self.traindata = preprocess_apply(self.traindata, self.missingvaluemethod, self.preprocessingmethods)
 		self.trainlabel=[repr(a) for a in self.trainlabel]
 		
 	def PrepareModel(self, savedmodel = None):
@@ -26,7 +26,7 @@ class SupportVectorMachine(algorithmbase):
 			self.clf.fit(self.traindata ,self.trainlabel)
 		
 	def PreProcessTestDate(self):
-		self.testdata=preprocess_apply(self.testdata, self.preprocess_method)
+		self.testdata=preprocess_apply(self.testdata, self.missingvaluemethod, self.preprocessingmethods)
 			
 
 	def Predict(self):

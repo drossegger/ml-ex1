@@ -18,19 +18,18 @@ class  NeuralNetworkRegression(algorithmbase):
 		return self
 	
 	def PreProcessTrainData(self):
-		self.traindata = preprocess_apply(self.traindata, self.preprocess_method)
-		attributescount=len(self.traindata[0])
-		
-		self.ds = SupervisedDataSet(attributescount, 1)
-		for i in range(len(self.traindata)):
-			self.ds.appendLinked(self.traindata[i], self.trainlabel[i])
-		
+		self.traindata = preprocess_apply(self.traindata, self.missingvaluemethod, self.preprocessingmethods)
 		
 	def PrepareModel(self, savedmodel = None):
 		
 		if savedmodel != None:
 			self.trainer = savedmodel
 		else:
+			attributescount=len(self.traindata[0])
+			self.ds = SupervisedDataSet(attributescount, 1)
+			for i in range(len(self.traindata)):
+				self.ds.appendLinked(self.traindata[i], self.trainlabel[i])
+		
 			self.net = FeedForwardNetwork()
 			inLayer = LinearLayer(len(self.traindata[0]))
 			self.net.addInputModule(inLayer)
@@ -58,7 +57,7 @@ class  NeuralNetworkRegression(algorithmbase):
 		
 		
 	def PreProcessTestDate(self):
-		self.testdata=preprocess_apply(self.testdata, self.preprocess_method)
+		self.testdata=preprocess_apply(self.testdata, self.missingvaluemethod, self.preprocessingmethods)
 			
 
 	def Predict(self):

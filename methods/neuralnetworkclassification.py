@@ -19,7 +19,7 @@ class  NeuralNetworkClassification(algorithmbase):
 		return self
 	
 	def PreProcessTrainData(self):
-		self.traindata = preprocess_apply(self.traindata, self.preprocess_method)		
+		self.traindata = preprocess_apply(self.traindata, self.missingvaluemethod, self.preprocessingmethods)		
 		
 	def PrepareModel(self, savedmodel = None):
 		
@@ -27,13 +27,10 @@ class  NeuralNetworkClassification(algorithmbase):
 			self.trainer = savedmodel
 		else:
 			attributescount=len(self.traindata[0])
-			if self.mlmethod==Constants.MACHINE_LEARNING_METHOD_REGRESSION:
-				self.ds = SupervisedDataSet(attributescount, 1)
-			elif self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
-				self.ds = ClassificationDataSet(attributescount, target=1, nb_classes=2, class_labels=list(set(self.trainlabel)))
+			self.ds = ClassificationDataSet(attributescount, target=len(set(self.trainlabel)), nb_classes=len(set(self.trainlabel)), class_labels=list(set(self.trainlabel)))
 				
 			for i in range(len(self.traindata)):
-				self.ds.appendLinked(self.traindata[i], self.trainlabel[i])
+				self.ds.appendLinked(self.traindata[i], [self.trainlabel[i]])
 			self.ds._convertToOneOfMany()
 	
 			self.net = FeedForwardNetwork()
@@ -63,7 +60,7 @@ class  NeuralNetworkClassification(algorithmbase):
 		
 		
 	def PreProcessTestDate(self):
-		self.testdata=preprocess_apply(self.testdata, self.preprocess_method)
+		self.testdata=preprocess_apply(self.testdata, self.missingvaluemethod, self.preprocessingmethods)
 			
 
 	def Predict(self):

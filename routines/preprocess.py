@@ -4,7 +4,7 @@ from sklearn.cross_validation import StratifiedShuffleSplit
 from base.constants import Constants
 import numpy as np
 
-def preprocess_apply(data, missingvaluemethod):
+def preprocess_apply(data, missingvaluemethod, preprocessingmethods):
 	#imputing missing values
 	if missingvaluemethod!=Constants.MISSING_VALUE_METHOD_NONE:
 		if missingvaluemethod==Constants.MISSING_VALUE_METHOD_MEAN:
@@ -15,13 +15,24 @@ def preprocess_apply(data, missingvaluemethod):
 			imp = Imputer(missing_values='NaN', strategy='most_frequent', axis=0)
 		imp.fit(data)
 		data=imp.transform(data)
-	
-		#scale data
-		scaler=preprocessing.StandardScaler().fit(data)
-		data=scaler.transform(data)
 	else:
 		data=np.asarray(data)
-	return data	
+
+	#scale data
+	res=np.array([])
+	for i in range(0,len(preprocessingmethods)):
+		field=[[x[i]] for x in data]
+		if preprocessingmethods[i]==Constants.SCALING_METHOD_NONE:
+			pass
+		elif preprocessingmethods[i]==Constants.SCALING_METHOD_STANDARDIZATION:
+			scaler=preprocessing.StandardScaler().fit(field)
+			field=scaler.transform(field)
+			
+		if i==0:
+			res = field
+		else:
+			res = np.concatenate((res, field), axis=1)
+	return res
 	
 def preprocess_splitset(attributes,labels,validationsize=0.25):
 	sss=StratifiedShuffleSplit(labels,1,test_size=validationsize)

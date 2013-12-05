@@ -13,7 +13,7 @@ class SGD(algorithmbase):
 	
 	
 	def PreProcessTrainData(self):
-		self.traindata = preprocess_apply(self.traindata, self.preprocess_method)
+		self.traindata = preprocess_apply(self.traindata, self.missingvaluemethod, self.preprocessingmethods)
 		self.trainlabel=[repr(a) for a in self.trainlabel]
 		
 	def PrepareModel(self, savedmodel = None):
@@ -35,7 +35,7 @@ class SGD(algorithmbase):
 		
 		
 	def PreProcessTestDate(self):
-		self.testdata=preprocess_apply(self.testdata, self.preprocess_method)
+		self.testdata=preprocess_apply(self.testdata, self.missingvaluemethod, self.preprocessingmethods)
 			
 
 	def Predict(self):

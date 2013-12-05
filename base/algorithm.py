@@ -10,15 +10,16 @@ class algorithmbase(object):
     result = []
 
     
-    def Initiate(self, traindata, trainlabel, testdata, testlabel, preprocess_method, traincolumnnames, mlmethod):
+    def Initiate(self, traindata, trainlabel, testdata, testlabel, missingvaluemethod, traincolumnnames, mlmethod, preprocessingmethods):
         self.traindata = traindata
         self.trainlabel = trainlabel
         self.testdata = testdata
         self.testlabel = testlabel
-        self.preprocess_method = preprocess_method
+        self.missingvaluemethod = missingvaluemethod
         self.traincolumnnames = traincolumnnames
         self.mlmethod = mlmethod;
-        
+        self.preprocessingmethods = preprocessingmethods
+                
     def SetAlgorithmName(self, algorithmlabel):
         self.algorithmlabel = algorithmlabel
         return self

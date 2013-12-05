@@ -27,7 +27,7 @@ def Main():
     #traindata=[[a if a!='?' else np.nan for a in instance] for instance in traindata]
     #testdata=[[a if a!='?' else np.nan for a in instance] for instance in testdata]
     
-    preprocess_method = Constants.MISSING_VALUE_METHOD_NONE
+    missingvaluemethod = Constants.MISSING_VALUE_METHOD_NONE
     traincolumnnames = trainColumnNames
     
     
@@ -38,19 +38,27 @@ def Main():
     testdata=CreatePolynomial(testdata, numberofpolynomials)
     '''
     
-    _container = algorithmcontainer.Container(traindata, trainlabel, testdata, testlabel, preprocess_method, traincolumnnames, Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION)
+    _container = algorithmcontainer.Container(traindata, trainlabel, testdata, testlabel, missingvaluemethod, traincolumnnames, Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION,
+                                              [Constants.SCALING_METHOD_STANDARDIZATION,
+                                               Constants.SCALING_METHOD_STANDARDIZATION,
+                                               Constants.SCALING_METHOD_STANDARDIZATION,
+                                               Constants.SCALING_METHOD_STANDARDIZATION,
+                                               Constants.SCALING_METHOD_STANDARDIZATION,
+                                               Constants.SCALING_METHOD_STANDARDIZATION,
+                                               Constants.SCALING_METHOD_STANDARDIZATION,
+                                               Constants.SCALING_METHOD_STANDARDIZATION])
     
     #_container.push(Ridge().ExtraParams(alpha=.1).SetAlgorithmName('Ridge_.1'))
-    #_container.push(Ridge().ExtraParams(alpha=1).SetAlgorithmName('Ridge_1'))
-    #_container.push(RidgeCV().ExtraParams(alphas=[0.1, 1.0, 10.0]).SetAlgorithmName('RidgeCV_[0.1, 1.0, 10.0]'))
+    _container.push(Ridge().ExtraParams(alpha=1).SetAlgorithmName('Ridge_1'))
+    _container.push(RidgeCV().ExtraParams(alphas=[0.1, 1.0, 10.0]).SetAlgorithmName('RidgeCV_[0.1, 1.0, 10.0]'))
     #_container.push(LogisticRegression().ExtraParams(C=0.5).SetAlgorithmName('LogisticRegression_0.5'))
     #_container.push(LogisticRegression().ExtraParams(C=2).SetAlgorithmName('LogisticRegression_2'))
-    #_container.push(LogisticRegression().ExtraParams(C=5).SetAlgorithmName('LogisticRegression_5'))
+    _container.push(LogisticRegression().ExtraParams(C=5).SetAlgorithmName('LogisticRegression_5'))
     #_container.push(SGD().ExtraParams(loss='hinge').SetAlgorithmName('SGD_hinge'))
     #_container.push(SGD().ExtraParams(loss='modified_huber', epsilon=500).SetAlgorithmName('SGD_huber_1000'))
-    #_container.push(SGD().ExtraParams(loss='log').SetAlgorithmName('SGD_log'))
-    #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=5, weight='uniform').SetAlgorithmName('KNearestNeighbors_5'))
-    #_container.push(SupportVectorMachine().ExtraParams(kernel='rbf',C=0.1).SetAlgorithmName('SupportVectorMachine_rbf_0.1'))
+    _container.push(SGD().ExtraParams(loss='log').SetAlgorithmName('SGD_log'))
+    _container.push(KNearestNeighbors().ExtraParams(n_neighbors=5, weight='uniform').SetAlgorithmName('KNearestNeighbors_5'))
+    _container.push(SupportVectorMachine().ExtraParams(kernel='rbf',C=0.1).SetAlgorithmName('SupportVectorMachine_rbf_0.1'))
     _container.push(DecisionTree().SetAlgorithmName('DecisionTree'))
     #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=12).SetAlgorithmName('NeuralNetwork_1_5'))
     
