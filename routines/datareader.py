@@ -28,7 +28,7 @@ def readCSV(path, attributeindexlist, labelindex, delim):
 		#x.append()
 	return [y,x,z]
 
-def readCSVML(path, attributeindexlist, labelindexlist, delim):
+def readCSV_dsProve(path, attributeindexlist, labelindexlist, delim):
 	csvfile=open(path,'rb')
 	x,y=[],[]
 	lines=csvfile.read()
