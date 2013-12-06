@@ -42,8 +42,13 @@ def preprocess_apply(data, missingvaluemethod, preprocessingmethods):
 	
 def preprocess_splitset(attributes,labels,validationsize=0.25):
 	sss=StratifiedShuffleSplit(labels,1,test_size=validationsize)
-	test_attrib,test_label,train_attrib,train_label
+	test_attrib,test_label,train_attrib,train_label=[],[],[],[]
 	for train_i, test_i in sss:
-		test_attrib,test_label=attributes[test_i],labels[test_i]
-		train_attrib,train_label=attributes[train_i],labels[train_i]
+		print len(train_i)
+		for i in test_i:
+			test_attrib.append(attributes[i])
+			test_label.append(labels[i])
+		for i in train_i:
+			train_attrib.append(attributes[i])
+			train_label.append(labels[i])
 	return np.array([[train_label,train_attrib],[test_label,test_attrib]])
