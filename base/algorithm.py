@@ -65,10 +65,10 @@ class algorithmbase(object):
             output = 'prediction time:{0:<20}'.format(self.predictiontime)
             print  output
             self.finaloutputfile.write(output + '\n')
-            output = 'precision=> micro:{0:<20} macro:{0:<20}'.format(precision_score(testlabel, prediction, average='micro'), precision_score(testlabel, prediction, average='macro'))
+            output = 'precision=> micro:{0:<20} macro:{1:<20}'.format(precision_score(np.asarray(testlabel), prediction, average='micro'), precision_score(testlabel, prediction, average='macro'))
             print  output
             self.finaloutputfile.write(output + '\n')
-            output = 'recall=> micro:{0:<20} macro:{0:<20}'.format(recall_score(testlabel, prediction, average='micro'), recall_score(testlabel, prediction, average='macro'))
+            output = 'recall=> micro:{0:<20} macro:{1:<20}'.format(recall_score(np.asarray(testlabel), prediction, average='micro'), recall_score(testlabel, prediction, average='macro'))
             print  output
             self.finaloutputfile.write(output + '\n')
         self.finaloutputfile.flush()

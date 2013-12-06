@@ -17,22 +17,26 @@ from methods.knearestneighbors import KNearestNeighbors
 from methods.decisiontree import DecisionTree
 
 def Main():
-    data=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc.data', range(0,9), 9,',')
-    test=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc.data', range(0,9), 9,',')
+    train=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc_train.data', range(1,10), 0,',')
+    cv=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc_cv.data', range(1,10), 0,',')
+    test=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc_test.data', range(1,10), 0,',')
  
-    traindata=data[1]
-    trainlabel=data[0]
-    trainColumnNames = data[2]
+    train_attr=train[1]
+    train_label=train[0]
+    train_label=[int(a) for a in train_label]
+    train_column_names = train[2]
+        
+    cv_attr=cv[1]
+    cv_label=cv[0]
+    cv_label=[int(a) for a in cv_label]
     
-    testdata=test[1]
-    testlabel=test[0]
-    testColumnNames = test[2]
-    
+    test_attr=test[1]
+    test_label=test[0]
+    test_label=[int(a) for a in test_label]
     #traindata=[[a if a!='?' else np.nan for a in instance] for instance in traindata]
     #testdata=[[a if a!='?' else np.nan for a in instance] for instance in testdata]
     
     missingvaluemethod = Constants.MISSING_VALUE_METHOD_NONE
-    traincolumnnames = trainColumnNames
     preprocessingmethods = [Constants.SCALING_METHOD_STANDARDIZATION,
                            Constants.SCALING_METHOD_CATEGORICAL,
                            Constants.SCALING_METHOD_CATEGORICAL,
@@ -61,7 +65,17 @@ def Main():
     np.savetxt('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc.twodim', res, fmt='%.5f', delimiter=",")
     '''
     
-    traindata,trainlabel=preprocess_splitset(traindata,trainlabel,validationsize=0.25);
+    #splitting data
+    '''
+    [train_label,train_attrib],[test_label,test_attrib]=preprocess_splitset(traindata,trainlabel,validationsize=0.20);
+    testdata=np.append([[x] for x in test_label], test_attrib,axis=1)    
+    np.savetxt('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc_test.data', testdata, fmt='%.0f', delimiter=",")
+    [train_label,train_attrib],[cv_label,cv_attrib]=preprocess_splitset(train_attrib,train_label,validationsize=0.25);
+    traindata=np.append([[x] for x in train_label], train_attrib,axis=1)
+    cvdata=np.append([[x] for x in cv_label], cv_attrib,axis=1)
+    np.savetxt('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc_train.data', traindata, fmt='%.0f', delimiter=",")
+    np.savetxt('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/cmc_cv.data', cvdata, fmt='%.0f', delimiter=",")
+    '''
     
     #creating polynomial data 
     '''
@@ -70,8 +84,8 @@ def Main():
     testdata=CreatePolynomial(testdata, numberofpolynomials)
     '''
     
-    _container = algorithmcontainer.Container(traindata, trainlabel, testdata, testlabel, missingvaluemethod, 
-                                              traincolumnnames, Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION, preprocessingmethods)
+    _container = algorithmcontainer.Container(train_attr, train_label, test_attr, test_label, missingvaluemethod, 
+                                              train_column_names, Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION, preprocessingmethods)
     
     #_container.push(Ridge().ExtraParams(alpha=.1).SetAlgorithmName('Ridge_.1'))
     #_container.push(Ridge().ExtraParams(alpha=1).SetAlgorithmName('Ridge_1'))
