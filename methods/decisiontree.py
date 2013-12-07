@@ -5,6 +5,10 @@ from base.constants import Constants
 
 class DecisionTree(algorithmbase):		
 	
+	def ExtraParams(self, criterion):
+		self.criterion = criterion
+		return self
+	
 	def PreProcessTrainData(self):
 		self.traindata = preprocess_apply(self.traindata, self.missingvaluemethod, self.preprocessingmethods)
 		
@@ -17,7 +21,7 @@ class DecisionTree(algorithmbase):
 			if self.mlmethod==Constants.MACHINE_LEARNING_METHOD_REGRESSION: 
 				self.clf=tree.DecisionTreeRegressor()
 			elif self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
-				self.clf=tree.DecisionTreeClassifier()
+				self.clf=tree.DecisionTreeClassifier(self.criterion)
 			
 			self.clf.fit(self.traindata ,self.trainlabel)
 		

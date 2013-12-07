@@ -18,9 +18,9 @@ from methods.decisiontree import DecisionTree
 
 def Main():
      
-    train=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/preproc2/cmc_train.data', range(1,22), 0,',')
-    cv=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/preproc2/cmc_cv.data', range(1,22), 0,',')
-    test=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/preproc2/cmc_test.data', range(1,22), 0,',')
+    train=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/preproc1/cmc_train.data', range(1,22), 0,',')
+    cv=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/preproc1/cmc_cv.data', range(1,22), 0,',')
+    test=readCSV('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/preproc1/cmc_test.data', range(1,22), 0,',')
  
     train_attr=train[1]
     train_label=train[0]
@@ -71,30 +71,59 @@ def Main():
     np.savetxt('C:/Users/Navid/Documents/GitHub/ml-ex1/data/dataset2/preproc1/cmc_cv.data', cvdata, fmt='%.4f', delimiter=",")
     '''
     
-    #creating polynomial data 
-    '''
-    numberofpolynomials=22
-    traindata=CreatePolynomial(traindata, numberofpolynomials)
-    testdata=CreatePolynomial(testdata, numberofpolynomials)
-    '''
+    #creating polynomial data
+    numberofpolynomials=44
     
-    _container = algorithmcontainer.Container(train_attr, train_label, test_attr, test_label, missingvaluemethod, 
+    train_attr=CreatePolynomial(train_attr, numberofpolynomials)
+    cv_attr=CreatePolynomial(cv_attr, numberofpolynomials)
+    test_attr=CreatePolynomial(test_attr, numberofpolynomials)
+    
+    
+    _container = algorithmcontainer.Container(train_attr, train_label, cv_attr, cv_label, missingvaluemethod, 
                                               train_column_names, Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION, 
                                               ispreprocessing, preprocessingmethods)
     
     #_container.push(Ridge().ExtraParams(alpha=.1).SetAlgorithmName('Ridge_.1'))
     #_container.push(Ridge().ExtraParams(alpha=1).SetAlgorithmName('Ridge_1'))
     #_container.push(RidgeCV().ExtraParams(alphas=[0.1, 1.0, 10.0]).SetAlgorithmName('RidgeCV_[0.1, 1.0, 10.0]'))
-    #_container.push(LogisticRegression().ExtraParams(C=0.5).SetAlgorithmName('LogisticRegression_0.5'))
-    #_container.push(LogisticRegression().ExtraParams(C=2).SetAlgorithmName('LogisticRegression_2'))
-    #_container.push(LogisticRegression().ExtraParams(C=5).SetAlgorithmName('LogisticRegression_5'))
     #_container.push(SGD().ExtraParams(loss='hinge').SetAlgorithmName('SGD_hinge'))
     #_container.push(SGD().ExtraParams(loss='modified_huber', epsilon=500).SetAlgorithmName('SGD_huber_1000'))
     #_container.push(SGD().ExtraParams(loss='log').SetAlgorithmName('SGD_log'))
+    
+    _container.push(LogisticRegression().ExtraParams(C=0.1).SetAlgorithmName('LogisticRegression_' + str(numberofpolynomials) + '_0.1'))
+    _container.push(LogisticRegression().ExtraParams(C=0.5).SetAlgorithmName('LogisticRegression_' + str(numberofpolynomials) + '_0.5'))
+    _container.push(LogisticRegression().ExtraParams(C=2).SetAlgorithmName('LogisticRegression_' + str(numberofpolynomials) + '_2'))
+    _container.push(LogisticRegression().ExtraParams(C=5).SetAlgorithmName('LogisticRegression_' + str(numberofpolynomials) + '_5'))
+    #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=1, weight='uniform').SetAlgorithmName('KNearestNeighbors_1'))
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=5, weight='uniform').SetAlgorithmName('KNearestNeighbors_5'))
-    #_container.push(SupportVectorMachine().ExtraParams(kernel='rbf',C=10).SetAlgorithmName('SupportVectorMachine_rbf_0.1'))
-    #_container.push(DecisionTree().SetAlgorithmName('DecisionTree'))
-    _container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=112).SetAlgorithmName('NeuralNetwork_1_5'))
+    #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=10, weight='uniform').SetAlgorithmName('KNearestNeighbors_10'))
+    #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=20, weight='uniform').SetAlgorithmName('KNearestNeighbors_20'))
+    #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=30, weight='uniform').SetAlgorithmName('KNearestNeighbors_30'))
+    #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=40, weight='uniform').SetAlgorithmName('KNearestNeighbors_40'))
+    #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=45, weight='uniform').SetAlgorithmName('KNearestNeighbors_45'))
+    #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=50, weight='uniform').SetAlgorithmName('KNearestNeighbors_50'))
+    #_container.push(DecisionTree().ExtraParams(criterion='gini').SetAlgorithmName('DecisionTree_gini'))
+    #_container.push(DecisionTree().ExtraParams(criterion='entropy').SetAlgorithmName('DecisionTree_entropy'))
+    #_container.push(SupportVectorMachine().ExtraParams(kernel='poly',C=0.1).SetAlgorithmName('SupportVectorMachine_poly_0.1'))
+    #_container.push(SupportVectorMachine().ExtraParams(kernel='poly',C=1).SetAlgorithmName('SupportVectorMachine_poly_1'))
+    #_container.push(SupportVectorMachine().ExtraParams(kernel='poly',C=5).SetAlgorithmName('SupportVectorMachine_poly_5'))
+    #_container.push(SupportVectorMachine().ExtraParams(kernel='poly',C=10).SetAlgorithmName('SupportVectorMachine_poly_10'))
+    #_container.push(SupportVectorMachine().ExtraParams(kernel='poly',C=20).SetAlgorithmName('SupportVectorMachine_poly_20'))
+    #_container.push(SupportVectorMachine().ExtraParams(kernel='poly',C=50).SetAlgorithmName('SupportVectorMachine_poly_50'))
+    #_container.push(SupportVectorMachine().ExtraParams(kernel='poly',C=100).SetAlgorithmName('SupportVectorMachine_poly_100'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=30).SetAlgorithmName('NeuralNetwork_1_30'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=60).SetAlgorithmName('NeuralNetwork_1_60'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=90).SetAlgorithmName('NeuralNetwork_1_90'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=120).SetAlgorithmName('NeuralNetwork_1_120'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=150).SetAlgorithmName('NeuralNetwork_1_150'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=200).SetAlgorithmName('NeuralNetwork_1_200'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=2, hiddenlayernodescount=30).SetAlgorithmName('NeuralNetwork_2_30'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=2, hiddenlayernodescount=60).SetAlgorithmName('NeuralNetwork_2_60'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=2, hiddenlayernodescount=90).SetAlgorithmName('NeuralNetwork_2_90'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=2, hiddenlayernodescount=120).SetAlgorithmName('NeuralNetwork_2_120'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=2, hiddenlayernodescount=150).SetAlgorithmName('NeuralNetwork_2_150'))
+    
+    
     
     _container.StartAlgorithms()
     
