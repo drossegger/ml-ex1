@@ -10,7 +10,7 @@ class Container(object):
 
     algorithms = []
 
-    def __init__(self, traindata, trainlabel, testdata, testlabel, missingvaluemethod, traincolumnnames, mlmethod, preprocessingmethods):
+    def __init__(self, traindata, trainlabel, testdata, testlabel, missingvaluemethod, traincolumnnames, mlmethod, ispreprocessing, preprocessingmethods):
         self.traindata = traindata
         self.trainlabel = trainlabel
         self.testdata = testdata
@@ -18,7 +18,9 @@ class Container(object):
         self.missingvaluemethod = missingvaluemethod
         self.traincolumnnames = traincolumnnames
         self.mlmethod = mlmethod
+        self.ispreprocessing = ispreprocessing
         self.preprocessingmethods = preprocessingmethods
+        
         
         
     def push(self, algorithm):
@@ -64,6 +66,7 @@ class Container(object):
                                     self.missingvaluemethod, 
                                     self.traincolumnnames, 
                                     self.mlmethod,
+                                    self.ispreprocessing,
                                     self.preprocessingmethods)
                 _algorithm.set_output_file_version(outputversion)
                 _algorithm.set_final_output_file(finalresultfile)
@@ -77,8 +80,8 @@ class Container(object):
                     except Exception, e:
                         print 'No model: ' + _algorithm.algorithmlabel
                 
-                
-                _algorithm.PreProcessTrainData()
+                if (self.ispreprocessing==True):
+                    _algorithm.PreProcessTrainData()
                 _algorithm.StartFitting(gnb_loaded)
                 
                 try:
@@ -88,7 +91,8 @@ class Container(object):
                 except Exception, e:
                     print 'Error in pickling : ' + str(e)
                 
-                _algorithm.PreProcessTestDate()
+                if (self.ispreprocessing==True):
+                    _algorithm.PreProcessTestDate()
                 _algorithm.StartPredicting()
                 
                 _algorithm.print_output()
