@@ -72,14 +72,14 @@ def Main():
     '''
     
     #creating polynomial data
-    numberofpolynomials=44
-    
+    numberofpolynomials=10
+    '''    
     train_attr=CreatePolynomial(train_attr, numberofpolynomials)
     cv_attr=CreatePolynomial(cv_attr, numberofpolynomials)
     test_attr=CreatePolynomial(test_attr, numberofpolynomials)
+    '''
     
-    
-    _container = algorithmcontainer.Container(train_attr, train_label, cv_attr, cv_label, missingvaluemethod, 
+    _container = algorithmcontainer.Container(train_attr, train_label, test_attr, test_label, missingvaluemethod, 
                                               train_column_names, Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION, 
                                               ispreprocessing, preprocessingmethods)
     
@@ -90,15 +90,15 @@ def Main():
     #_container.push(SGD().ExtraParams(loss='modified_huber', epsilon=500).SetAlgorithmName('SGD_huber_1000'))
     #_container.push(SGD().ExtraParams(loss='log').SetAlgorithmName('SGD_log'))
     
-    _container.push(LogisticRegression().ExtraParams(C=0.1).SetAlgorithmName('LogisticRegression_' + str(numberofpolynomials) + '_0.1'))
-    _container.push(LogisticRegression().ExtraParams(C=0.5).SetAlgorithmName('LogisticRegression_' + str(numberofpolynomials) + '_0.5'))
-    _container.push(LogisticRegression().ExtraParams(C=2).SetAlgorithmName('LogisticRegression_' + str(numberofpolynomials) + '_2'))
-    _container.push(LogisticRegression().ExtraParams(C=5).SetAlgorithmName('LogisticRegression_' + str(numberofpolynomials) + '_5'))
+    #_container.push(LogisticRegression().ExtraParams(C=0.1).SetAlgorithmName('LogisticRegression_' + str(numberofpolynomials) + '_0.1'))
+    #_container.push(LogisticRegression().ExtraParams(C=0.5).SetAlgorithmName('LogisticRegression_' + str(numberofpolynomials) + '_0.5'))
+    #_container.push(LogisticRegression().ExtraParams(C=2).SetAlgorithmName('LogisticRegression_' + str(numberofpolynomials) + '_2'))
+    #_container.push(LogisticRegression().ExtraParams(C=5).SetAlgorithmName('LogisticRegression_' + str(numberofpolynomials) + '_5'))
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=1, weight='uniform').SetAlgorithmName('KNearestNeighbors_1'))
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=5, weight='uniform').SetAlgorithmName('KNearestNeighbors_5'))
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=10, weight='uniform').SetAlgorithmName('KNearestNeighbors_10'))
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=20, weight='uniform').SetAlgorithmName('KNearestNeighbors_20'))
-    #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=30, weight='uniform').SetAlgorithmName('KNearestNeighbors_30'))
+    _container.push(KNearestNeighbors().ExtraParams(n_neighbors=30, weight='uniform').SetAlgorithmName('KNearestNeighbors_30'))
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=40, weight='uniform').SetAlgorithmName('KNearestNeighbors_40'))
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=45, weight='uniform').SetAlgorithmName('KNearestNeighbors_45'))
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=50, weight='uniform').SetAlgorithmName('KNearestNeighbors_50'))

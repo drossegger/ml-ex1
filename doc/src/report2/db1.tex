@@ -8,21 +8,156 @@ The dataset is split into three parts: $i$ Training dataset ($60\%$), $ii$ Cross
 
 In order to scale the data, we choose Zero Mean, Min Max and 1-N vector for encoding categorical data. In order to have a better overview of result of preprocessing, we use Principal Component Analysis (PCA). By using PCA algorithm provided by Scikit-Learn, we reduce dimension of data to two and draw plots by applying different techniques. 
 
-As it is depicted in Figure \ref{fig:db1-dimred}, the second plot seems too dense and unclear (as applying Zero-Mean on binary features may not be a good approach). By comparing the first and third plots, we can say that they seem very similar. Therefore, we use the first and the forth preprocessing method for the rest of the current section. By convention we call the first method (Numerical : Zero-Mean, Categorical : 1-N, Binary : None) $PreProc1$ and the second (Numerical : Min-Max, Categorical : 1-N, Binary : None) $PreProc2$. 
+As it is depicted in Figure \ref{fig:db1-dimred}, the second plot seems too dense and unclear (as applying Zero-Mean on binary features may not be a good approach). By comparing the first and third plots, we can say that they seem very similar. Therefore, we use the first and the forth preprocessing method for the rest of the current section. By convention we call the first method (Numerical : Zero-Mean, Categorical : 1-N, Binary : None) $PreProc1$ and the second (Numerical : Min-Max, Categorical : 1-N, Binary : None) $PreProc2$.
 
-\begin{figure}
-	\center
-	\includegraphics[scale=\figurescaling]{figures/db1/dim_reduction.jpg}
-	\caption{Dimensional Reduction applied on different preprocessing techniques (Numerical, Categorical, Binary)
-	\label{fig:db1-dimred}}
+\begin{figure}[p]
+\center
+\includegraphics[scale=\figurescaling]{figures/db1/dim_reduction.jpg}
+\caption{Dimensional Reduction applied on different preprocessing techniques (Numerical, Categorical, Binary)
+\label{fig:db1-dimred}}
 \end{figure}
 
 
 \subsection{Logistic Regression}
+We applied different values of the parameter $C$ (Inverse of regularization strength) and tried the algorithm in both polynomial and linear ways. Whole the process was also done using two preprocessing methods mentioned before.
+
+The F1-score of the result is shown in Table \ref{table:db1-logisticregression}. As it's shown in Table \ref{table:db1-logisticregression}, changing the parameter $C$ doesn't cause any significant difference in results while $0.1$ seems to be slightly better. Also while $PreProc1$ seems better in result in some records, $PreProc2$ seems to be more stable and indifference against changing the highest exponent.
+
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline \multicolumn{2}{ |c| }{C} & 0.1 & 2 & 5 \\
+
+\hline \multicolumn{1}{ |c| }{\multirow{6}{*}{Highest exponent} } & 1 & \minibox{0.50\\ 0.51} & \minibox{0.49 \\ 0.50} & \minibox{0.49 \\ 0.50} \\
+
+\cline{2-5} & 5 & \minibox{0.55 \\ 0.53} & \minibox{0.55 \\ 0.52} & \minibox{0.56 \\ 0.53} \\
+
+\cline{2-5} & 10 & \minibox{\textbf{0.56} \\ 0.50} & \minibox{0.54 \\ 0.51} & \minibox{0.54 \\ 0.52} \\
+
+\cline{2-5} & 21 & \minibox{0.39 \\ 0.52} & \minibox{0.39 \\ 0.52} & \minibox{0.39 \\ 0.52} \\
+
+\cline{2-5} & 33 & \minibox{0.34 \\ 0.52} & \minibox{0.34 \\ 0.52} & \minibox{0.34 \\ 0.53} \\
+
+\cline{2-5} & 44 & \minibox{0.24 \\ 0.52} & \minibox{0.24 \\ 0.52} & \minibox{0.24 \\ 0.53} \\
+
+\hline
+\end{tabular}
+
+\caption{Contraceptive Method Choice - Logistic Regressions F1-score ($PreProc1$, $PreProc2$)}
+\label{table:db1-logisticregression}
+\end{center}
+\end{table}
+
+We applied the best result ($C=0.1$, $Highest exponent=10$) on test dataset and the result is shown in Table \ref{table:db1-logisticregression-test}. The result is slightly worse than the best result of Cross Validation dataset.
+
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline Class & Precision & Recall & F1-score & Support \\
+
+\hline 0 & 0.59 & 0.62 & 0.60 & 126\\
+\hline 1 & 0.54 & 0.22 & 0.32 & 67\\
+\hline 2 & 0.46 & 0.61 & 0.53 & 102\\
+\hline avg / total & 0.53 & 0.53 & 0.51 & 295\\
+\hline
+\end{tabular}
+
+\caption{Contraceptive Method Choice - Logistic Regressions on Test dataset}
+\label{table:db1-logisticregression-test}
+\end{center}
+\end{table}
 
 \subsection{Decision Tree}
+We applied two criteria for decision tree: $gini$ and $entropy$. As before, we repeated it for two preprocessing methods mentioned before.
+
+The F1-score of the result is shown in Table \ref{table:db1-decisiontree}. $Gini$ seems to be a better criterion measure for the algorithm. Also in this case, $PreProc1$ seems better than $PreProc2$.
+
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline Criterion & F-Score \\
+
+\hline Gini & \minibox{\textbf{0.48}\\ 0.47} \\
+
+\hline Entropy & \minibox{0.46\\ 0.43} \\
+
+\hline
+\end{tabular}
+
+\caption{Contraceptive Method Choice - Decision Tree F1-score ($PreProc1$, $PreProc2$)}
+\label{table:db1-decisiontree}
+\end{center}
+\end{table}
+
+We applied again the best result ($Criterion=Gini$) on test dataset and the result is shown in Table \ref{table:db1-decisiontree-test}. The result is again slightly worse than the best result of Cross Validation dataset.
+
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline Class & Precision & Recall & F1-score & Support \\
+
+\hline 0 & 0.55 & 0.57 & 0.56 & 126\\
+\hline 1 & 0.33 & 0.34 & 0.34 & 67\\
+\hline 2 & 0.42 & 0.39 & 0.41 & 102\\
+\hline avg / total & 0.46 & 0.46 & 0.46 & 295\\
+\hline
+\end{tabular}
+
+\caption{Contraceptive Method Choice - Decision Tree on Test dataset}
+\label{table:db1-decisiontree-test}
+\end{center}
+\end{table}
 
 \subsection{$k$-nearest neighbor}
+Since the data is so blended, we run the algorithm many times with different values of Number of Neighbors parameter. As before, the process is repeated two times for preprocessing methods.
+
+The F1-score of the result is shown in Table \ref{table:db1-knn}. Running the algorithm with $30$ neighbors as parameter seems to be the best result. Also in this case, $PreProc1$ seems better than $PreProc2$.
+
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline Number of Neighbors & F-Score \\
+
+\hline 1 & \minibox{0.42\\ 0.45} \\
+\hline 5 & \minibox{0.47\\ 0.46} \\
+\hline 10 & \minibox{0.51\\ 0.43} \\
+\hline 20 & \minibox{0.51\\ 0.45} \\
+\hline 30 & \minibox{\textbf{0.56}\\ 0.47} \\
+\hline 40 & \minibox{0.54\\ 0.49} \\
+\hline 50 & \minibox{0.54\\ 0.47} \\
+
+\hline
+\end{tabular}
+
+\caption{Contraceptive Method Choice - K Nearest Neighbors  F1-score ($PreProc1$, $PreProc2$)}
+\label{table:db1-knn}
+\end{center}
+\end{table}
+
+We applied again the best result ($Number of Neighbors=30$) on test dataset and the result is shown in Table \ref{table:db1-knn-test}. The result is again slightly worse than the best result of Cross Validation dataset.
+
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline Class & Precision & Recall & F1-score & Support \\
+
+\hline 0 & 0.61 & 0.60 & 0.60 & 126\\
+\hline 1 & 0.48 & 0.43 & 0.45 & 67\\
+\hline 2 & 0.49 & 0.54 & 0.51 & 102\\
+\hline avg / total & 0.54 & 0.54 & 0.54 & 295\\
+\hline
+\end{tabular}
+
+\caption{Contraceptive Method Choice - K Nearest Neighbors on Test dataset}
+\label{table:db1-knn-test}
+\end{center}
+\end{table}
 
 \subsection{Support Vector Machine}
 
