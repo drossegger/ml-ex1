@@ -41,13 +41,14 @@ class Container(object):
         if self.mlmethod==Constants.MACHINE_LEARNING_METHOD_REGRESSION:
             finalresultcolumns = '{0:40}, {1:20}, {2:20}, {3:20}'.format('Algorithm', 'DiffMean', 'DiffStd', 'RunningTime')
         elif self.mlmethod==Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION:
-            finalresultcolumns = '{0:40}'.format('Algorithm') + "\r\n"
-            finalresultcolumns += '{0:20}, {1:20}, {2:20}'.format('Label', 'Prediction', 'Count')
+            #finalresultcolumns = '{0:40}'.format('Algorithm') + "\r\n"
+            #finalresultcolumns += '{0:20}, {1:20}, {2:20}'.format('Label', 'Prediction', 'Count')
+						finalresultcolumns=''
         
         finalresultfile = self.MakeResultFile(outputversion, finalresultcolumns)
         
         print finalresultcolumns
-        print ''
+        #print ''
             
         algdirectory = 'algs/'    
         if not os.path.exists(algdirectory):

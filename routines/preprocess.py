@@ -44,7 +44,6 @@ def preprocess_splitset(attributes,labels,validationsize=0.25):
 	sss=StratifiedShuffleSplit(labels,1,test_size=validationsize)
 	test_attrib,test_label,train_attrib,train_label=[],[],[],[]
 	for train_i, test_i in sss:
-		print len(train_i)
 		for i in test_i:
 			test_attrib.append(attributes[i])
 			test_label.append(labels[i])
