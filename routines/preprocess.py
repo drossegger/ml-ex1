@@ -51,4 +51,4 @@ def preprocess_splitset(attributes,labels,validationsize=0.25):
 		for i in train_i:
 			train_attrib.append(attributes[i])
 			train_label.append(labels[i])
-	return np.array([[train_label,train_attrib],[test_label,test_attrib]])
+	return (np.asarray(train_label),np.asarray(train_attrib)),(np.asarray(test_label),np.asarray(test_attrib))

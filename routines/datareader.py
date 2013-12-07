@@ -38,7 +38,7 @@ def readCSVML(path, attributeindexlist, labelindexlist, delim):
 		line=line.split(delim)
 		labels=[]
 		for c in labelindexlist:
-			labels.append(int(line[c]))
+			labels.append(float(line[c]))
 		y.append(labels)
 		attributes=[]
 		for c in attributeindexlist:

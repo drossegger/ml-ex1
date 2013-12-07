@@ -1,13 +1,13 @@
 
 
-from AppStarts import Soroosh, Navid, Dino
+from AppStarts import Dino
 
 
 
 def Main():
     #Soroosh.Main()
-    Navid.Main()
-    #Dino.Main()
+    #Navid.Main()
+    Dino.Main()
     pass
     
 
