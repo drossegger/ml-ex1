@@ -1,7 +1,9 @@
 \section{Contraceptive Method Choice}
 \label{db:sec:ds1}
 \subsection{Description}
-Contraceptive Method Choice contains the results of a survey. The samples are married women who were either not pregnant or do not know if they were at the time of interview. The problem is to predict the current contraceptive method choice (no use, long-term methods, or short-term methods) of a woman based on her demographic and socio-economic characteristics. The dataset has $9$ attributes and $1473$ samples. The dataset has no missing value. As it's mentioned, it has three classes. Different type of attributes such as binary, numerical and categorical as well as shortage of data make the dataset distinct and interesting for Machine Learning experiences.
+Contraceptive Method Choice contains the results of a survey. The samples are married women who were either not pregnant or do not know if they were at the time of interview. The problem is to predict the current contraceptive method choice of a woman based on her demographic and socio-economic characteristics. The dataset has $9$ attributes and $1473$ samples. The dataset has no missing value. As it's mentioned, it has three classes: $1$ No-Use, $2$ Long-term method and $3$ Short-term method.
+
+Different type of attributes such as binary, numerical and categorical as well as shortage of data make the dataset distinct and interesting for Machine Learning experiences.
 
 \subsection{Preprocessing}
 The dataset is split into three parts: $i$ Training dataset ($60\%$), $ii$ Cross Validation dataset ($20\%$) and $iii$ Test dataset ($20\%$). As it's mentioned before, shuffling algorithms of Scikit-Learn is used for splitting the dataset.
@@ -249,17 +251,17 @@ We applied the best result ($Number of Layers=1$, $Number of Nodes=120$) on test
 
 
 \subsection{Comparison}
-Table\ref{table:db1-comparison} compares the between best run of each algorithm based on the value of precision, recall, F1-score, learning time and prediction time.
+Table\ref{table:db1-comparison} compares the between best run of each algorithm on Test dataset based on the value of precision, recall, F1-score, learning time and prediction time.
 
 \begin{table}[p]
 \begin{center}
 \begin{tabular}{|p{5cm}|c|c|c|p{2cm}|p{2cm}|}
-\hline Algorithm & Precision & Recall & F1-score & Learning Time & Prediction Time \\
-\hline Logistic Regression, PreProc1, C=0.1, Exponent=10 & 0.50 & 0.57 & 0.56 & &\\
-\hline Decision Tree, PreProc1, Criterion=Gini & 0.48 & 0.48 & 0.48 & &\\
-\hline K Nearest Neighbors, PreProc1, NN=30 & 0.57 & 0.56 & 0.56 & &\\
-\hline SVM, PreProc1, Kernel=RBF, C=1 & \textbf{0.58} & \textbf{0.57} & \textbf{0.57} & &\\
-\hline Neural Network, PreProc1, NL=1, NN=120 & 0.40 & 0.38 & 0.37 & &\\
+\hline Algorithm & Precision & Recall & F1-score & Training Time & Prediction Time \\
+\hline Logistic Regression, PreProc1, C=0.1, Exponent=10 & 0.53 & 0.53 & 0.51 & 01.528 & 00.323\\
+\hline Decision Tree, PreProc1, Criterion=Gini & 0.46 & 0.46 & 0.46 & \textbf{00.019} & \textbf{00.049}\\
+\hline K Nearest Neighbors, PreProc1, NN=30 & 0.54 & 0.54 & 0.54 & 00.029 & 00.662 \\
+\hline SVM, PreProc1, Kernel=RBF, C=1 & \textbf{0.55} & \textbf{0.55} & \textbf{0.55} & 00.281 & 00.189\\
+\hline Neural Network, PreProc1, NL=1, NN=120 & 0.42 & 0.37 & 0.37 & 03.202 & 00.251\\
 \hline
 \end{tabular}
 \caption{Contraceptive Method Choice - Comparison}
@@ -285,8 +287,12 @@ Since SVM tends to have a better results among the other algorithm, its confusio
 
 Based on achieved results, following points can be infered:
 \begin{itemize}
-\item asda
-\item asda
+\item Using Standard Deviation instead of MinMax leads to better results in all cases.
+\item SVM has the best result and the result is rather consistent in different runs.
+\item Surprisingly, KNN has a really good results such that it's completely comparable with SVM. Since it's a lazy learner algorithm, in the case of need it can be replaced with SVM.
+\item Neural Network has a very bad result. Usually precision is better than recall and smaller collections are worse in results.
+\item Analyzing confusion matrix and the results of runs show us that class $1$ and $3$ are mistaken more often. As it is mentioned before class $1$ and $3$ stand for No-use and Short-term.
+\item While training and prediction time are usually less than one minute and not time consuming, NN algorithm tends to have about three times longer training time than the others.
+\item Decision Tree is the fastest algorithm among the others
+\item While KNN is expected to have a more prediction time than training, the same situation can be seen for Decision Tree. The reason is probably because of short amount of data and time which makes the situation not appropriate for judgment.
 \end{itemize}
-
-\subsection{Imputation Experiment}

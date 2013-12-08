@@ -61,12 +61,6 @@ class algorithmbase(object):
             #    print  output
             #    self.finaloutputfile.write(output + '\n')
                 
-            #output = 'training time:{0:<20}'.format(self.trainingtime)
-            #print  output
-            #self.finaloutputfile.write(output + '\n')
-            #output = 'prediction time:{0:<20}'.format(self.predictiontime)
-            #print  output
-            #self.finaloutputfile.write(output + '\n')
             #output = 'precision=> micro:{0:<20} macro:{1:<20}'.format(precision_score(np.asarray(testlabel), prediction, average='micro'), precision_score(testlabel, prediction, average='macro'))
             #print  output
             #self.finaloutputfile.write(output + '\n')
@@ -76,6 +70,13 @@ class algorithmbase(object):
             output= classification_report(np.asarray(testlabel), prediction)
             print output
             self.finaloutputfile.write(output + '\n')
+            output = 'training time:{0:<20}'.format(self.trainingtime)
+            print  output
+            self.finaloutputfile.write(output + '\n')
+            output = 'prediction time:{0:<20}'.format(self.predictiontime)
+            print  output
+            self.finaloutputfile.write(output + '\n')
+            
         self.finaloutputfile.flush()
         
     def set_output_file_version(self, outputversion):

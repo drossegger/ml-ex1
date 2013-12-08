@@ -73,11 +73,11 @@ def Main():
     
     #creating polynomial data
     numberofpolynomials=10
-    '''    
+    
     train_attr=CreatePolynomial(train_attr, numberofpolynomials)
     cv_attr=CreatePolynomial(cv_attr, numberofpolynomials)
     test_attr=CreatePolynomial(test_attr, numberofpolynomials)
-    '''
+    
     
     _container = algorithmcontainer.Container(train_attr, train_label, test_attr, test_label, missingvaluemethod, 
                                               train_column_names, Constants.MACHINE_LEARNING_METHOD_CLASSIFICATION, 
@@ -102,7 +102,7 @@ def Main():
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=40, weight='uniform').SetAlgorithmName('KNearestNeighbors_40'))
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=45, weight='uniform').SetAlgorithmName('KNearestNeighbors_45'))
     #_container.push(KNearestNeighbors().ExtraParams(n_neighbors=50, weight='uniform').SetAlgorithmName('KNearestNeighbors_50'))
-    #_container.push(DecisionTree().ExtraParams(criterion='gini').SetAlgorithmName('DecisionTree_gini'))
+    _container.push(DecisionTree().ExtraParams(criterion='gini').SetAlgorithmName('DecisionTree_gini'))
     #_container.push(DecisionTree().ExtraParams(criterion='entropy').SetAlgorithmName('DecisionTree_entropy'))
     #_container.push(SupportVectorMachine().ExtraParams(kernel='linear',C=0.1).SetAlgorithmName('SupportVectorMachine_linear_0.1'))
     #_container.push(SupportVectorMachine().ExtraParams(kernel='linear',C=1).SetAlgorithmName('SupportVectorMachine_linear_1'))
@@ -121,7 +121,7 @@ def Main():
     #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=30).SetAlgorithmName('NeuralNetwork_1_30'))
     #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=60).SetAlgorithmName('NeuralNetwork_1_60'))
     #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=90).SetAlgorithmName('NeuralNetwork_1_90'))
-    _container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=120).SetAlgorithmName('NeuralNetwork_1_120'))
+    #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=120).SetAlgorithmName('NeuralNetwork_1_120'))
     #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=150).SetAlgorithmName('NeuralNetwork_1_150'))
     #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=1, hiddenlayernodescount=200).SetAlgorithmName('NeuralNetwork_1_200'))
     #_container.push(NeuralNetworkClassification().ExtraParams(hiddenlayerscount=2, hiddenlayernodescount=30).SetAlgorithmName('NeuralNetwork_2_30'))
