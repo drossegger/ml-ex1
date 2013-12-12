@@ -10,20 +10,20 @@ The dataset is split into three parts: $i$ Training dataset ($60\%$), $ii$ Cross
 
 In order to scale the data, we choose Zero Mean, Min Max and 1-N vector for encoding categorical data. In order to have a better overview of result of preprocessing, we use Principal Component Analysis (PCA). By using PCA algorithm provided by Scikit-Learn, we reduce dimension of data to two and draw plots by applying different techniques. 
 
-As it is depicted in Figure \ref{fig:db1-dimred}, the second plot seems too dense and unclear (as applying Zero-Mean on binary features may not be a good approach). By comparing the first and third plots, we can say that they seem very similar. Therefore, we use the first and the forth preprocessing method for the rest of the current section. By convention we call the first method (Numerical : Zero-Mean, Categorical : 1-N, Binary : None) $PreProc1$ and the second (Numerical : Min-Max, Categorical : 1-N, Binary : None) $PreProc2$.
+As it is depicted in Figure \ref{ds1:fig:dimred}, the second plot seems too dense and unclear (as applying Zero-Mean on binary features may not be a good approach). By comparing the first and third plots, we can say that they seem very similar. Therefore, we use the first and the forth preprocessing method for the rest of the current section. By convention we call the first method (Numerical : Zero-Mean, Categorical : 1-N, Binary : None) $PreProc1$ and the second (Numerical : Min-Max, Categorical : 1-N, Binary : None) $PreProc2$.
 
 \begin{figure}[p]
 \center
 \includegraphics[scale=\figurescaling]{figures/db1/dim_reduction.jpg}
 \caption{Dimensional Reduction applied on different preprocessing techniques (Numerical, Categorical, Binary)
-\label{fig:db1-dimred}}
+\label{ds1:fig:dimred}}
 \end{figure}
 
 
 \subsection{Logistic Regression}
 We applied different values of the parameter $C$ (Inverse of regularization strength) and tried the algorithm in both polynomial and linear ways. Whole the process was also done using two preprocessing methods mentioned before.
 
-The F1-score of the result is shown in Table\ref{table:db1-logisticregression}. As it's shown in Table\ref{table:db1-logisticregression}, changing the parameter $C$ doesn't cause any significant difference in results while $0.1$ seems to be slightly better. Also while $PreProc1$ seems better in result in some records, $PreProc2$ seems to be more stable and indifference against changing the highest exponent.
+The F1-score of the result is shown in Table\ref{ds1:table:logisticregression}. As it's shown in Table\ref{ds1:table:logisticregression}, changing the parameter $C$ doesn't cause any significant difference in results while $0.1$ seems to be slightly better. Also while $PreProc1$ seems better in result in some records, $PreProc2$ seems to be more stable and indifference against changing the highest exponent.
 
 
 \begin{table}[p]
@@ -47,11 +47,11 @@ The F1-score of the result is shown in Table\ref{table:db1-logisticregression}. 
 \end{tabular}
 
 \caption{Contraceptive Method Choice - Logistic Regressions F1-score ($PreProc1$, $PreProc2$)}
-\label{table:db1-logisticregression}
+\label{ds1:table:logisticregression}
 \end{center}
 \end{table}
 
-We applied the best result ($C=0.1$, $Highest exponent=10$) on test dataset and the result is shown in Table\ref{table:db1-logisticregression-test}. The result is slightly worse than the best result of Cross Validation dataset.
+We applied the best result ($C=0.1$, $Highest exponent=10$) on test dataset and the result is shown in Table\ref{ds1:table:logisticregression-test}. The result is slightly worse than the best result of Cross Validation dataset.
 
 
 \begin{table}[p]
@@ -67,14 +67,14 @@ We applied the best result ($C=0.1$, $Highest exponent=10$) on test dataset and 
 \end{tabular}
 
 \caption{Contraceptive Method Choice - Logistic Regressions on Test dataset}
-\label{table:db1-logisticregression-test}
+\label{ds1:table:logisticregression-test}
 \end{center}
 \end{table}
 
 \subsection{Decision Tree}
 We applied two criteria for decision tree: $gini$ and $entropy$. As before, we repeated it for two preprocessing methods mentioned before.
 
-The F1-score of the result is shown in Table\ref{table:db1-decisiontree}. $Gini$ seems to be a better criterion measure for the algorithm. Also in this case, $PreProc1$ seems better than $PreProc2$.
+The F1-score of the result is shown in Table\ref{ds1:table:decisiontree}. $Gini$ seems to be a better criterion measure for the algorithm. Also in this case, $PreProc1$ seems better than $PreProc2$.
 
 
 \begin{table}[p]
@@ -90,11 +90,11 @@ The F1-score of the result is shown in Table\ref{table:db1-decisiontree}. $Gini$
 \end{tabular}
 
 \caption{Contraceptive Method Choice - Decision Tree F1-score ($PreProc1$, $PreProc2$)}
-\label{table:db1-decisiontree}
+\label{ds1:table:decisiontree}
 \end{center}
 \end{table}
 
-We applied again the best result ($Criterion=Gini$) on test dataset and the result is shown in Table\ref{table:db1-decisiontree-test}. The result is again slightly worse than the best result of Cross Validation dataset.
+We applied again the best result ($Criterion=Gini$) on test dataset and the result is shown in Table\ref{ds1:table:decisiontree-test}. The result is again slightly worse than the best result of Cross Validation dataset.
 
 
 \begin{table}[p]
@@ -110,14 +110,14 @@ We applied again the best result ($Criterion=Gini$) on test dataset and the resu
 \end{tabular}
 
 \caption{Contraceptive Method Choice - Decision Tree on Test dataset}
-\label{table:db1-decisiontree-test}
+\label{ds1:table:decisiontree-test}
 \end{center}
 \end{table}
 
 \subsection{$k$-nearest neighbor}
 Since the data is so blended, we run the algorithm many times with different values of Number of Neighbors parameter. As before, the process is repeated two times for preprocessing methods.
 
-The F1-score of the result is shown in Table\ref{table:db1-knn}. Running the algorithm with $30$ neighbors as parameter seems to be the best result. Also in this case, $PreProc1$ seems better than $PreProc2$.
+The F1-score of the result is shown in Table\ref{ds1:table:knn}. Running the algorithm with $30$ neighbors as parameter seems to be the best result. Also in this case, $PreProc1$ seems better than $PreProc2$.
 
 
 \begin{table}[p]
@@ -137,11 +137,11 @@ The F1-score of the result is shown in Table\ref{table:db1-knn}. Running the alg
 \end{tabular}
 
 \caption{Contraceptive Method Choice - K Nearest Neighbors  F1-score ($PreProc1$, $PreProc2$)}
-\label{table:db1-knn}
+\label{ds1:table:knn}
 \end{center}
 \end{table}
 
-We applied again the best result ($Number of Neighbors=30$) on test dataset and the result is shown in Table\ref{table:db1-knn-test}. The result is again slightly worse than the best result of Cross Validation dataset.
+We applied again the best result ($Number of Neighbors=30$) on test dataset and the result is shown in Table\ref{ds1:table:knn-test}. The result is again slightly worse than the best result of Cross Validation dataset.
 
 
 \begin{table}[p]
@@ -157,14 +157,14 @@ We applied again the best result ($Number of Neighbors=30$) on test dataset and 
 \end{tabular}
 
 \caption{Contraceptive Method Choice - K Nearest Neighbors on Test dataset}
-\label{table:db1-knn-test}
+\label{ds1:table:knn-test}
 \end{center}
 \end{table}
 
 \subsection{Support Vector Machine}
 Kernel and value $C$ (Inverse of regularization strength) are two factors considered in running SVM algorithm. Different kernels like RBF (Radial Basis Function), Linear, Polynomial and Sigmoid are applied on the dataset.
 
-Since the result of Sigmoid are significantly bad, in Table\ref{table:db1-svm} we only show the results of RBF, Linear and Polynomial. Again $PreProc1$ seems better in result rather than $PreProc2$. As it's expected, RBF have the best results among other kernels.
+Since the result of Sigmoid are significantly bad, in Table\ref{ds1:table:svm} we only show the results of RBF, Linear and Polynomial. Again $PreProc1$ seems better in result rather than $PreProc2$. As it's expected, RBF have the best results among other kernels.
 
 
 \begin{table}[p]
@@ -182,11 +182,11 @@ Since the result of Sigmoid are significantly bad, in Table\ref{table:db1-svm} w
 \end{tabular}
 
 \caption{Contraceptive Method Choice - SVM F1-score ($PreProc1$, $PreProc2$)}
-\label{table:db1-svm}
+\label{ds1:table:svm}
 \end{center}
 \end{table}
 
-We applied the best result ($C=1$, $Kernel=RBF$) on test dataset and the result is shown in Table\ref{table:db1-svm-test}. The result is slightly worse than the best result of Cross Validation dataset.
+We applied the best result ($C=1$, $Kernel=RBF$) on test dataset and the result is shown in Table\ref{ds1:table:svm-test}. The result is slightly worse than the best result of Cross Validation dataset.
 
 
 \begin{table}[p]
@@ -202,7 +202,7 @@ We applied the best result ($C=1$, $Kernel=RBF$) on test dataset and the result 
 \end{tabular}
 
 \caption{Contraceptive Method Choice - SVM on Test dataset}
-\label{table:db1-svm-test}
+\label{ds1:table:svm-test}
 \end{center}
 \end{table}
 
@@ -210,7 +210,7 @@ We applied the best result ($C=1$, $Kernel=RBF$) on test dataset and the result 
 \subsection{Neural Networks}
 Number of hidden layers as well as number of nodes in each hidden layer are two important factors in result of neural network algorithm. 
 
-Usually the number of nodes in hidden layer should be at least twice as number of nodes in input layer (number of attributes). The results are shown in Table\ref{table:db1-nn}. Again $PreProc1$ seems better in result rather than $PreProc2$. As it's expected, RBF have the best results among other kernels.
+Usually the number of nodes in hidden layer should be at least twice as number of nodes in input layer (number of attributes). The results are shown in Table\ref{ds1:table:nn}. Again $PreProc1$ seems better in result rather than $PreProc2$. As it's expected, RBF have the best results among other kernels.
 
 
 \begin{table}[p]
@@ -226,11 +226,11 @@ Usually the number of nodes in hidden layer should be at least twice as number o
 \end{tabular}
 
 \caption{Contraceptive Method Choice - Neural Network F1-score ($PreProc1$, $PreProc2$)}
-\label{table:db1-nn}
+\label{ds1:table:nn}
 \end{center}
 \end{table}
 
-We applied the best result ($Number of Layers=1$, $Number of Nodes=120$) on test dataset. The result is shown in Table\ref{table:db1-nn-test}. The result is as good as the best result of Cross Validation dataset.
+We applied the best result ($Number of Layers=1$, $Number of Nodes=120$) on test dataset. The result is shown in Table\ref{ds1:table:nn-test}. The result is as good as the best result of Cross Validation dataset.
 
 
 \begin{table}[p]
@@ -245,13 +245,13 @@ We applied the best result ($Number of Layers=1$, $Number of Nodes=120$) on test
 \hline
 \end{tabular}
 \caption{Contraceptive Method Choice - Neural Network on Test dataset}
-\label{table:db1-nn-test}
+\label{ds1:table:nn-test}
 \end{center}
 \end{table}
 
 
 \subsection{Comparison}
-Table\ref{table:db1-comparison} compares the between best run of each algorithm on Test dataset based on the value of precision, recall, F1-score, learning time and prediction time.
+Table\ref{ds1:table:comparison} compares the between best run of each algorithm on Test dataset based on the value of precision, recall, F1-score, learning time and prediction time.
 
 \begin{table}[p]
 \begin{center}
@@ -265,11 +265,11 @@ Table\ref{table:db1-comparison} compares the between best run of each algorithm 
 \hline
 \end{tabular}
 \caption{Contraceptive Method Choice - Comparison}
-\label{table:db1-comparison}
+\label{ds1:table:comparison}
 \end{center}
 \end{table}
 
-Since SVM tends to have a better results among the other algorithm, its confusion matrix is depicted in Table \ref{table:db1-confusionmatrix}
+Since SVM tends to have a better results among the other algorithm, its confusion matrix is depicted in Table \ref{ds1:table:confusionmatrix}
 
 \begin{table}[p]
 \begin{center}
@@ -281,7 +281,7 @@ Since SVM tends to have a better results among the other algorithm, its confusio
 \hline
 \end{tabular}
 \caption{Contraceptive Method Choice - Confusion Matrix}
-\label{table:db1-confusionmatrix}
+\label{ds1:table:confusionmatrix}
 \end{center}
 \end{table}
 
