@@ -3,7 +3,7 @@
 \subsection{Description}
 This database is made of $6112$ instances made of $51$ attributes each. This $51$ attributes are static and dynamic features of first order theorems which were tried to be solved with $5$ different heuristics. The last $5$ columns cotain the runtime of the heuristics or $-100$ ifthe heuristic was not able to prove the theorem within $100$ seconds.\par
 Our first idea was to assign a class $1-5$ to each instance indicating which heuristic was the fastest or $0$ if the theorem could not be proved by any heuristic within $100$ seconds. Running experiments with this configuration we observed that all our machine learning algorithms did not produce any good results. While the hit rate for instances which were unsolvable was quite good, it seemed impossible to predict which heuristic was the fastest in most cases. Therefore we could not achieve a precision higher than $60\%$.
-Looking at the instances the cause of this became obvious. For most of the provable algorithms the difference in runtime of the heuristic was very small, in some cases all five of them had the same runtime. Because of this we changed our configuration, assigning classes to the instances based on the runtime of the best heuristic. The classes can be seen in Table~\ref{ds2:table:classes}.
+Looking at the instances the cause of this became obvious. For most of the provable theorems the difference in runtime of the heuristic was very small, in some cases all five of them had the same runtime. Because of this we changed our configuration, assigning classes to the instances based on the runtime of the best heuristic. The classes can be seen in Table~\ref{ds2:table:classes}.
 \begin{table}[h]
 	\begin{center}
 	\begin{tabular}{c|c|c|c|c|c|c}
@@ -15,15 +15,63 @@ Looking at the instances the cause of this became obvious. For most of the prova
 	\caption{Class assignment \label{ds2:table:classes}}
 \end{table}
 \subsection{Preprocessing}
-We applied min max scaling as well as mean removal and variance scaling. It turned out that mean removal and variance scaling was the best scling method. Imputation of missing values was not needed for this dataset but two attributes were removed because of redundancy.
+We applied min max scaling as well as mean removal and variance scaling. It turned out that mean removal and variance scaling was the best scling method. Imputation of missing values was not needed for this dataset but two attributes were removed because of redundancy. Cross Validation was used using Stratisfied K-Fold provided by scikit, $60\%$ of the dataset were used for training, $20\%$ were used for testing and validation respectively. 
 \subsection{Logistic Regression}
+Logistic Regression was applied with different parameters for the Regularization Strength ranging from $0.1$ to $5$. However changes in the parameters only minimally affected the quality of the model. Since the results only differed slightly in recall ($~0.01\%$) only the result of the best configuration is shown in Table~\ref{ds2:table:lr}. Interestingly Logistic Regression was not able to correctly classify instances of classes $3$ to $5$. This was the case with most of the algorithms, an intuitive explanation is given in Section~\ref{ds2:sec:comparison}. The model achieved similar results on the test dataset.
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline Class & Precision & Recall & F1-score & Support \\
+\hline  $0$    &   $0.60$    & $ 0.65$  &   $ 0.62$  &     $639$ \\
+\hline  $1$    &   $0.61$    &  $0.74$  &   $ 0.67$  &     $699$ \\
+\hline  $2-5$  &   $0.00$    &  $0.00$  &    $0.00$  &     $*$ \\
+\hline avg / total &      $0.53$  &    $0.61$  &    $0.57$  &   $1531$\\
+\hline
+\end{tabular}
+
+\caption{Result of Logistic Regression with $C=2$}
+\label{ds2:table:lr}
+\end{center}
+\end{table}
+
 
 \subsection{Decision Tree}
+Decision Tree was applied with two different classification criterias \textit{gini} and \textit{entropy}. Both of them achieved similar results (F1-score difference $~0.01\%$) but with different results in the classes. The F1-score for the different criterias can be seen in Table~\ref{ds2:table:dtf1}. Interestingly Decision Tree was one of the few algorithms to classify some instances of class $3-5$ correctly. Still the result for this $3$ classes is still quite bad. The algorithms had similar performance on the test dataset.
+\begin{table}[p]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline Class & $0$ & $1$ & $2$ & $3$ &$4$  &$ 5$ & total \\
+\hline gini & $0.75$ &$0.74$ &$0.34$ &$0.14$&$0.11$&$0.26$&$0.69$\\
+\hline entropy & $0.74$&$0.74$&$0.33$&$0.14$&$0.14$&$0.26$&$0.68$\\
+\hline
+	\end{tabular}
 
+
+	\end{center}
+	\caption{F1-Scores of Decision Tree with different classification criteria\label{ds2:table:dtf1}}
+\end{table}
 \subsection{$k$-nearest neighbor}
-
-\subsection{Support Vector Machine}
+$k$-nearest neighbors was tested with $k \in [1,50]$. The choice of $k$ affected the result with $k=1$ being the best choice. A comparison of the F1-scores can be seen in Table~\ref{ds2:table:knnf1}. Interestingly the F1-score gets better the higher $k$ is chosen for class $3$ while it becomes worse for all the other classes. Both precision and recall are considerably better in $k=50$ for this class compared to $k=1$
+being $0.4$ and $0.3$ compared to $0.12$ and $0.10$. This might also be because of the characteristics of the validation set since this happened to less extent on the test set. Apart from this the algorithms had similar performance on the test set.
+\begin{table}[p]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline Class & $0$ & $1$ & $2$ & $3$ &$4$  &$ 5$ & total \\
+\hline 1 & $0.76$ & $0.76$ & $0.26$ & $0.11$ & $0.11$ & $0.33$ & $0.69$ \\
+\hline 5 & $0.74$ & $0.74$ & $0.14$ & $0.07$ & $0.09$ & $0.00$ & $0.66$ \\
+\hline 10 & $0.73$ & $0.75$ &$0.18$ & $0.07$ & $0.00$ & $0.19$ & $0.66$ \\
+\hline 20 & $0.72$ & $0.74$ &$0.18$ & $0.21$ & $0.00$ &	$0.00$ & $0.65$ \\
+\hline 30 & $0.69$ & $0.72$ &$0.24$ & $0.27$ & $0.00$ & $0.00$ & $0.64$ \\
+\hline 40 & $0.68$ & $0.71$ &$0.26$ &	$0.27$ & $0.00$ & $0.00$ & $0.64$ \\
+\hline 50 & $0.69$ & $0.72$ &$0.25$ & $0.34$ & $0.00$ & $0.00$ & $0.64$ \\
+\hline
+	\end{tabular}
+	\end{center}
+	\caption{F1-Scores of $k$-nearest neighbor with different $k$\label{ds2:table:knnf1}}
+\end{table}\subsection{Support Vector Machine}
 
 \subsection{Neural Networks}
 
 \subsection{Comparison}
+\label{ds2:sec:comparison}

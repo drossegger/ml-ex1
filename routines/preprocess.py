@@ -41,7 +41,7 @@ def preprocess_apply(data, missingvaluemethod, preprocessingmethods):
 	return res
 	
 def preprocess_splitset(attributes,labels,validationsize=0.25):
-	sss=StratifiedShuffleSplit(labels,1,test_size=validationsize)
+	sss=StratifiedShuffleSplit(labels,1,test_size=validationsize,random_state=0)
 	test_attrib,test_label,train_attrib,train_label=[],[],[],[]
 	for train_i, test_i in sss:
 		for i in test_i:
