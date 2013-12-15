@@ -1,21 +1,24 @@
 \section{First Order Theorem Proving}
 \label{db:sec:ds2}
 \subsection{Description}
-This database is made of $6112$ instances made of $51$ attributes each. This $51$ attributes are static and dynamic features of first order theorems which were tried to be solved with $5$ different heuristics. The last $5$ columns cotain the runtime of the heuristics or $-100$ ifthe heuristic was not able to prove the theorem within $100$ seconds.\par
+This dataset First Order Theorem Proving~\cite{ds2:uci}~\cite{ds2:paper} is made of $6112$ instances made of $51$ attributes each. This $51$ attributes are static and dynamic features of first order theorems which were tried to be solved with $5$ different heuristics. The last $5$ columns cotain the runtime of the heuristics or $-100$ if the heuristic was not able to prove the theorem within $100$ seconds.\par
 Our first idea was to assign a class $1-5$ to each instance indicating which heuristic was the fastest or $0$ if the theorem could not be proved by any heuristic within $100$ seconds. Running experiments with this configuration we observed that all our machine learning algorithms did not produce any good results. While the hit rate for instances which were unsolvable was quite good, it seemed impossible to predict which heuristic was the fastest in most cases. Therefore we could not achieve a precision higher than $60\%$.
-Looking at the instances the cause of this became obvious. For most of the provable theorems the difference in runtime of the heuristic was very small, in some cases all five of them had the same runtime. Because of this we changed our configuration, assigning classes to the instances based on the runtime of the best heuristic. The classes can be seen in Table~\ref{ds2:table:classes}.
+Looking at the instances the cause of this became obvious. For most of the provable theorems the difference in runtime of the heuristic was very small, in some cases all five of them had the same runtime. While this would not matter in practice since it is irrelevant which heuristic is chosen if all perform the same for our experiments we found it to be a little underwhelming. Therefore we changed our configuration, assigning classes to the instances based on the runtime of the best heuristic. The classes can be seen in Table~\ref{ds2:table:classes}.
 \begin{table}[h]
 	\begin{center}
 	\begin{tabular}{c|c|c|c|c|c|c}
 
-		Label & $1$ & $2$ & $3$ & $4$ & $5$& $0$\\\hline
-		Runtime (s) & $<1$ & $<10$ & $<25$ & $<50$ &$<100$ &$>100$\\
+		Label & $0$ & $1$ & $2$ & $3$ & $4$ & $5$\\\hline
+		Runtime (s) & $>100$ & $<1$ & $<10$ & $<25$ & $<50$ &$<100$\\\hline
+		$\#$ of instances & $2554$ & $2794$ & $504$ & $106$ & $77$ & $83$\\\hline
+		percentage & $0.42$ & $0.46$ & $0.08$ & $0.02$ & $0.01$ & $0.01$\\\hline
+
 	\end{tabular}
 \end{center}
 	\caption{Class assignment \label{ds2:table:classes}}
 \end{table}
 \subsection{Preprocessing}
-We applied min max scaling as well as mean removal and variance scaling. It turned out that mean removal and variance scaling was the best scling method. Imputation of missing values was not needed for this dataset but two attributes were removed because of redundancy. Cross Validation was used using Stratisfied K-Fold provided by scikit, $60\%$ of the dataset were used for training, $20\%$ were used for testing and validation respectively. 
+We applied min max scaling as well as mean removal and variance scaling. It turned out that mean removal and variance scaling was the best scaling method. Imputation of missing values was not needed for this dataset but two attributes were removed because of redundancy. Cross Validation was used using Stratisfied K-Fold provided by scikit, $60\%$ of the dataset were used for training, $20\%$ were used for testing and validation respectively. 
 \subsection{Logistic Regression}
 Logistic Regression was applied with different parameters for the Regularization Strength ranging from $0.1$ to $5$. However changes in the parameters only minimally affected the quality of the model. Since the results only differed slightly in recall ($~0.01\%$) only the result of the best configuration is shown in Table~\ref{ds2:table:lr}. Interestingly Logistic Regression was not able to correctly classify instances of classes $3$ to $5$. This was the case with most of the algorithms, an intuitive explanation is given in Section~\ref{ds2:sec:comparison}. The model achieved similar results on the test dataset.
 
@@ -58,20 +61,40 @@ being $0.4$ and $0.3$ compared to $0.12$ and $0.10$. This might also be because 
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline Class & $0$ & $1$ & $2$ & $3$ &$4$  &$ 5$ & total \\
-\hline 1 & $0.76$ & $0.76$ & $0.26$ & $0.11$ & $0.11$ & $0.33$ & $0.69$ \\
-\hline 5 & $0.74$ & $0.74$ & $0.14$ & $0.07$ & $0.09$ & $0.00$ & $0.66$ \\
-\hline 10 & $0.73$ & $0.75$ &$0.18$ & $0.07$ & $0.00$ & $0.19$ & $0.66$ \\
-\hline 20 & $0.72$ & $0.74$ &$0.18$ & $0.21$ & $0.00$ &	$0.00$ & $0.65$ \\
-\hline 30 & $0.69$ & $0.72$ &$0.24$ & $0.27$ & $0.00$ & $0.00$ & $0.64$ \\
-\hline 40 & $0.68$ & $0.71$ &$0.26$ &	$0.27$ & $0.00$ & $0.00$ & $0.64$ \\
-\hline 50 & $0.69$ & $0.72$ &$0.25$ & $0.34$ & $0.00$ & $0.00$ & $0.64$ \\
+\hline $1$ & $0.76$ & $0.76$ & $0.26$ & $0.11$ & $0.11$ & $0.33$ & $0.69$ \\
+\hline $5$ & $0.74$ & $0.74$ & $0.14$ & $0.07$ & $0.09$ & $0.00$ & $0.66$ \\
+\hline $10$ & $0.73$ & $0.75$ &$0.18$ & $0.07$ & $0.00$ & $0.19$ & $0.66$ \\
+\hline $20$ & $0.72$ & $0.74$ &$0.18$ & $0.21$ & $0.00$ &	$0.00$ & $0.65$ \\
+\hline $30$ & $0.69$ & $0.72$ &$0.24$ & $0.27$ & $0.00$ & $0.00$ & $0.64$ \\
+\hline $40$ & $0.68$ & $0.71$ &$0.26$ &	$0.27$ & $0.00$ & $0.00$ & $0.64$ \\
+\hline $50$ & $0.69$ & $0.72$ &$0.25$ & $0.34$ & $0.00$ & $0.00$ & $0.64$ \\
 \hline
 	\end{tabular}
 	\end{center}
 	\caption{F1-Scores of $k$-nearest neighbor with different $k$\label{ds2:table:knnf1}}
-\end{table}\subsection{Support Vector Machine}
+\end{table}
+\subsection{Support Vector Machines}
+Experiments with three different kernels, $rbf,linear,poly$ and different parameters for the penalty were done. Linear and polynomial support vector machines did not terminate within reasonable time and therefore reports on their performance are omitted. One run of linear support vector machines with $0.1$ as penalty finished successfully and it could be observed that the results were very bad. The penalty varied between $0.1$ and $100$ and while the performance on some classes varied, the overall performance stayed the same. The F1-scores of the configurations can be seen in Table~\ref{ds2:table:svmf1}. It can be seen that support vector machines with penalty $10$ and $5$ performed slightly better with $10$ being better in classifieing theorems of the second class. This observation is backed up by the experiments on the test data set where the same can be observed.
+\begin{table}[p]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline Class & $0$ & $1$ & $2$ & $3$ &$4$  &$ 5$ & total \\
+\hline $0.1$ & $0.62$ & $0.72$ & $0.17$ & $0$ & $0$ & $0$ & $0.60$ \\
+\hline $1$ & $0.71$ & $0.75$ & $0.27$ & $0$ & $0$ & $0$ & $0.66$ \\
+\hline $5$ & $0.74$ & $0.76$ &$0.28$ & $0.12$ & $0$ & $0$ & $0.68$ \\
+\hline $10$ & $0.74$ & $0.75$ &$0.28$ & $0.12$ & $0.00$ &	$0.00$ & $0.68$ \\
+\hline $20$ & $0.73$ & $0.75$ &$0.25$ & $0.12$ & $0.00$ & $0.00$ & $0.67$ \\
+\hline $50$ & $0.74$ & $0.74$ &$0.27$ & $0.12$ & $0.10$ & $0.00$ & $0.67$ \\
+\hline
+	\end{tabular}
+	\end{center}
+	\caption{F1-Scores of Support Vector Machines with kernel $rbf$ and different penalty\label{ds2:table:svmf1}}
+\end{table}
 
 \subsection{Neural Networks}
-
+Experiments were done with different number of hidden layers and different number of nodes. Interestingly neither of the parameters made any difference in the result. In general the result obtained was very bad, only predicting instances in class $0$ correctly. Even in this class the algorithm only achieved a precision of $0.42$ but at least the recall was very good, being $1.00$. Similar results were obtained using the test set. The different configurations used where $1,2,3,4$ hidden layers and $300,600,900,1200$ nodes. 
 \subsection{Comparison}
+$Decision trees$ and $k$-nearest neighbor with a very small $k$ of $1$ gave the best result with a F$1$-score of $0-69$. Apart from getting the higher F$1$-score overall, they were also able to classify instances with labels $3-5$ correctly which most of the other algorithms could not. Most of the other algorithms despite $neural networks$ fell only	$1-4\%$ short.
+Looking at the class distribution visualized in Table~\ref{ds2:table:classes} it becomes obvious why all of the algorithms had problems labeling instances of the classes $2-5$ correctly since the number of instances labelled this way is very small, having only $~5\%$ of the dataset.
+\par $Neural networks$ was by far the worst classification technique being immune to parameter change and giving bad results in the validation as well as in the test dataset.
 \label{ds2:sec:comparison}
