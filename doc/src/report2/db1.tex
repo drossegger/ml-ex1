@@ -1,12 +1,12 @@
 \section{Contraceptive Method Choice}
 \label{db:sec:ds1}
 \subsection{Description}
-Contraceptive Method Choice contains the results of a survey. The samples are married women who were either not pregnant or do not know if they were at the time of interview. The problem is to predict the current contraceptive method choice of a woman based on her demographic and socio-economic characteristics. The dataset has $9$ attributes and $1473$ samples. The dataset has no missing value. As it's mentioned, it has three classes: $1$ No-Use, $2$ Long-term method and $3$ Short-term method.
+Contraceptive Method Choice ~\cite{ds1:uci} contains the results of a survey. The samples are married women who were either not pregnant or do not know if they were at the time of interview. The problem is to predict the current contraceptive method choice of a woman based on her demographic and socio-economic characteristics. The dataset has $9$ attributes and $1473$ samples. The dataset has no missing value. As it's mentioned, it has three classes: $1$ No-Use, $2$ Long-term method and $3$ Short-term method.
 
 Different type of attributes such as binary, numerical and categorical as well as shortage of data make the dataset distinct and interesting for Machine Learning experiences.
 
 \subsection{Preprocessing}
-The dataset is split into three parts: $i$ Training dataset ($60\%$), $ii$ Cross Validation dataset ($20\%$) and $iii$ Test dataset ($20\%$). As it's mentioned before, shuffling algorithms of Scikit-Learn is used for splitting the dataset.
+The dataset is split into three parts: $i$ Training dataset ($60\%$), $ii$ Validation dataset ($20\%$) and $iii$ Test dataset ($20\%$). As it's mentioned before, shuffling algorithms of Scikit-Learn is used for splitting the dataset.
 
 In order to scale the data, we choose Zero Mean, Min Max and 1-N vector for encoding categorical data. In order to have a better overview of result of preprocessing, we use Principal Component Analysis (PCA). By using PCA algorithm provided by Scikit-Learn, we reduce dimension of data to two and draw plots by applying different techniques. 
 
@@ -19,7 +19,7 @@ We applied different values of the parameter $C$ (Inverse of regularization stre
 The F1-score of the result is shown in Table\ref{ds1:table:logisticregression}. As it's shown in Table\ref{ds1:table:logisticregression}, changing the parameter $C$ doesn't cause any significant difference in results while $0.1$ seems to be slightly better. Also while $PreProc1$ seems better in result in some records, $PreProc2$ seems to be more stable and indifference against changing the highest exponent.
 
 
-We applied the best result ($C=0.1$, $Highest exponent=10$) on test dataset and the result is shown in Table\ref{ds1:table:logisticregression-test}. The result is slightly worse than the best result of Cross Validation dataset.
+We applied the best result ($C=0.1$, $Highest exponent=10$) on test dataset and the result is shown in Table\ref{ds1:table:logisticregression-test}. The result is slightly worse than the best result of Validation dataset.
 
 
 \subsection{Decision Tree}
@@ -27,28 +27,28 @@ We applied two criteria for decision tree: $gini$ and $entropy$. As before, we r
 
 The F1-score of the result is shown in Table\ref{ds1:table:decisiontree}. $Gini$ seems to be a better criterion measure for the algorithm. Also in this case, $PreProc1$ seems better than $PreProc2$.
 
-We applied again the best result ($Criterion=Gini$) on test dataset and the result is shown in Table\ref{ds1:table:decisiontree-test}. The result is again slightly worse than the best result of Cross Validation dataset.
+We applied again the best result ($Criterion=Gini$) on test dataset and the result is shown in Table\ref{ds1:table:decisiontree-test}. The result is again slightly worse than the best result of Validation dataset.
 
 \subsection{$k$-nearest neighbor}
 Since the data is so blended, we run the algorithm many times with different values of Number of Neighbors parameter. As before, the process is repeated two times for preprocessing methods.
 
 The F1-score of the result is shown in Table\ref{ds1:table:knn}. Running the algorithm with $30$ neighbors as parameter seems to be the best result. Also in this case, $PreProc1$ seems better than $PreProc2$.
 
-We applied again the best result ($Number of Neighbors=30$) on test dataset and the result is shown in Table\ref{ds1:table:knn-test}. The result is again slightly worse than the best result of Cross Validation dataset.
+We applied again the best result ($Number of Neighbors=30$) on test dataset and the result is shown in Table\ref{ds1:table:knn-test}. The result is again slightly worse than the best result of Validation dataset.
 
 \subsection{Support Vector Machine}
 Kernel and value $C$ (Inverse of regularization strength) are two factors considered in running SVM algorithm. Different kernels like RBF (Radial Basis Function), Linear, Polynomial and Sigmoid are applied on the dataset.
 
 Since the result of Sigmoid are significantly bad, in Table\ref{ds1:table:svm} we only show the results of RBF, Linear and Polynomial. Again $PreProc1$ seems better in result rather than $PreProc2$. As it's expected, RBF have the best results among other kernels.
 
-We applied the best result ($C=1$, $Kernel=RBF$) on test dataset and the result is shown in Table\ref{ds1:table:svm-test}. The result is slightly worse than the best result of Cross Validation dataset.
+We applied the best result ($C=1$, $Kernel=RBF$) on test dataset and the result is shown in Table\ref{ds1:table:svm-test}. The result is slightly worse than the best result of Validation dataset.
 
 \subsection{Neural Networks}
 Number of hidden layers as well as number of nodes in each hidden layer are two important factors in result of neural network algorithm. 
 
 Usually the number of nodes in hidden layer should be at least twice as number of nodes in input layer (number of attributes). The results are shown in Table\ref{ds1:table:nn}. Again $PreProc1$ seems better in result rather than $PreProc2$. As it's expected, RBF have the best results among other kernels.
 
-We applied the best result ($Number of Layers=1$, $Number of Nodes=120$) on test dataset. The result is shown in Table\ref{ds1:table:nn-test}. The result is as good as the best result of Cross Validation dataset.
+We applied the best result ($Number of Layers=1$, $Number of Nodes=120$) on test dataset. The result is shown in Table\ref{ds1:table:nn-test}. The result is as good as the best result of Validation dataset.
 
 \subsection{Comparison}
 Table\ref{ds1:table:comparison} compares the between best run of each algorithm on Test dataset based on the value of precision, recall, F1-score, learning time and prediction time.
