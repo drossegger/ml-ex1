@@ -96,6 +96,21 @@ Experiments with three different kernels, $rbf,linear,poly$ and different parame
 Experiments were done with different number of hidden layers and different number of nodes. Interestingly neither of the parameters made any difference in the result. In general the result obtained was very bad, only predicting instances in class $0$ correctly. Even in this class the algorithm only achieved a precision of $0.42$ but at least the recall was very good, being $1.00$. Similar results were obtained using the test set. The different configurations used where $1,2,3,4$ hidden layers and $300,600,900,1200$ nodes. 
 \subsection{Comparison}
 Decision trees and $k$-nearest neighbor with $k=1$ gave the best result with a F$1$-score of $0-69$. Apart from getting the higher F$1$-score overall, they were also able to classify instances with labels $3-5$ correctly which most of the other algorithms could not. Most of the other algorithms despite $neural networks$ fell only	$1-4\%$ short.
-Looking at the class distribution visualized in Table~\ref{ds2:table:classes} it becomes obvious why all of the algorithms had problems labeling instances of the classes $2-5$ correctly since the number of instances labelled this way is very small, having only $~5\%$ of the dataset.
+Looking at the class distribution visualized in Table~\ref{ds2:table:classes} it becomes obvious why all of the algorithms had problems labeling instances of the classes $2-5$ correctly since the number of instances labelled this way is very small, having only $~5\%$ of the dataset. The confusion matrix for decision trees with \textit{entropy} as classification criteria can be seen in Table~\ref{ds2:confmatrix}. It is highly visible that for classes $2-5$ it was very hard to do a correct prediction because of the small amount of data available. Most wrongly assigned labels where labelled with class $0$ or $1$, classes which contain many data.
 \par $Neural networks$ was by far the worst classification technique being immune to parameter change and giving bad results in the validation as well as in the test dataset.
+
+\begin{table}[p]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline	\backslashbox{Class}{Predicted} & $0$ & $1$ & $2$ & $3$ & $4$ & $5$ \\
+		\hline  0 & $351$ & $94$ & $14$ & $8$ & $9$ & $3$ \\
+		\hline  1 & $100$ & $389$ & $23$ & $5$ & $5$ & $2$ \\
+		\hline  2 & $34$  & $33$ & $19$ & $4$ & $4$ & $1$ \\
+		\hline  3 & $6$   & $3$ & $1$ & $5$ & $5$ & $0$ \\
+		\hline  4 & $1$   & $2$ & $6$ & $3$ & $3$ & $0$ \\
+		\hline  5 & $8$   & $2$ & $2$ & $0$ & $1$ & $3$ \\
+		\end{tabular}
+	\end{center}
+		\caption{Confusion Matrix for Decision Tree with \textit{entropy}\label{ds2:confmatrix}}
+\end{table}
 \label{ds2:sec:comparison}
