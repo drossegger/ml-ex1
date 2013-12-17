@@ -1,14 +1,22 @@
 \section{Contraceptive Method Choice}
 \label{db:sec:ds1}
 \subsection{Description}
-Contraceptive Method Choice ~\cite{ds1:uci} contains the results of a survey. The samples are married women who were either not pregnant or do not know if they were at the time of interview. The problem is to predict the current contraceptive method choice of a woman based on her demographic and socio-economic characteristics. The dataset has $9$ attributes and $1473$ samples. The dataset has no missing value. As it's mentioned, it has three classes: $1$ No-Use, $2$ Long-term method and $3$ Short-term method.
+Contraceptive Method Choice ~\cite{ds1:uci} contains the results of a survey.
+The samples are married women who were either not pregnant or did not know if
+they were at the time of interview. The problem is to predict the current
+contraceptive method choice of a woman based on her demographic and
+socio-economic characteristics. The dataset has $9$ attributes, $1473$
+samples, no missing value and three classes, $1$
+No-Use, $2$ Long-term method and $3$ Short-term method.
 
 Different type of attributes such as binary, numerical and categorical as well as shortage of data make the dataset distinct and interesting for Machine Learning experiences.
 
 \subsection{Preprocessing}
 The dataset is split into three parts: $i$ Training dataset ($60\%$), $ii$ Test dataset ($20\%$) and $iii$ Validation dataset ($20\%$). As it's mentioned before, shuffling algorithms of Scikit-Learn is used for splitting the dataset.
 
-In order to scale the data, we choose Zero Mean, Min Max and 1-N vector for encoding categorical data. In order to have a better overview of result of preprocessing, we use Principal Component Analysis (PCA). By using PCA algorithm provided by Scikit-Learn, we reduce dimension of data to two and draw plots by applying different techniques. 
+In order to scale the data, we choose Zero Mean, Min Max and 1-N vector for
+encoding categorical data. To have a better overview on result of preprocessing,
+we use Principal Component Analysis (PCA). By using PCA algorithm provided by Scikit-Learn, we reduce dimension of data to two and draw plots by applying different techniques.
 
 As it is depicted in Figure \ref{ds1:fig:dimred}, the second plot seems too dense and unclear (as applying Zero-Mean on binary features may not be a good approach). By comparing the first and third plots, we can say that they seem very similar. Therefore, we use the first and the forth preprocessing method for the rest of the current section. By convention we call the first method (Numerical : Zero-Mean, Categorical : 1-N, Binary : None) $PreProc1$ and the second (Numerical : Min-Max, Categorical : 1-N, Binary : None) $PreProc2$.
 
@@ -16,7 +24,10 @@ As it is depicted in Figure \ref{ds1:fig:dimred}, the second plot seems too dens
 \subsection{Logistic Regression}
 We applied different values of the parameter $C$ (Inverse of regularization strength) and tried the algorithm in both multinomial and linear ways. Whole the process was also done using two preprocessing methods mentioned before.
 
-The F1-score of the result is shown in Table\ref{ds1:table:logisticregression}. As it's shown in Table\ref{ds1:table:logisticregression}, changing the parameter $C$ doesn't cause any significant difference in results while $0.1$ seems to be slightly better. Also while $PreProc1$ seems better in result in some records, $PreProc2$ seems to be more stable and indifference against changing the highest exponent.
+The F1-score of the result is shown in Table\ref{ds1:table:logisticregression}.
+As it's shown in Table\ref{ds1:table:logisticregression}, changing the parameter
+$C$ doesn't make any significant difference in results while $0.1$ seems to be
+slightly better. Also while $PreProc1$ seems better in result in some records, $PreProc2$ seems to be more stable and indifference against changing the highest exponent.
 
 
 We applied the best result ($C=0.1$, $Highest exponent=10$) on Validation dataset and the result is shown in Table\ref{ds1:table:logisticregression-validation}. The result is slightly worse than the best result of Test dataset.
@@ -39,7 +50,8 @@ We applied again the best result ($Number of Neighbors=30$) on Validation datase
 \subsection{Support Vector Machine}
 Kernel and value $C$ (Inverse of regularization strength) are two factors considered in running SVM algorithm. Different kernels like RBF (Radial Basis Function), Linear, Polynomial and Sigmoid are applied on the dataset.
 
-Since the result of Sigmoid are significantly bad, in Table\ref{ds1:table:svm} we only show the results of RBF, Linear and Polynomial. Again $PreProc1$ seems better in result rather than $PreProc2$. As it's expected, RBF have the best results among other kernels.
+Since the results of Sigmoid are significantly bad, in Table\ref{ds1:table:svm}
+we only show the results of RBF, Linear and Polynomial. Again $PreProc1$ seems better in result rather than $PreProc2$. As it's expected, RBF have the best results among other kernels.
 
 We applied the best result ($C=1$, $Kernel=RBF$) on Validation dataset and the result is shown in Table\ref{ds1:table:svm-validation}. The result is slightly worse than the best result of Test dataset.
 
@@ -57,13 +69,19 @@ Since SVM tends to have better results among the algorithms, its confusion matri
 Based on achieved results, following points can be infered:
 \begin{itemize}
 \item Using Standard Deviation instead of MinMax leads to better results in all cases.
-\item SVM has the best result and the result is rather consistent in different runs.
-\item Surprisingly, KNN has a really good results such that it's completely comparable with SVM. Since it's a lazy learner algorithm, in the case of need it can be replaced with SVM.
+\item SVM has the best result and the result is fairly consistent in different
+runs.
+\item Surprisingly, KNN makes good results such that it's completely comparable
+with SVM.
+Since it's a lazy learner algorithm, in the case of need it can be replaced with SVM.
 \item Neural Network has a very bad result. Usually precision is better than recall and smaller collections are worse in results.
 \item Analyzing confusion matrix and the results of runs show us that class $1$ and $3$ are mistaken more often. As it is mentioned before class $1$ and $3$ stand for No-use and Short-term.
 \item While training and prediction time are usually less than one minute and not time consuming, NN algorithm tends to have about three times longer training time than the others.
-\item Decision Tree is the fastest algorithm among the others
-\item While KNN is expected to have a more prediction time than training, the same situation can be seen for Decision Tree. The reason is probably because of short amount of data and time which makes the situation not appropriate for judgment.
+\item Decision Tree is the fastest algorithm among all.
+\item While KNN is expected to have longer prediction time than training, the
+same situation can be seen for Decision Tree. So is it, probably because of
+low amount of data and time which makes the situation inappropriate for
+judgment.
 \end{itemize}
 
 \begin{figure}[p]
