@@ -4,7 +4,7 @@
 
 The third dataset used during this experiment is called funniest youtube video.
 The dataset utilized for classification is called YouTube Comedy Slam Preference
-Data Data Set~\cite{}. The subject of this data is fairly interesting and
+Data Data Set~\cite{ds3:uci}. The subject of this data is fairly interesting and
 challenging in many aspects. The dataset contains over $1,200,000$ number
 of instances. Each instance comprises two strings and a label where strings
 refer to IDs of videos on Youtube and the label expresses a vote by a
@@ -15,8 +15,8 @@ or 'right'.
 
 As mentioned in latest section, the dataset contains only ID of a video and no
 more details. Thus it is up to the experimenter to select and find some features
-for each video. Luckily, Youtube provides a robust, easy-to-use API ~\cite{}
-which offers many useful data and information about videos and they are accessible having
+for each video. Luckily, Youtube provides a robust, easy-to-use API
+~\cite{youtubeapi} which offers many useful data and information about videos and they are accessible having
 only ID of a video and a bit of knowledge about web technologies and
 exchange data structures. 
 
@@ -110,8 +110,8 @@ numerical data as input for learning.
 
 First step is to map date and time information to numerical correspondence. In
 this experiment, all date and time information are mapped to float numbers by
-Epoch~\cite{} approach which what counts the number of seconds since January 
-$1^{st}$, $1970$. For instance, {\it 12/16/2013 10:40:21 AM GMT+1} becomes
+Epoch~\cite{ritchie1971unix} approach which what counts the number of seconds
+since January $1^{st}$, $1970$. For instance, {\it 12/16/2013 10:40:21 AM GMT+1} becomes
 $1387186821.0$ by this mapping.
 
 \subsubsection{Categorical strings mapping}
@@ -178,15 +178,15 @@ experiment unless it is restrictly stated that any other data is used.
 
 \subsubsection{Splitting the dataset}
 
-As two previous datasets in sections ~\ref{} and ~\ref{}, current dataset is
-also splitted into three diverse subsets with approximately $60\%$, $20\%$ and
+As two previous datasets in sections ~\ref{db:sec:ds1} and ~\ref{db:sec:ds2},
+current dataset is also splitted into three diverse subsets with approximately $60\%$, $20\%$ and
 respectively $20\%$ of the data as train, test and validation sets.
 
 \subsection{Logistic Regression}
 
 First algorithm by which a model for classification is tried to build is {\it
 Logistic Regression}. Not only once, but it is tried four times to find the best
-model created by this algorithm using different {\it C} parameter~\ref{} where
+model created by this algorithm using different {\it C} parameter where
 $C \in \{0.1,0.5,1,10 \}$. Results can be seen in
 Table~\ref{table:ds3:logisticregression}. Also detailed information about the best practice with a combination of number of exponents
 and parameter C on the test set is shown in
@@ -276,8 +276,8 @@ different criteria, doesn't help in finding any better model.
 \subsection{$k$-nearest neighbors}
 
 Another engine for classification used in this experiment is {\it
-$k$-nearest neighbors}. From our previous experiment on regression, we observed
-that $k$-nearest neighbors can be utilized to build a reasonable model and
+$k$-nearest neighbors}. From our previous experiment on regression, we
+observed that $k$-nearest neighbors can be utilized to build a reasonable model and
 predictor. In Table~\ref{table:ds3:knn} it is shown that how successful the
 classification experiment was with this algorithm using different number of neighbors. As you
 can see, best result is gained with $k=5$ and $k=10$ in $F1-Score$.
@@ -327,7 +327,8 @@ dependant on the size of dataset in terms of dimensionality as well as number of
 instances. Hence, the process of building a model by support vector machines for
 the current dataset was stopped after three days with no results for a SVM with
 RBF kernel. Nevertheless, with linear kernel, it becomes feasible to create a
-model using SVM. Results brought by SVM are shown in Table~\ref{}
+model using SVM. Results brought by SVM are shown in Table~\ref{table:ds3:svm}
+and in Table~\ref{table:ds3:svm-test} respectively.
 
 
 \begin{table}[p]
@@ -373,8 +374,8 @@ model using SVM. Results brought by SVM are shown in Table~\ref{}
 \subsection{Neural Networks}
 
 Due to some problems and limitations in the base on which SciKit is developed,
-meaning NumPy~\cite{} library, Neural Networks algorithm of SciKit returns
-a result neither reasonable nor trustable. The result from the algorithm is a
+meaning NumPy~\cite{oliphant2006guide} library, Neural Networks algorithm of
+SciKit returns a result neither reasonable nor trustable. The result from the algorithm is a
 program exception with a $x86$ version of Python installed and a
 precision/recall equal to zero, meaning that the sum of true positives and false
 positives are equal to zero for one of the
@@ -393,8 +394,8 @@ scaling do not result in any better model in the current dataset.
 
 \subsection{Comparison}
 
-To sum up the section, Table~\ref{} demonstrates best results by all algorithms
-in a glimpse. We should admit that even best algorithm does not create a
+To sum up the section, Table~\ref{table:ds3:comparison} demonstrates best
+results by all algorithms in a glimpse. We should admit that even best algorithm does not create a
 magnificent model to predict. Knowing that a function $f$ which assigns one of
 two labels to a new instance randomely will leads to Precision $=$ Recall $=$
 $0.5$ in no time will cause a total disappointment. Thus there must be a lot of
