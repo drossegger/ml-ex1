@@ -1,17 +1,450 @@
-\section{-}
+\section{Funniest Youtube Video}
 \label{db:sec:ds3}
 \subsection{Description}
 
+The third dataset used during this experiment is called funniest youtube video.
+The dataset utilized for classification is called YouTube Comedy Slam Preference
+Data Data Set~\cite{}. The subject of this data is fairly interesting and
+challenging in many aspects. The dataset contains over $1,200,000$ number
+of instances. Each instance comprises two strings and a label where strings
+refer to IDs of videos on Youtube and the label expresses a vote by a
+user that mentions which one was funnier in the voter's opinion, either 'left'
+or 'right'.
+
+\subsection{Preparing data}
+
+As mentioned in latest section, the dataset contains only ID of a video and no
+more details. Thus it is up to the experimenter to select and find some features
+for each video. Luckily, Youtube provides a robust, easy-to-use API ~\cite{}
+which offers many useful data and information about videos and they are accessible having
+only ID of a video and a bit of knowledge about web technologies and
+exchange data structures. 
+
+Nonetheless there are some obstacles and defficulties
+in this path. The very first one is that many of the videos provided in the
+dataset are deleted either by uploders or Youtube due to copyright violations.
+Second problem is that Youtube consider immidiate consequtive requests from a
+client as a fraud and cuts information flow. As a result, the pace at which data
+acquisition is happening falls steeply due to many halts in the process of
+data acquisition to prevent blocking of data flow. This is why at the end, only
+$500,000$ instances of the dataset were inspected in a four-day non-stop data
+acquisition process, a process in which data on only around $50\%$ of the
+inspected instances, both right and left videos were found. Consequently, the
+final data set on which learning is performed, totally contains around $250,000$
+instances. Later we will see that this set is splitted to three different sets
+for further use.
+
+As it is mentioned, Youtube API provides service clients with many diverse types
+of information about videos from which some important features were selected for
+the final dataset, raw-dataset hereafter. In raw-dataset there is an instance
+row number, two IDs for two videos, a label indicating either 'left' or 'right'
+video and some new features. These new features are distinguished with 
+$R_{\ldots}$ and $L_{\ldots}$ for the right video and the left video
+respectively.
+Features of the raw-dataset are shown in Table~\ref{ds3:table:attributes}.
+
+Surprisingly, there are some missing values in the responses by Youtube API in
+the requested information of some videos. Therefore we have to deal with these
+missing values before reaching a reasonalbe model which is capable of predicting
+new entries.
+
+
+\begin{table}[p]
+	\begin{center}
+	\begin{tabular}{||l|l||}
+		\hline
+		
+		{\bf  Name} & {\bf Description}\\ \hline
+		Index & Row number.\\ \hline
+		LID & Youtube Id of the left video.\\ \hline
+		RID & Youtube Id of the right video.\\ \hline
+		(+) R\_userId & Uploader of right video.\\ \hline
+		(+) R\_commentHits & Number of comments on the right video. \\ \hline
+		(+) R\_ratingAverage & Rating average for the right video. $\in [0,5]$\\
+		\hline (+) R\_ratingMin & Mininum of rating for the right video. $\in
+		\{0,..,5\}$\\
+		\hline (+) R\_ratingMax & Maximum of the rating the right video. $\in
+		\{0,..,5\}$ \\ \hline
+		(+) R\_ratingCount & Number of ratings for the right video.\\ \hline
+		(+) R\_duration & Duration of the right video in seconds.\\ \hline
+		(+) R\_published & Date at which the right video is uploaded.\\ \hline
+		(+) R\_likeCount & Number of likes for the right video.\\ \hline
+		(+) R\_dislikeCount & Number of dislikes for the right video.\\ \hline
+		(+) R\_viewCount & Number of views for the right video.\\ \hline
+		(+) L\_userId & Uploader of left video.\\ \hline
+		(+) L\_commentHits & Number of comments on the left video.\\ \hline
+		(+) L\_ratingAverage & Rating average for the left video. $\in [0,5]$\\ \hline
+		(+) L\_ratingMin & Mininum of rating for the left video. $\in
+		\{0,..,5\}$\\ \hline
+		(+) L\_ratingMax & Maximum of the rating the left video. $\in
+		\{0,..,5\}$\\ \hline
+		(+) L\_ratingCount & Number of ratings for the left video.\\ \hline
+		(+) L\_duration & Duration of the left video in seconds.\\ \hline
+		(+) L\_published & Date at which the left video is uploaded.\\ \hline
+		(+) L\_likeCount & Number of likes for the left video.\\ \hline
+		(+) L\_dislikeCount & Number of dislikes for the left video.\\ \hline
+		(+) L\_viewCount & Number of views for the left video.\\ \hline
+		VotedIndex & Label $\in \{'right', 'left'\}$\\ \hline
+
+	\end{tabular}
+\end{center}
+	\caption{Raw-dataset Attributes. (+) means this attribute is fetched from
+	Youtube API.
+	\label{ds3:table:attributes}}
+\end{table}
+
+
+
+
+
+
 \subsection{Preprocessing}
+
+Before we can proceed to build a model for classification, there are some steps
+to follow in order to prepare data. These steps include mapping all
+non-numerical attributes to numericals due to the fact that most of the
+algorithms in classification specially implemented by SciKit only accept
+numerical data as input for learning.
+
+\subsubsection{Mapping Date and Time}
+
+First step is to map date and time information to numerical correspondence. In
+this experiment, all date and time information are mapped to float numbers by
+Epoch~\cite{} approach which what counts the number of seconds since January 
+$1^{st}$, $1970$. For instance, {\it 12/16/2013 10:40:21 AM GMT+1} becomes
+$1387186821.0$ by this mapping.
+
+\subsubsection{Categorical strings mapping}
+
+Second step is to map all string information to numerical. Better to say, all
+categorical strings which exists in the data should be mapped to a new number.
+For instance, {\it 'left'} $\to 0$ and {\it 'right'} $\to 1$ in the label
+column. This step of preprocessing works on label column as well as
+{\it R\_userId} and {\it L\_userId}.
+
+\subsubsection{Encoding categorical features} 
+
+In spite of mapping categorical features to numbers in the previous step, still
+a further effort is required before using the data in classifiers. The problem
+is that these numbers are not ready for the classifier since the classifier
+would consider and interpret them as being ordered while it is not desirable.
+One possibility is to convert them to a new form having not only numerical
+value, but also solving this problem. 
+
+Luckily there are some facilities in
+SciKit such as one-of-K and one-hot encodings, implemented in OneHotEncoder. 
+This function transforms each categorical
+   feature with $m$ possible values into $m$ binary features, with only one
+   active.
+
+Although it looks great and helpful, we will see that it is not always the best
+way since in this dataset, the mapping turns the dataset from under $30$
+dimensions to over $2700$ dimensions and it is not desirable in many algorithms
+which are highly affected by number of attributes such as {\it Support Vector
+Machines}.
+
+According to deep increase in the dimensionality of data due to encoding
+categorical features, meaning {\it R\_userId} and {\it L\_userId} here in our
+dataset, an idea bounces around to not only avoid this encoding, but also to
+discard these two features from the dataset. Thus as a solution to control
+dimensionality and keep simplicity, this approach is also taken into
+consideration.
+
+\subsubsection{Normalisation/Scaling}
+
+It is sometimes crucial to normalise data in order to achieve best result. It is
+highly probable that in many algorithms which demand on the distance of data, a
+column with larger numbers dominate all other ones. For instance, here we have
+seen that $1387186821.0$ as a mapped date and time is considerably lager than a
+float value $v_n \in [0,5]$.
+
+Standard scaling and {\it MinMax} scaling are used over the dataset and all
+results are shown with and without normalisation later in this report.
+
+\subsubsection{Missing values}
+
+As it is mentioned before, there are some missing values in the dataset. Missing
+value is not acceptable by any classifier so there are some approaches to deal
+with missing values. These approaches include eliminating instances containing
+missing values, using the most frequent value in the column, using the mean of
+the column and using the median of the column as a substitution to a missing
+value. All methods are tested and result are presented later.
+
+It should be noted that, here in this report all results hereafter are based on
+{\it most frequent} method in dealing with missing values, no
+normalisation/scaling and no {\it R\_userId} and {\it L\_userId} as the basis of
+experiment unless it is restrictly stated that any other data is used.
+
+
+\subsubsection{Splitting the dataset}
+
+As two previous datasets in sections ~\ref{} and ~\ref{}, current dataset is
+also splitted into three diverse subsets with approximately $60\%$, $20\%$ and
+respectively $20\%$ of the data as train, test and validation sets.
 
 \subsection{Logistic Regression}
 
+First algorithm by which a model for classification is tried to build is {\it
+Logistic Regression}. Not only once, but it is tried four times to find the best
+model created by this algorithm using different {\it C} parameter~\ref{} where
+$C \in \{0.1,0.5,1,10 \}$. Results can be seen in
+Table~\ref{table:ds3:logisticregression}. Also detailed information about the best practice with a combination of number of exponents
+and parameter C on the test set is shown in
+Table~\ref{table:ds3:logisticregression-test}.
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline \multicolumn{2}{ |c| }{C} & 0.1 & 2 & 5 & 10 \\
+
+\hline \multicolumn{1}{ |c| }{\multirow{3}{*}{Highest exponent} } & 1 & {\bf
+0.38} & 0.38 & 0.38 & 0.38 \\
+
+\cline{2-6} & 5 & 0.35 & 0.35 & 0.35 & 0.35 \\
+
+\cline{2-6} & 10 & 0.37 & 0.37 & 0.37 & 0.37 \\
+
+\hline
+\end{tabular}
+
+\caption{Funniest Youtube Video - Logistic Regressions F1-score}
+\label{table:ds3:logisticregression}
+\end{center}
+\end{table}
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline Class & Precision & Recall & F1-score & Support \\
+
+\hline 0 & 0.52 & 0.98 & 0.68 & 25857\\
+\hline 1 & 0.53 & 0.02 & 0.06 & 24066\\
+\hline avg / total & 0.52 & 0.52 & 0.38 & 49923\\
+\hline
+\end{tabular}
+
+\caption{Funniest Youtube Video - Logistic Regressions on Test dataset}
+\label{table:ds3:logisticregression-test}
+\end{center}
+\end{table}
+
 \subsection{Decision Tree}
 
-\subsection{$k$-nearest neighbor}
+Second algorithm to apply to the data is {\it Decision Tree}. As before, there
+are two modes of decision trees each one having different criterion $c$ where
+$ c \in\{ gini,entropy\}$ used to build a model on current data.
+
+Results are depicted in Table~\ref{table:ds3:decisiontree}. Also again detailed
+information of the best model is shown in
+Table~\ref{table:db2:decisiontree-test}. It is obvious that chosing between
+different criteria, doesn't help in finding any better model.
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline Criterion & F1-Score \\
+
+\hline Gini & 0.52 \\
+
+\hline Entropy & 0.52 \\
+
+\hline
+\end{tabular}
+
+\caption{Funniest Youtube Video - Decision Tree F1-score}
+\label{table:ds3:decisiontree}
+\end{center}
+\end{table}
+
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline Class & Precision & Recall & F1-score & Support \\
+
+\hline 0 & 0.50 & 0.54 & 0.52 & 24066\\
+\hline 1 & 0.54 & 0.49 & 0.51 & 25857\\
+\hline avg / total & 0.52 & 0.52 & 0.52 & 49923\\
+\hline
+\end{tabular}
+
+\caption{Funniest Youtube Video - Decision Tree on Test dataset}
+\label{table:db2:decisiontree-test}
+\end{center}
+\end{table}
+
+\subsection{$k$-nearest neighbors}
+
+Another engine for classification used in this experiment is {\it
+$k$-nearest neighbors}. From our previous experiment on regression, we observed
+that $k$-nearest neighbors can be utilized to build a reasonable model and
+predictor. In Table~\ref{table:ds3:knn} it is shown that how successful the
+classification experiment was with this algorithm using different number of neighbors. As you
+can see, best result is gained with $k=5$ and $k=10$ in $F1-Score$.
+Consequently, detailed information about the algorithm results with $k=10$ are
+presented in Table~\ref{table:ds3:knn-test}.
+
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline Number of Neighbors & F1-Score \\
+
+\hline 2 & 0.47 \\
+\hline 5 & {\bf 0.51} \\
+\hline 10 & {\bf 0.51} \\
+
+\hline
+\end{tabular}
+
+\caption{Funniest Youtube Video - K Nearest Neighbors  F1-score}
+\label{table:ds3:knn}
+\end{center}
+\end{table}
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline Class & Precision & Recall & F1-score & Support \\
+
+\hline 0 & 0.50 & 0.59 & 0.54 & 24066\\
+\hline 1 & 0.54 & 0.44 & 0.49 & 25857\\
+\hline avg / total & 0.52 & 0.51 & 0.51 & 49923\\
+\hline
+\end{tabular}
+
+\caption{Funniest Youtube Video - K Nearest Neighbors on Test dataset ($k=10$)}
+\label{table:ds3:knn-test}
+\end{center}
+\end{table}
+
+
 
 \subsection{Support Vector Machine}
 
+Time required by {\it Support Vector Machines} to create a model is highly
+dependant on the size of dataset in terms of dimensionality as well as number of
+instances. Hence, the process of building a model by support vector machines for
+the current dataset was stopped after three days with no results for a SVM with
+RBF kernel. Nevertheless, with linear kernel, it becomes feasible to create a
+model using SVM. Results brought by SVM are shown in Table~\ref{}
+
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline \multicolumn{2}{ |c| }{C} & 0.1 & 1 & 5 & 10 & 20 & 50 & 100 \\
+
+\hline \multicolumn{1}{ |c| }{\multirow{2}{*}{Kernel} } & Linear & 0.35 &
+0.38 & 0.38 & 0.38 & 0.38 & 0.38 & 0.38\\
+
+\cline{2-9} & RBF & - & - & - & -  & - & - & -\\
+
+\cline{2-9} & Polynomial & - & - & - & -  & - & - & -\\
+
+\hline
+\end{tabular}
+
+\caption{Funniest Youtube Video - SVM F1-score}
+\label{table:ds3:svm}
+\end{center}
+\end{table}
+
+
+
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline Class & Precision & Recall & F1-score & Support \\
+
+\hline 0 & 0.52 & 0.97 & 0.68 & 25857\\
+\hline 1 & 0.54 & 0.03 & 0.07 & 24066\\
+\hline avg / total & 0.53 & 0.52 & 0.38 & 49923\\
+\hline
+\end{tabular}
+
+\caption{Funniest Youtube Video - SVM on Test dataset}
+\label{table:ds3:svm-test}
+\end{center}
+\end{table}
+
+
 \subsection{Neural Networks}
 
+Due to some problems and limitations in the base on which SciKit is developed,
+meaning NumPy~\cite{} library, Neural Networks algorithm of SciKit returns
+a result neither reasonable nor trustable. The result from the algorithm is a
+program exception with a $x86$ version of Python installed and a
+precision/recall equal to zero, meaning that the sum of true positives and false
+positives are equal to zero for one of the
+classes with a $x64$ version of Python installed.
+
+
+\subsection{Different preprocessed data}
+
+Playing with possibilities of preprocessing of data resulted in many different
+data as train/test/validation sets. It is surprising to observe that the current
+combination of preprocessing operations leads to the best results. 
+
+In no case, there is any improvement in replacing missing values with mean or
+median of the column rather than most frequent one. Also normalisation and
+scaling do not result in any better model in the current dataset.
+
 \subsection{Comparison}
+
+To sum up the section, Table~\ref{} demonstrates best results by all algorithms
+in a glimpse. We should admit that even best algorithm does not create a
+magnificent model to predict. Knowing that a function $f$ which assigns one of
+two labels to a new instance randomely will leads to Precision $=$ Recall $=$
+$0.5$ in no time will cause a total disappointment. Thus there must be a lot of
+other things to do in order to find funniest video over Youtube. 
+
+However
+obviously among all algorithms, decision tree brought slightly better result.
+Despite it is strictly stated by data provider that instances of the original
+dataset are shuffled to avoid position bias, in some algorithms such as Logistic
+Regression family we observe such a bias where recalls for two classes are
+$0.03$ and $0.97$ respectively. The same happens to support vector machines.
+
+Another important point to consider is the amount of time required by support
+vector machines which is unbelievably higher than all others. Reference to the
+cost of this algorithm, presuming a learned support vector machine with encoded
+categorical attributes seems impossible with respect to the size of this report.
+
+\subsection{Future work on Funniest Youtube Video}
+
+An idea floating around is to duplicate training data. As stated before,
+features for two videos are in the form of $R_{\ldots}$ and $L_{\ldots}$ for the
+right and the left video and respectively a label, either {\it 'right'} or
+{\it'left'} indicates the video which is funnier. Supposing that we swap
+feature values of $video_{left}$ and $video_{right}$ pairwise and inverse the
+label, may cause a hugh difference in the result with respect to the fact that
+we are sure about truth of the new instance.
+
+This is one of the tasks remains to be tried for further experiments on the
+current dataset in order to find a predicting model for funniest video based on
+provided information about each video.
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|p{5cm}|c|c|c|p{2cm}|p{2cm}|}
+\hline Algorithm & Precision & Recall & F1-score & Training Time & Prediction Time \\
+\hline Logistic Regression, C=0.1, Exponent=1 & 0.52 & 0.52 & 0.38 & 01.027 &
+02.890\\
+\hline {\bf Decision Tree, Criterion=Gini} & 0.52 & 0.52 & {\bf 0.52} & 13.321 &
+1.807\\
+\hline K Nearest Neighbors, k=10 & 0.52 & 0.51 & 0.51 & 00.706 & 20.322 \\
+\hline SVM, Kernel=Linear, C=1 & 0.53 & 0.52 & 0.38 &
+2165.245 & 201.824\\
+\hline Neural Network & - & - & - & - & -\\
+\hline
+\end{tabular}
+\caption{Funniest Youtube Video - Comparison}
+\label{table:ds3:comparison}
+\end{center}
+\end{table}
+
+
+
+
