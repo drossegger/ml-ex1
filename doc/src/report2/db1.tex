@@ -51,9 +51,9 @@ Usually the number of nodes in hidden layer should be at least twice as number o
 We applied the best result ($Number of Layers=1$, $Number of Nodes=120$) on Validation dataset. The result is shown in Table\ref{ds1:table:nn-validation}. The result is as good as the best result of Test dataset.
 
 \subsection{Comparison}
-Table\ref{ds1:table:comparison} compares the between best run of each algorithm on Validation dataset based on the value of precision, recall, F1-score, learning time and prediction time.
+Table\ref{ds1:table:comparison} compares the best run of each algorithm on Validation dataset based on the value of precision, recall, F1-score, learning time and prediction time.
 
-Since SVM tends to have a better results among the other algorithm, its confusion matrix is depicted in Table \ref{ds1:table:confusionmatrix}
+Since SVM tends to have better results among the algorithms, its confusion matrix is depicted in Table \ref{ds1:table:confusionmatrix}
 Based on achieved results, following points can be infered:
 \begin{itemize}
 \item Using Standard Deviation instead of MinMax leads to better results in all cases.
@@ -75,7 +75,7 @@ Based on achieved results, following points can be infered:
 \end{figure}
 
 
-\begin{table}[p]
+\begin{table}[p!]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}
 \hline \multicolumn{2}{ |c| }{C} & 0.1 & 2 & 5 \\

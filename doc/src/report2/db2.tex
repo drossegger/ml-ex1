@@ -21,7 +21,7 @@ Looking at the instances the cause of this became obvious. For most of the prova
 \subsection{Preprocessing}
 We applied min max scaling as well as mean removal and variance scaling. It turned out that mean removal and variance scaling was the best scaling method. Imputation of missing values was not needed for this dataset but two attributes were removed because of redundancy. A test and validation dataset was used to tune the algorithms, $60\%$ of the dataset were used for training, $20\%$ were used for testing and validation respectively. 
 \subsection{Logistic Regression}
-Logistic Regression was applied with different parameters for the Regularization Strength ranging from $0.1$ to $5$. However changes in the parameters only minimally affected the quality of the model. Since the results only differed slightly in recall ($~0.01\%$) only the result of the best configuration is shown in Table~\ref{ds2:table:lr}. Interestingly Logistic Regression was not able to correctly classify instances of classes $3$ to $5$. This was the case with most of the algorithms, an intuitive explanation is given in Section~\ref{ds2:sec:comparison}. The model achieved similar results on the validation dataset.
+Logistic Regression was applied with different parameters for the Regularization Strength ranging from $0.1$ to $5$. However changing the parameters only minimally affected the quality of the model. Since the results only differed slightly in recall ($~0.01\%$) only the result of the best configuration is shown in Table~\ref{ds2:table:lr}. Interestingly Logistic Regression was not able to correctly classify instances of classes $3$ to $5$. This was the case with most of the algorithms, an intuitive explanation is given in Section~\ref{ds2:sec:comparison}. The model achieved similar results on the validation dataset.
 
 \begin{table}[p]
 \begin{center}
@@ -61,7 +61,7 @@ being $0.4$ and $0.3$ compared to $0.12$ and $0.10$. This might also be because 
 \begin{table}[p]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|c|c|c|}
-\hline Class & $0$ & $1$ & $2$ & $3$ &$4$  &$ 5$ & total \\
+			\hline \backslashbox{k}{Class} & $0$ & $1$ & $2$ & $3$ &$4$  &$ 5$ & total \\
 \hline $1$ & $0.76$ & $0.76$ & $0.26$ & $0.11$ & $0.11$ & $0.33$ & $0.69$ \\
 \hline $5$ & $0.74$ & $0.74$ & $0.14$ & $0.07$ & $0.09$ & $0.00$ & $0.66$ \\
 \hline $10$ & $0.73$ & $0.75$ &$0.18$ & $0.07$ & $0.00$ & $0.19$ & $0.66$ \\
@@ -79,7 +79,7 @@ Experiments with three different kernels, $rbf,linear,poly$ and different parame
 \begin{table}[p]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|c|c|c|}
-\hline Class & $0$ & $1$ & $2$ & $3$ &$4$  &$ 5$ & total \\
+		\hline \backslashbox{$C$}{Class} & $0$ & $1$ & $2$ & $3$ &$4$  &$ 5$ & total \\
 \hline $0.1$ & $0.62$ & $0.72$ & $0.17$ & $0$ & $0$ & $0$ & $0.60$ \\
 \hline $1$ & $0.71$ & $0.75$ & $0.27$ & $0$ & $0$ & $0$ & $0.66$ \\
 \hline $5$ & $0.74$ & $0.76$ &$0.28$ & $0.12$ & $0$ & $0$ & $0.68$ \\
@@ -89,15 +89,33 @@ Experiments with three different kernels, $rbf,linear,poly$ and different parame
 \hline
 	\end{tabular}
 	\end{center}
-	\caption{F1-Scores of Support Vector Machines with kernel $rbf$ and different penalty\label{ds2:table:svmf1}}
+	\caption{F1-Scores of Support Vector Machines with kernel $rbf$ and different penalty $C$\label{ds2:table:svmf1}}
 \end{table}
 
 \subsection{Neural Networks}
 Experiments were done with different number of hidden layers and different number of nodes. Interestingly neither of the parameters made any difference in the result. In general the result obtained was very bad, only predicting instances in class $0$ correctly. Even in this class the algorithm only achieved a precision of $0.42$ but at least the recall was very good, being $1.00$. Similar results were obtained using the test set. The different configurations used where $1,2,3,4$ hidden layers and $300,600,900,1200$ nodes. 
 \subsection{Comparison}
-Decision trees and $k$-nearest neighbor with $k=1$ gave the best result with a F$1$-score of $0-69$. Apart from getting the higher F$1$-score overall, they were also able to classify instances with labels $3-5$ correctly which most of the other algorithms could not. Most of the other algorithms despite \textit{neural networks} fell only	$1-4\%$ short.
-Looking at the class distribution visualized in Table~\ref{ds2:table:classes} it becomes obvious why all of the algorithms had problems labeling instances of the classes $2-5$ correctly since the number of instances labelled this way is very small, having only $~5\%$ of the dataset. The confusion matrix for decision trees with \textit{entropy} as classification criteria can be seen in Table~\ref{ds2:confmatrix}. It is highly visible that for classes $2-5$ it was very hard to do a correct prediction because of the small amount of data available. Most incorrectly-assigned labels where labelled with class $0$ or $1$, classes which contain many data.
+In Table~\ref{ds2:table:comparison} a comparison between the tuned algorithms can be seen. Decision trees and $k$-nearest neighbor with $k=1$ gave the best result with a F$1$-score of $0.69$. Apart from getting the higher F$1$-score overall, they were also able to classify instances with labels $3-5$ correctly which most of the other algorithms could not. Most of the other algorithms despite \textit{neural networks} fell only	marginally short but especially between $k$-nearest neighbors, decision tree and support vector machines it is hard to say which performed better. While support vector machines worked better on classifying instances of label $0$ and $1$, the other two were able to classify at least some of the instances labelled $4$ and $5$.
+\par Looking at the class distribution visualized in Table~\ref{ds2:table:classes} it becomes obvious why all of the algorithms had problems labeling instances of the classes $2-5$ correctly since the number of instances labelled this way is very small, having only $~5\%$ of the dataset. The confusion matrix for decision trees with \textit{giny} as classification criteria can be seen in Table~\ref{ds2:confmatrix}. It is highly visible that for classes $2-5$ it was very hard to do a correct prediction because of the small amount of data available. Most incorrectly-assigned labels where labelled with class $0$ or $1$, classes which contain many data.
 \par \textit{Neural networks} was by far the worst classification technique being immune to parameter change and giving bad results in the validation as well as in the test dataset.
+
+\begin{table}[p]
+\begin{center}
+\begin{tabular}{|p{5cm}|c|c|c|}
+\hline Algorithm & Precision & Recall & F1-score  \\
+\hline Logistic Regression, $C=2$ & $0.56$ & $0.62$ & $0.58$ \\
+\hline Decision Tree, Criterion=giny& $0.69$ & $0.69$ & $\mathbf{0.69}$ \\
+\hline K Nearest Neighbors, $k=1$ & $0.69$ & $0.69$ & $\mathbf{0.69}$ \\
+\hline SVM, $kernel=rbf$, $C=10$ & $0.66$ & $0.69$ & $0.68$ \\
+\hline Neural Network, $NL=1$, $N=300$ & $0.17$ & $0.42$ & $0.25$ \\
+\hline
+\end{tabular}
+\caption{First Order Theorem Proving - Comparison}
+\label{ds2:table:comparison}
+\end{center}
+\end{table}
+
+
 
 \begin{table}[p]
 	\begin{center}
@@ -112,6 +130,6 @@ Looking at the class distribution visualized in Table~\ref{ds2:table:classes} it
 		\hline
 		\end{tabular}
 	\end{center}
-		\caption{Confusion Matrix for Decision Tree with \textit{entropy}\label{ds2:confmatrix}}
+		\caption{Confusion Matrix for Decision Tree with \textit{giny}\label{ds2:confmatrix}}
 \end{table}
 \label{ds2:sec:comparison}
