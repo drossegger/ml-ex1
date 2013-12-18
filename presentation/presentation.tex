@@ -1,0 +1,402 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% MASTER FILE START
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{ifpdf}
+\ifpdf
+  \documentclass[ignoreframetext,envcountsect]{beamer}
+\else
+  \documentclass[ignoreframetext,dvips,trans,envcountsect]{beamer}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% PACKAGES
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[]{fontenc}         % select new font encodings
+\usepackage[utf8]{inputenc}  % select input encoding
+\usepackage{fancybox}          % nice boxes
+\usepackage{ifpdf}             % using the ifpdf conditional
+\usepackage{alltt}             % use tex-environments inside verbatim
+\usepackage{epsfig}            % another way to include eps-figures
+\usepackage{epic,eepic}        % extended picture environments 
+\usepackage{graphicx,color}    % support for including graphics
+\usepackage{latexsym}          % symbols
+\usepackage{xspace}            % intelligent space after macros
+\usepackage{url}               % url typeset correctly
+\usepackage{epstopdf}          % on-the-fly conversion of eps to pdf when needed
+\usepackage{lmodern}
+\DeclareGraphicsRule{.pdftex}{pdf}{.pdftex}{}
+\usepackage{bibentry}
+\usepackage{amstext,amssymb,amsbsy}
+\usepackage{amsmath}
+\usepackage{pifont}
+
+\usepackage{proof}
+\usepackage[normalem]{ulem}
+
+\usepackage{slidesec}
+
+\mode<article>
+{
+\usepackage{fullpage}
+}
+
+
+\newcommand{\sa}[0]{\textrm{a}}
+\newcommand{\se}[0]{\textrm{e}}
+\newcommand{\si}[0]{\textrm{i}}
+\newcommand{\so}[0]{\textrm{o}}
+\renewcommand{\sa}[0]{\mbox{$\mathrm{a}$}}
+\renewcommand{\se}[0]{\mbox{$\mathrm{e}$}}
+\renewcommand{\si}[0]{\mbox{$\mathrm{i}$}}
+\renewcommand{\so}[0]{\mbox{$\mathrm{o}$}}
+\nobibliography*
+\let\newblock\relax
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% CUSTOM BEAMER STYLE
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\useoutertheme{infolines}
+
+\setbeamersize{text margin left=0.5cm}
+\setbeamersize{text margin right=0.5cm}
+\setbeamercovered{invisible}
+
+%\definecolor{orange}{cmyk}{0,0.61,0.87,0}
+
+\newcommand{\emptyhead}{\vskip-4pt
+       \leavevmode
+       \hbox{
+       \begin{beamercolorbox}[wd=.96\paperwidth,leftskip=3ex]{title in head/foot}
+       \color{bg}
+       Empty Head
+       \hfill
+       \end{beamercolorbox}
+       }
+       \vskip0.75pt
+}
+
+\newcommand{\myhead}{\vskip-4pt
+       \leavevmode
+       \hbox{
+       \begin{beamercolorbox}[wd=.48\paperwidth,leftskip=3ex]{title in head/foot}
+       \insertpart
+       \hfill
+       \end{beamercolorbox}
+       \hfill
+       \begin{beamercolorbox}[wd=.48\paperwidth,rightskip=3ex]{title in head/foot}
+       \hfill
+       \insertframenumber/\inserttotalframenumber
+       \end{beamercolorbox}
+       }
+       \vskip0pt
+}
+
+\newcommand{\emptyfoot}{
+       \leavevmode
+       \hbox{
+       \begin{beamercolorbox}[wd=.96\paperwidth,leftskip=3ex]{title in head/foot}
+       \color{bg}
+       Empty Foot
+       \hfill
+       \end{beamercolorbox}
+       }
+       \vskip9.75pt
+}
+
+\newcommand{\myfoot}{
+       \leavevmode
+       \hbox{
+       \begin{beamercolorbox}[wd=.58\paperwidth,leftskip=3ex]{title in head/foot}
+       \insertshorttitle
+       \hfill
+       \end{beamercolorbox}
+       \hfill
+       \begin{beamercolorbox}[wd=.38\paperwidth,rightskip=3ex]{navigation symbols}
+       \hfill
+       \ifpdf
+       %\insertslidenavigationsymbol
+       %\insertframenavigationsymbol
+       %\insertsubsectionnavigationsymbol
+       %\insertsectionnavigationsymbol
+       %\insertdocnavigationsymbol
+       %\insertbackfindforwardnavigationsymbol
+       \fi
+       \end{beamercolorbox}
+       }
+       \vskip9pt
+}
+
+\newcommand{\myfootalt}{
+       \leavevmode
+       \hbox{
+       \begin{beamercolorbox}[wd=.38\paperwidth,leftskip=3ex]{navigation symbols}
+       \ifpdf
+       %\insertslidenavigationsymbol
+       %\insertframenavigationsymbol
+       %\insertsubsectionnavigationsymbol
+       %\insertsectionnavigationsymbol
+       %\insertdocnavigationsymbol
+       %\insertbackfindforwardnavigationsymbol
+       \fi
+       \hfill
+       \end{beamercolorbox}
+       \hfill
+       \begin{beamercolorbox}[wd=.58\paperwidth,rightskip=3ex]{title in head/foot}
+       \hfill
+       \insertframenumber/\inserttotalframenumber       
+       \end{beamercolorbox}
+       }
+       \vskip9pt
+}
+
+\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{headline}{\myhead}
+%\setbeamertemplate{footline}{\myfoot}
+\setbeamertemplate{footline}{\myfootalt}
+%\setbeamertemplate{footline}[text line]{}
+%\setbeamertemplate{headline}[text line]{}
+\setbeamertemplate{headline}{\emptyhead}
+%\setbeamertemplate{footline}{\emptyfoot}
+
+
+\setbeamertemplate{frametitle}{
+\begin{centering}
+    \insertframetitle\par
+\end{centering}
+}
+
+\setbeamertemplate{part page}{
+\begin{centering}
+\begin{beamercolorbox}[wd=\paperwidth]{title in head/foot}
+\begin{center}\vspace{2ex}\inserttitle\\[1ex]\insertpart\end{center}
+\end{beamercolorbox}
+\end{centering}
+\begin{centering}
+\insertauthor\par
+\end{centering}
+\begin{centering}
+\vspace*{1.5ex}{\scriptsize \insertinstitute}\par
+\end{centering}
+\vspace*{2ex}\par
+\begin{centering}
+\insertdate
+\end{centering}
+}
+
+\AtBeginPart{
+\frame[plain]{\partpage}
+\addtocounter{framenumber}{-1}
+}
+
+\mode<presentation>
+{
+\newtheorem{mybox}[]{}
+}
+
+\mode<article>
+{
+\newcommand{\mybox}{}
+}
+
+
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+%\newcommand{\blue}[1]{\textcolor{red!30!green!30!blue!90}{#1}}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\ifpdf
+  \newcommand{\yellow}[1]{\textcolor{orange}{#1}}
+\else
+  \newcommand{\yellow}[1]{\blue{#1}}
+\fi
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\white}[1]{\textcolor{white}{#1}}
+\newcommand{\black}[1]{\textcolor{black}{#1}}
+
+\mode<handout|trans|article>
+{
+\renewcommand{\yellow}[1]{\blue{#1}}
+}
+
+
+\newcommand{\bluearrow}{\blue{\Pisymbol{pzd}{228}}}
+\newcommand{\blueresarrow}{\large\blue{\Pisymbol{pzd}{229}}}
+\newcommand{\greenarrow}{\green{\Pisymbol{pzd}{228}}}
+\newcommand{\greenresarrow}{\large\green{\Pisymbol{pzd}{229}}}
+\newcommand{\redarrow}{\red{\Pisymbol{pzd}{228}}}
+\newcommand{\redresarrow}{\large\red{\Pisymbol{pzd}{229}}}
+\newcommand{\yellowarrow}{\yellow{\Pisymbol{pzd}{228}}}
+\newcommand{\yellowresarrow}{\large\yellow{\Pisymbol{pzd}{229}}}
+
+\newcommand{\cemph}[1]{\yellow {\emph{#1}}}
+%\newcommand{\myitem}{\item[\bluearrow]}
+\newcommand{\myitem}{\item[\Pisymbol{pzd}{228}]}
+\newcommand{\mi}{\myitem}
+%\newcommand{\bitem}{\item[\blue {\textbf{--}}]}
+\newcommand{\bitem}{\item[{\textbf{--}}]}
+%\newcommand{\resitem}{\item[\blueresarrow]}
+\newcommand{\resitem}{\item[\large{\Pisymbol{pzd}{229}}]}
+\newcommand{\h}{\yellow {$\Longrightarrow$}}
+
+\newcommand{\itarrow}{\yellow{\Pisymbol{pzd}{229}}}
+\newcommand{\ithook}{\yellow{\Pisymbol{pzd}{52}}}
+\newcommand{\itcross}{\yellow{\Pisymbol{pzd}{56}}}
+\newcommand{\ithand}{\yellow{\Pisymbol{pzd}{43}}}
+
+
+\newcommand{\gdw}[0]{~$\Longleftrightarrow$~}
+\newcommand{\commadots}[0]{,\ldots ,}
+\newcommand{\magenta}[1]{\textcolor{magenta}{#1}}
+%\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\renewcommand{\blue}[1]{\textcolor{red!30!green!30!blue!100}{#1}}
+\renewcommand{\magenta}[1]{\textcolor{red}{#1}}
+\newcommand{\Th}[1]{\mathit{Th}(#1)}
+\newcommand{\hence}{\;\dot{.\;.}\;}
+\newcommand{\quantifier}{{\sf Q}}
+\newcommand{\dt}{T=\langle W,D\rangle}
+\newcommand{\reduct}[2]{#1^{#2}}
+\newcommand{\Cn}[1]{\Th{#1}}
+
+
+\setbeamertemplate{itemize item}{\Pisymbol{pzd}{228}}
+\setbeamertemplate{itemize subitem}{{$\bullet$}}
+\setbeamertemplate{itemize subsubitem}{\textbf{--}}
+
+%
+% Use equal font size at all levels (of itemization and enumeration)
+%
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\normalsize}
+\setbeamerfont{itemize subitem}{size=\normalsize}
+\setbeamerfont{itemize subsubitem}{size=\normalsize}
+\setbeamerfont{enumerate subitem}{size=\normalsize}
+\setbeamerfont{enumerate subsubitem}{size=\normalsize}
+
+
+\mode<article>
+{
+\renewcommand{\labelitemi}{\blue{\Pisymbol{pzd}{228}}}
+\renewcommand{\labelitemii}{\blue{$\bullet$}}
+\renewcommand{\labelitemiii}{\blue{\textbf{--}}}
+\renewcommand{\myitem}{\item[\bluearrow]}
+\renewcommand{\bitem}{\item[\blue {\textbf{--}}]}
+\renewcommand{\resitem}{\item[\blueresarrow]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+}
+
+\mode<handout|trans>
+{
+\beamertemplatenavigationsymbolsempty
+}
+
+\ifpdf
+\else
+\mode<beamer>
+{
+  \beamertemplatenavigationsymbolsempty
+}
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% MACROS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\AND     { \,\wedge\,                 }
+\def\OR      { \,\vee\,                   }
+\def\XOR     { \,\stackrel{.}{\vee}\,     }
+\def\IMPLIES { \,\supset\,                }
+\def\IMPL    { \,\supset\,                }
+\def\IF      { \,\leftarrow\,             }
+\def\IFF     { \,\equiv\,         }
+\def\IFFdef  { \,\stackrel{\rm def}{\longleftrightarrow}\, }
+
+\newcommand{\iec}[0]{i.e.,\ }
+\newcommand{\egc}[0]{e.g.,\ }
+\newcommand{\ra}[0]{\rightarrow}
+\newcommand{\Ra}[0]{$\Rightarrow$\ }
+\newcommand{\bi}[0]{\begin{itemize}\itemsep=+.5ex}
+\newcommand{\ei}[0]{\end{itemize}}
+\newcommand{\bdescr}[0]{\begin{description}}
+\newcommand{\edescr}[0]{\end{description}}
+\newcommand{\be}[0]{\begin{enumerate}\itemsep=+.5ex}
+\newcommand{\ee}[0]{\end{enumerate}}
+
+\newcommand\nop[1]{}
+\newif\ifmakebbl
+\newcommand{\sld}{\mode<presentation>}
+\newcommand{\lns}{\mode<article>}
+
+
+
+%%%%%%%%%%%%%% SPACING COMMANDS 
+
+\newcommand{\nbls}{\vspace*{-1\baselineskip}}
+\newcommand{\hnbls}{\vspace*{-.5\baselineskip}}
+\newcommand{\tnbls}{\vspace*{-.33\baselineskip}}
+\newcommand{\qnbls}{\vspace*{-.25\baselineskip}}
+
+\newcommand{\bls}{\vspace*{1\baselineskip}}
+\newcommand{\hbls}{\vspace*{.5\baselineskip}}
+\newcommand{\tbls}{\vspace*{.33\baselineskip}}
+\newcommand{\qbls}{\vspace*{.25\baselineskip}}
+
+\newcommand{\bs}{\bigskip}
+\newcommand{\ms}{\medskip}
+% \newcommand{\b}{\bigskip}
+\newcommand{\m}{\medskip}
+\newcommand{\s}{\smallskip}
+\newcommand{\sm}{\smallskip}
+
+%\input{macro.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% DOCUMENT PROPERTIES
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Exercise 1}
+\author[S. Mortezapoor,N. Rekabsaz,D. Rossegger]{Soroosh Mortezapoor, Navid Rekabsaz, Dino Rossegger}
+\institute{VU Machine Learning WS 13/14}
+\date[19.12.2013]{December, $19^{th}$, 2013}
+\subject{Exercise 1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% DOCUMENT START
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\frame[plain]{\titlepage}
+\lns{\maketitle}
+
+\addtocounter{framenumber}{-1}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Themen
+\input{general}
+\input{db1}
+\input{db2}
+\input{db3}
+\input{conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
+
