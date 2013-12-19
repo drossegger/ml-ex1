@@ -1,0 +1,111 @@
+\begin{frame}{Auto MPG (Miles Per Gallon)}
+
+
+\bi
+\mi Auto MPG (Miles Per Gallon)
+\mi $398\times8$
+\mi Missing value in the forth column
+\begin{enumerate}
+    \item horsepower 
+  \end{enumerate}
+\ei
+\begin{columns}[t] % contents are top vertically aligned
+     \begin{column}[T]{7cm} % each column can also be its own environment
+     
+     \end{column}
+     \begin{column}[T]{5cm} % alternative top-align that's better for graphics
+          \includegraphics[height=2.5cm]{fig/FuelGauge.jpg}
+     \end{column}
+ \end{columns}
+
+\end{frame}
+
+\begin{frame}{Auto MPG (Miles Per Gallon)}
+
+\begin{tcolorbox}[colback=LightSteelBlue!5,colframe=yellow!40!black,title=Preprocessing]
+
+\bi
+\mi Standardize data
+\begin{itemize}
+    \item Standard scale
+  \end{itemize}
+
+  \mi Missing Values
+\begin{itemize}
+    \item Mean
+    \item Median
+    \item Most Frequent
+  \end{itemize}
+\ei
+
+
+\end{tcolorbox}
+\end{frame}
+
+\begin{frame}{Auto MPG (Miles Per Gallon)}
+\begin{tcolorbox}[colback=LightSteelBlue!5,colframe=yellow!40!black,title=Final
+Comparison]
+
+
+\begin{table}
+\centering
+\resizebox{\columnwidth}{!}
+	{
+		\begin{tabular}{|p{4cm}|c|c|c|c|}
+		\hline Algorithm and Parameters & Imputation & Bias Mean & Bias Std & Execution Time(s)\\
+		
+		\hline Linear Ridge Regression, $\alpha=0.1$ & Mean & $9.152$ & $3.891$ & $00.027$ \\
+		
+		\hline Polynomial Ridge Regression, highest exponent$=32$, $\alpha=0.1$ & Mean & $\mathbf{1.127}$ & $2.895$ & $00.155$  \\
+		
+		\hline nearest neighbors $k=18$ & Mean & $6.62$ & $3.36$ & $00.02$  \\
+		
+		\hline SVM & Mean & $5.76$ & $\mathbf{2.044}$ & $00.118$  \\
+		
+		\hline SGD, loss function$=$squaredloss & Mean & $8.682$ & $3.87$ & $\mathbf{00.003}$  \\
+		
+		\hline Neural Networks, Hidden Layers$=1$, Nodes Count$=20$ & Mean & $6.25$ & $3.47$ & $00.83$  \\
+		
+		\hline
+		\end{tabular}
+	}
+
+
+
+\end{table}
+
+
+
+\end{tcolorbox}
+\end{frame}
+
+\begin{frame}{Auto MPG (Miles Per Gallon)}
+\begin{center}
+\includegraphics[height=8cm]{../doc/src/report1/figures/mpg_bestresults.png}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Auto MPG (Miles Per Gallon)}
+
+
+\begin{tcolorbox}[colback=LightSteelBlue!5,colframe=yellow!40!black,title=Facts]
+
+\bi
+  \mi Best results:
+  \begin{itemize}
+    \item Polynomial Ridge Regression
+    \item SVM
+  \end{itemize}
+  \mi SVM, more stable
+  \mi SGD, inappropriate model.
+  \mi Neural
+  Networks $\to$ the longest execution time
+  \mi SGD $\to$ the shortest execution time
+  \mi Mean is the best Imputation technique
+\ei
+
+
+\end{tcolorbox}
+
+\end{frame}
