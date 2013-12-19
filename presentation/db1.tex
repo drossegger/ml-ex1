@@ -4,7 +4,7 @@
 \bi
 \mi Auto MPG (Miles Per Gallon)
 \mi $398\times8$
-\mi Missing value in the forth column
+\mi Missing value in the fourth column
 \begin{enumerate}
     \item horsepower 
   \end{enumerate}
@@ -27,7 +27,7 @@
 \bi
 \mi Standardize data
 \begin{itemize}
-    \item Standard scale
+    \item Standardization scaling ($x'=\frac{x-\mu}{\sigma^2}$)
   \end{itemize}
 
   \mi Missing Values
@@ -52,19 +52,22 @@ Comparison]
 \resizebox{\columnwidth}{!}
 	{
 		\begin{tabular}{|p{4cm}|c|c|c|c|}
-		\hline Algorithm and Parameters & Imputation & Bias Mean & Bias Std & Execution Time(s)\\
+		\hline Algorithm & Imputation &  Mean &  Std & Execution Time(s)\\
 		
 		\hline Linear Ridge Regression, $\alpha=0.1$ & Mean & $9.152$ & $3.891$ & $00.027$ \\
 		
-		\hline Polynomial Ridge Regression, highest exponent$=32$, $\alpha=0.1$ & Mean & $\mathbf{1.127}$ & $2.895$ & $00.155$  \\
+		\hline Polynomial Ridge Regression, $highest\_exponent=32$, $\alpha=0.1$ &
+		Mean & $\mathbf{1.127}$ & $2.895$ & $00.155$  \\
 		
-		\hline nearest neighbors $k=18$ & Mean & $6.62$ & $3.36$ & $00.02$  \\
+		\hline $k-$nearest neighbors $k=18$ & Mean & $6.62$ & $3.36$ &
+		$00.02$  \\
 		
 		\hline SVM & Mean & $5.76$ & $\mathbf{2.044}$ & $00.118$  \\
 		
-		\hline SGD, loss function$=$squaredloss & Mean & $8.682$ & $3.87$ & $\mathbf{00.003}$  \\
+		\hline SGD, $squared\_loss$ & Mean & $8.682$ & $3.87$ & $\mathbf{00.003}$  \\
 		
-		\hline Neural Networks, Hidden Layers$=1$, Nodes Count$=20$ & Mean & $6.25$ & $3.47$ & $00.83$  \\
+		\hline Neural Networks, $hidden\_layers=1$, $nodes=20$ & Mean & $6.25$ &
+		$3.47$ & $00.83$  \\
 		
 		\hline
 		\end{tabular}
