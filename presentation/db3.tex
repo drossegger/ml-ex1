@@ -1,0 +1,122 @@
+\begin{frame}{Electric Power Consumption}
+
+\begin{tcolorbox}[colback=white!5,colframe=yellow!40!black,title=Charactrestics]
+\bi
+\mi One-minute-sampling of electric power consumption  
+\begin{enumerate}
+    \item in households
+    \item over almost $4$ years
+    \item total + three different categories 
+
+  \end{enumerate}
+\mi Electric Power Consumption\\
+$2,075,259\times3$
+\mi $1.25\%$ missing values
+\ei
+\begin{columns}[t] % contents are top vertically aligned
+     \begin{column}[T]{7cm} % each column can also be its own environment
+     
+     \end{column}
+     \begin{column}[T]{5cm} % alternative top-align that's better for graphics
+          \includegraphics[height=3cm]{fig/each.jpg}
+     \end{column}
+     \end{columns}
+\end{tcolorbox}
+
+
+
+
+\end{frame}
+
+\begin{frame}{Electric Power Consumption}
+\begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=Preprocessing]
+
+\bi
+\mi Date and Time
+\begin{enumerate}
+    \item Ticks {\tiny (100-nanosecond ticks since $\ldots$)}
+    \item Epoch$_{Unix Time}$ {\tiny (Seconds since (UTC), Thursday, 1
+    January 1970) }
+  \end{enumerate}
+\mi Normalisation/Scaling
+\begin{enumerate}
+    \item Z-Core 
+    \item MinMax 
+  \end{enumerate}
+  
+  \mi Missing Values
+\begin{enumerate}
+    \item Three to one mapping 
+    \item Eliminated
+  \end{enumerate}
+\ei
+
+
+\end{tcolorbox}
+\end{frame}
+
+\begin{frame}{Electric Power Consumption}
+\begin{tcolorbox}[colback=blue!5,colframe=gray!40!black,title=Final
+Comparison]
+
+
+
+
+\begin{table}
+\begin{center} 
+\resizebox{\columnwidth}{}
+	{
+		\begin{tabular}{|c|c|c|c|c|}
+					\hline \multirow &&& $1^{st}$ quartile
+					&\\{Algorithm}&Mean&Standard Deviation&Median& Runtime (s)\\&&& $3^{rd}$
+					quartile &\\
+					\hline \multirow&&&$-3.19193$&\\
+					{Linear Ridge
+		Regression}& $0.05528$ & $6.70155$  & $-0.07853$ & $\bf {0.252}$\\
+					 ($\alpha = 0.1$)&&&$1.97658$& \\
+					\hline \multirow&&&$\bf {-0.50000}$&\\
+					\bf {{$k-$Nearest Neighbors}}& $\bf {0.02874}$ & $\bf {3.88777}$  &
+					$0.00000$ & $5.975$\\
+					 ($k = 2$)&&&$\bf {0.50000}$& \\
+					\hline \multirow&&&$-2.23407$&\\
+					{Stochastic Gradient Descent }& $0.80390$ & $6.81799$  & $0.02416$ &
+					$4.388$\\
+					({\it huber}, $\epsilon = 0.1$ )&&&$1.93741$& \\
+					\hline \multirow&&&$-$&\\
+					{Support Vector Machine }& $-$ & $-$  & $-$ &
+					$-$\\
+					&&& $-$ & \\
+					\hline
+
+		\end{tabular}
+	}
+\end{center}
+
+
+\end{table}
+\end{tcolorbox}
+\end{frame}
+
+\begin{frame}{Electric Power Consumption}
+
+
+\begin{tcolorbox}[colback=red!5,colframe=red!40!black,title=Preprocessing's
+impact]
+
+\bi
+\mi Date and Time 
+\begin{enumerate}
+    \item $\mapsto$ Epoch
+  \end{enumerate}
+  
+  \mi Normalisation/Scaling 
+\begin{enumerate}
+    \item Better results neither with MinMax nor Z-Core
+  \end{enumerate}
+  
+\ei
+
+
+\end{tcolorbox}
+
+\end{frame}
