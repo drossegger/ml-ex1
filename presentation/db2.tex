@@ -1,6 +1,57 @@
-\begin{frame}{Year Prediction MSD - $k-$nearest neighbor}
+\begin{frame}{Year Prediction MSD - Facts}
+	\bi
+	\mi predict release year of songs
+	\mi $515,345 \times 90$
+	\bi
+
+\item	$463,715$ training set
+\item $51,630$ test set
+	\ei
+	\mi no missing values
+	\mi only numerical features
+	\bs
+	\mi Standardization scaling ($x'=\frac{x-\mu}{\sigma^2}$)
+	\ei
+\end{frame}
+\begin{frame}{Year Prediction MSD - $k-$nearest neighbors}
 		\begin{figure}
 		\includegraphics[scale=0.42]{../doc/src/report1/figures/ypmsd_nnr.png}
-		\caption{Boxplot of $k-$nearest neighbor}
+		\caption{Boxplot of $k-$nearest neighbors}
 		\end{figure}
+\end{frame}
+
+\begin{frame}{Year Prediction MSD - Conclusion}
+\begin{tcolorbox}[colback=LightSteelBlue!5,colframe=yellow!40!black,title=Final
+Comparison]
+
+\begin{table}
+
+\resizebox{\columnwidth}{!}{
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline \multirow{3}{*}{Algorithms} &					&												 & $1^{st}$ quartile & \\
+																				 &	Mean 		&		Standard 	Deviation	 & Median						 & Runtime (s)\\
+																				 &					&												 & $3^{rd}$ quartile & \\
+    	\hline \multirow{3}{*}{Linear Ridge $\alpha=0.5$}&						&						&	$-5.9060$ &\\
+															& $-0.1905$ & $9.5122$  & $-1.7070$ & $39.9399$\\
+																										&						&						&	$3.3120$& \\
+			\hline \multirow{3}{*}{Nearest Neighbor $k=5$}&						&						&	$-6.0000$ &\\
+																		 		& $-0.1716$ & $10.2283$  & $-1.4000$ & $8070.12$\\
+																										&						&						&	$4.0000$& \\
+			\hline \multirow{3}{*}{SGD $squared\_loss$} &						&						&	$-5.80100$ &\\
+										& $0.00162$ & $9.6652$  & $-1.45400$ & $1.6416$\\
+																	&						&						&	$3.69600$& \\
+																										\hline
+
+		\end{tabular}
+}
+\end{table}
+\bi
+\mi SVM killed after $16$ hours
+\ei
+\end{tcolorbox}
+\end{frame}
+\begin{frame}{Year Prediction MSD - Conclusion}
+		\begin{figure}
+		\includegraphics[scale=0.42]{../doc/src/report1/figures/ypmsd_conclusion.png}
+	\end{figure}
 \end{frame}
