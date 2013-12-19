@@ -9,8 +9,8 @@
     \item total + three different categories 
 
   \end{enumerate}
-\mi Electric Power Consumption\\
-$2,075,259\times3$
+\mi Electric Power Consumption
+\mi $2,075,259\times9$
 \mi $1.25\%$ missing values
 \ei
 \begin{columns}[t] % contents are top vertically aligned
@@ -29,6 +29,7 @@ $2,075,259\times3$
 \end{frame}
 
 \begin{frame}{Electric Power Consumption}
+
 \begin{tcolorbox}[colback=green!5,colframe=green!40!black,title=Preprocessing]
 
 \bi
@@ -60,29 +61,27 @@ $2,075,259\times3$
 Comparison]
 
 
-
-
 \begin{table}
-\begin{center} 
-\resizebox{\columnwidth}{}
+\centering
+\resizebox{\columnwidth}{!}
 	{
 		\begin{tabular}{|c|c|c|c|c|}
-					\hline \multirow &&& $1^{st}$ quartile
+					\hline  &&& $1^{st}$ quartile
 					&\\{Algorithm}&Mean&Standard Deviation&Median& Runtime (s)\\&&& $3^{rd}$
 					quartile &\\
-					\hline \multirow&&&$-3.19193$&\\
+					\hline &&&$-3.19193$&\\
 					{Linear Ridge
 		Regression}& $0.05528$ & $6.70155$  & $-0.07853$ & $\bf {0.252}$\\
 					 ($\alpha = 0.1$)&&&$1.97658$& \\
-					\hline \multirow&&&$\bf {-0.50000}$&\\
+					\hline &&&$\bf {-0.50000}$&\\
 					\bf {{$k-$Nearest Neighbors}}& $\bf {0.02874}$ & $\bf {3.88777}$  &
 					$0.00000$ & $5.975$\\
 					 ($k = 2$)&&&$\bf {0.50000}$& \\
-					\hline \multirow&&&$-2.23407$&\\
+					\hline &&&$-2.23407$&\\
 					{Stochastic Gradient Descent }& $0.80390$ & $6.81799$  & $0.02416$ &
 					$4.388$\\
 					({\it huber}, $\epsilon = 0.1$ )&&&$1.93741$& \\
-					\hline \multirow&&&$-$&\\
+					\hline &&&$-$&\\
 					{Support Vector Machine }& $-$ & $-$  & $-$ &
 					$-$\\
 					&&& $-$ & \\
@@ -90,10 +89,13 @@ Comparison]
 
 		\end{tabular}
 	}
-\end{center}
+
 
 
 \end{table}
+
+
+
 \end{tcolorbox}
 \end{frame}
 
