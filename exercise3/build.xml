@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Jan 9, 2014 4:30:43 PM                                                        
+
+     ML-Ex3    
+     description
+                   
+     dino,navid, soroosh                                                              
+     ====================================================================== -->
+<project name="ml-ex3" default="compile" basedir=".">
+	<description>
+            description
+    </description>
+	<!-- Variables -->
+	<property name="weka.dir" value="/home/dino/opt/weka" />
+
+
+	<!-- Define the CLASSPATH -->
+	<path id="compile.classpath">
+		<fileset dir="${weka.dir}/weka">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${weka.dir}/weka/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+
+	<!-- ================================= 
+          target: clean              
+         ================================= -->
+	<target name="clean" description="Delete all generated files">
+		<delete dir="classes" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: compile                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="compile" description="Compile the project">
+		<mkdir dir="classes" />
+		<javac srcdir="." destdir="classes" classpathref="compile.classpath"/>
+	</target>
+	<!-- - - - - - - - - - - - - - - - - - 
+	          target: jar                      
+	     - - - - - - - - - - - - - - - - - -->
+	<target name="jar" depends="compile" description="create a Jar file for the application">
+		<jar destfile="ml-ex3.jar">
+			<fileset dir="classes" includes="**/*.class" />
+			<manifest>
+				<attribute name="Main-Class" value="main.Exercise3" />
+			</manifest>
+		</jar>
+	</target>
+	<!-- - - - - - - - - - - - - - - - - - 
+		          target: run                      
+		     - - - - - - - - - - - - - - - - - -->
+	<!--<target name="run" depends="compile" description="runs the project">
+		<java classname="main.Exercise3"/>
+	</target>
+	-->
+
+</project>
