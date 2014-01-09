@@ -13,6 +13,7 @@
     </description>
 	<!-- Variables -->
 	<property name="weka.dir" value="/home/dino/opt/weka" />
+	<property name="lib.dir" value="/home/dino/opt/lib" />
 
 
 	<!-- Define the CLASSPATH -->
@@ -22,6 +23,9 @@
 		</fileset>
 		<fileset dir="${weka.dir}/weka/lib">
 			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${lib.dir}">
+			<include name="commons-cli*.jar"/>
 		</fileset>
 	</path>
 
