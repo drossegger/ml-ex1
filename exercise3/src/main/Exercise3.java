@@ -1,5 +1,7 @@
 package main;
 
+import input.CMDReader;
+
 public class Exercise3 {
 
 	/**
@@ -14,7 +16,11 @@ public class Exercise3 {
 		}
 		else
 			System.out.println("No feature set");
-		
+		String s[]=cmd.getParameters();
+		for(int i=0;i<s.length;i++){
+			System.out.println(s[i]);
+		}
+			
 	}
 
 }
