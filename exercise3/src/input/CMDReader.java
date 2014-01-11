@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
@@ -58,6 +59,14 @@ public class CMDReader {
 	}
 	public String getInstanceDir(){
 		return cli.getOptionValue("d");
+	}
+	public boolean isDirSet(){
+		return cli.hasOption("d");
+		
+	}
+	public void printUsage(){
+		HelpFormatter formatter=new HelpFormatter();
+		formatter.printHelp("exercise3", options);
 	}
 	
 };
