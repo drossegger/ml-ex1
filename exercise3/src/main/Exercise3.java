@@ -33,20 +33,8 @@ public class Exercise3 {
 				printErrorMsg(e.getLocalizedMessage());
 			}
 			//IFeatureSelector fs[]=new IFeatureSelector[l.size()];
-			for(Instances i : l){
-				IFeatureSelector fs=new MyFeatureSelector();
-				fs.setData(i);
-				if(fs.select()){
-					try {
-						int selectedAttrib[]=fs.getSelectedAttributes();
-						System.out.println(Utils.arrayToString(selectedAttrib));
-					} catch (Exception e) {
-						printErrorMsg("Could not read selected attributes");
-						
-					}
-					
-				}
-			}
+			RunTests rt=new RunTests(l);
+			rt.featureSelection();
 		}
 		
 			
