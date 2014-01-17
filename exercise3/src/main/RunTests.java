@@ -37,8 +37,15 @@ public class RunTests {
 					try {
 						int selectedAttrib[]=selectionmethods[i].getSelectedAttributes();
 						System.out.println("	Selected attributes: "+Utils.arrayToString(selectedAttrib));
+						//selectionmethods[i].printResults();
+						System.out.println("	Attribute ranks: ");
+						double attribrank[][]=selectionmethods[i].getAttributeRank();
+						for (int j=0;j<attribrank.length;j++){
+							System.out.println(attribrank[j][0]+";"+attribrank[j][1]);
+						}
 					} catch (Exception e) {
 						Exercise3.printErrorMsg("Could not read selected attributes");
+						e.printStackTrace();
 					}
 				}
 				else{

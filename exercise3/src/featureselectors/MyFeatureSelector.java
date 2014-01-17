@@ -2,7 +2,9 @@ package featureselectors;
 
 import weka.attributeSelection.AttributeSelection;
 import weka.attributeSelection.CfsSubsetEval;
+import weka.attributeSelection.GainRatioAttributeEval;
 import weka.attributeSelection.GreedyStepwise;
+import weka.attributeSelection.Ranker;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -19,14 +21,16 @@ public class MyFeatureSelector implements IFeatureSelector {
 	public boolean select() {
 		attsel = new AttributeSelection();
 															
-		CfsSubsetEval eval = new CfsSubsetEval();
-		GreedyStepwise search = new GreedyStepwise();
-		search.setSearchBackwards(true);
-		attsel.setEvaluator(eval);
-		attsel.setSearch(search);
+		//CfsSubsetEval eval = new CfsSubsetEval();
+		//GreedyStepwise search = new GreedyStepwise();
+		//search.setSearchBackwards(true);
+		attsel.setEvaluator(new GainRatioAttributeEval());
+		attsel.setSearch(new Ranker());
+		attsel.setRanking(true);
 		try {
 			attsel.SelectAttributes(data);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 		return true;
@@ -39,8 +43,17 @@ public class MyFeatureSelector implements IFeatureSelector {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "MyFeatureSelectionAlgorithm";
+	}
+
+	@Override
+	public double[][] getAttributeRank() throws Exception {
+		//attsel.setRanking(true);
+		return attsel.rankedAttributes();
+	}
+	@Override
+	public void printResults(){
+		attsel.toResultsString();
 	}
 
 }
