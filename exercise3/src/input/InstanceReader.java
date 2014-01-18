@@ -9,6 +9,8 @@ import weka.core.converters.ConverterUtils.DataSource;
 
 public class InstanceReader {
 	private final File path;
+	
+	public List <String> instaceAddresses = new LinkedList <String>();
 
 	public InstanceReader(String path) {
 		this.path = new File(path);
@@ -25,6 +27,7 @@ public class InstanceReader {
 		})) {
 			DataSource source = new DataSource(file.getAbsolutePath());
 			l.add(source.getDataSet());
+			instaceAddresses.add(file.getName());
 
 		}
 		return l;

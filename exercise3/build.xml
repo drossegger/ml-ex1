@@ -12,16 +12,13 @@
             description
     </description>
 	<!-- Variables -->
-	<property name="weka.dir" value="/home/dino/opt/weka" />
-	<property name="lib.dir" value="/home/dino/opt/lib" />
+	<property name="weka.dir" value="C:\Program Files\Weka-3-6" />
+	<property name="lib.dir" value="commons-cli-1.2" />
 
 
 	<!-- Define the CLASSPATH -->
 	<path id="compile.classpath">
-		<fileset dir="${weka.dir}/weka">
-			<include name="*.jar" />
-		</fileset>
-		<fileset dir="${weka.dir}/weka/lib">
+		<fileset dir="${weka.dir}">
 			<include name="*.jar" />
 		</fileset>
 		<fileset dir="${lib.dir}">
