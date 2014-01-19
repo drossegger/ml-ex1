@@ -22,58 +22,76 @@ public class Exercise3 {
 
 	/**
 	 * @param args
-	 * @throws UnsupportedEncodingException 
-	 * @throws FileNotFoundException 
+	 * @throws UnsupportedEncodingException
+	 * @throws FileNotFoundException
 	 */
-	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+	public static void main(String[] args) throws FileNotFoundException,
+			UnsupportedEncodingException {
 		// TODO Auto-generated method stub
 		System.out.println("Started");
-		
-		CMDReader cmd=new CMDReader();
+
+		CMDReader cmd = new CMDReader();
 		cmd.parse(args);
-		if(!cmd.isDirSet()){
-	    		printErrorMsg("Instance directory not set");
+		if (cmd.isListTechniques()) {
+			printTechniques();
+		} else if (!cmd.isDirSet()) {
+			printErrorMsg("Instance directory not set");
 			cmd.printUsage();
+		} else if (cmd.useFeature()) {
+			runWithFeatures(cmd.getFeatures(), cmd.getInstanceDir());
 		}
+
 		else
-		{
-			InstanceReader ir=new InstanceReader(cmd.getInstanceDir());
-			
-			
+			runWithFeatures(null, cmd.getInstanceDir());
+
+	}
+
+	public static void printErrorMsg(String error) {
+		System.err.println("Err: " + error);
+
+	}
+
+	public static void printTechniques() {
+		System.out.format("%s%10s%10s", "name", "Search", "Eval");
+	}
+
+	public static void runWithFeatures(String[] features, String instancedir) {
+		if (features == null) {
+			InstanceReader ir = new InstanceReader(instancedir);
+
 			List<Instances> l = null;
 			try {
-				l=ir.read();
+				l = ir.read();
 			} catch (Exception e) {
 				printErrorMsg("Could not read instances");
 				printErrorMsg(e.getLocalizedMessage());
 			}
-			
+
 			List<FeatureSelectorBaseRanker> _selectorBases = new LinkedList<FeatureSelectorBaseRanker>();
-			
+
 			_selectorBases.add(new MyFeatureSelectorRanker()
-									.setFeatureSelectorName("ReliefFAttributeEval-Ranker")
-									.setEvaluator(new ReliefFAttributeEval())
-									.setSearcher(new Ranker())
-									.setResultThreshold(50));
-			
-			
+					.setFeatureSelectorName("ReliefFAttributeEval-Ranker")
+					.setEvaluator(new ReliefFAttributeEval())
+					.setSearcher(new Ranker()).setResultThreshold(50));
+
 			_selectorBases.add(new MyFeatureSelectorRanker()
-									.setFeatureSelectorName("InfoGain-Ranker")
-									.setEvaluator(new InfoGainAttributeEval())
-									.setSearcher(new Ranker())
-									.setResultThreshold(50));
-			
-			
-			String[] _instanceNames = ir.instaceAddresses.toArray(new String[]{});
-			RunTests rt = new RunTests(l,_selectorBases.toArray(new FeatureSelectorBaseRanker[]{}) ,_instanceNames);
-			rt.featureSelection();
+					.setFeatureSelectorName("InfoGain-Ranker")
+					.setEvaluator(new InfoGainAttributeEval())
+					.setSearcher(new Ranker()).setResultThreshold(50));
+
+			String[] _instanceNames = ir.instaceAddresses
+					.toArray(new String[] {});
+			RunTests rt = new RunTests(l,
+					_selectorBases.toArray(new FeatureSelectorBaseRanker[] {}),
+					_instanceNames);
+			try {
+				rt.featureSelection();
+			} catch (FileNotFoundException | UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
-			
-	}
-	public static void printErrorMsg(String error){
-		System.err.println("Err: "+error);
-		
+
 	}
 
 }

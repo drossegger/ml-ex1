@@ -20,9 +20,12 @@ public class CMDReader {
 				.withArgName("technique").hasArg()
 				.withDescription("use specified feature selection technique")
 				.create("f");
-		Option parameters = OptionBuilder.withArgName("parameter=value")
+		Option listTechniques = OptionBuilder
+				.withDescription("list all available feature selection techniques")
+				.create("l");
+		/*Option parameters = OptionBuilder.withArgName("parameter=value")
 				.hasArgs(2).withValueSeparator()
-				.withDescription("use value for given parameter").create("p");
+				.withDescription("use value for given parameter").create("p");*/
 		Option instancedir = OptionBuilder
 				.withArgName("directory")
 				.hasArg()
@@ -32,7 +35,7 @@ public class CMDReader {
 
 		options = new Options();
 		options.addOption(featureSelectionTechnique);
-		options.addOption(parameters);
+		options.addOption(listTechniques);
 		options.addOption(instancedir);
 	}
 
@@ -50,8 +53,11 @@ public class CMDReader {
 		return cli.hasOption("f");
 	}
 
-	public String getFeature() {
-		return cli.getOptionValue("f");
+	public boolean isListTechniques(){
+		return cli.hasOption("l");
+	}
+	public String[] getFeatures() {
+		return cli.getOptionValues("f");
 	}
 
 	public String[] getParameters() {
