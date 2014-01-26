@@ -1,12 +1,6 @@
 Supervised:
-CfsSubsetEval - BestFirst
 InfoGainAtributeEval - Ranker
 ReliefFAttributeEval - Ranker
 OneRAttributeEval - Ranker
 GainRatioAttributeEval - Ranker
 SymmetricalUncertAttributeEval - Ranker
-
-
-Unsupervised:
-LatentSemanticAnalysis - Ranker
-PrincipalComponents - Ranker
