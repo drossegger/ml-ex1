@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -71,14 +72,15 @@ public class CompareResult {
 			System.out.println("Comparing selected features of "+inst.Name+"("+inst.Features.length+")");
 			
 			if (num == 1)
-				mutualFeatures=Arrays.asList(inst.Features);
+				mutualFeatures=new ArrayList<Integer>(Arrays.asList(inst.Features));
 			else
 			{
-				Iterator<Integer> i = mutualFeatures.iterator();
-				while (i.hasNext()) {
-					Integer e = i.next();
-					if(!Arrays.asList(inst.Features).contains(e))
-						i.remove();
+				for (int i=0; i<mutualFeatures.size(); i++) {
+					Integer e = mutualFeatures.get(i);
+					if(!Arrays.asList(inst.Features).contains(e)){
+						mutualFeatures.remove(e);
+						i--;
+					}
 				}
 			}
 			

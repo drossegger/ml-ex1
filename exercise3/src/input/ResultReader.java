@@ -30,13 +30,14 @@ public class ResultReader {
 				FileReader fr = new FileReader(file.getAbsolutePath());
 			    BufferedReader br = new BufferedReader(fr);
 			    String s = "";
-			    FeatureSelectionResult f = new FeatureSelectionResult();
+			    FeatureSelectionResult f = null;
 			    
 			    while (br.ready()) {
 			    	s = br.readLine();
 			    	
 				    if(s.startsWith("++"))
 					{
+				    	f = new FeatureSelectionResult();
 						f.Name = s.substring(2);
 					}
 					else if(s.startsWith("--Selected attributes:"))
@@ -48,10 +49,12 @@ public class ResultReader {
 						    results[i] = Integer.parseInt(items[i]);
 						}
 						f.Features = results;
+						
+						l.add(f);
 					}
 			    }
 			    
-				l.add(f);
+				
 		    }
 		}
 		return l;
