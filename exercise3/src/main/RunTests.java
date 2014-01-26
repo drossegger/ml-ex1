@@ -122,9 +122,17 @@ public class RunTests {
 						WriteInTotalFile("--Selected attributes: "+Utils.arrayToString(selectedAttribThresh));
 						//selectionmethods[i].printResults();
 						WriteInTotalFile("--Attribute ranks: ");
-						double attribrank[][]=selectionmethods[i].getAttributeRank();
-						for (int j=0;j<Math.min(attribrank.length, selectionmethods[i].resultThreshold);j++){
-							WriteInTotalFile(attribrank[j][0]+";"+attribrank[j][1]);
+						double attribrank[][]=null;
+						try{
+							attribrank = selectionmethods[i].getAttributeRank();
+						} catch (Exception e) {
+							Exercise3.printErrorMsg("No ranking available");
+						}
+						if (attribrank != null)
+						{
+							for (int j=0;j<Math.min(attribrank.length, selectionmethods[i].resultThreshold);j++){
+								WriteInTotalFile(attribrank[j][0]+";"+attribrank[j][1]);
+							}
 						}
 					} catch (Exception e) {
 						Exercise3.printErrorMsg("Could not read selected attributes");

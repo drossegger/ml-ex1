@@ -9,11 +9,17 @@ import model.FeatureSelectionResult;
 import featureselectors.FeatureSelectorBaseRanker;
 import featureselectors.IFeatureSelector;
 import featureselectors.MyFeatureSelectorRanker;
+import weka.attributeSelection.BestFirst;
 import weka.attributeSelection.CfsSubsetEval;
+import weka.attributeSelection.GainRatioAttributeEval;
 import weka.attributeSelection.HoldOutSubsetEvaluator;
 import weka.attributeSelection.InfoGainAttributeEval;
+import weka.attributeSelection.LatentSemanticAnalysis;
+import weka.attributeSelection.OneRAttributeEval;
+import weka.attributeSelection.PrincipalComponents;
 import weka.attributeSelection.Ranker;
 import weka.attributeSelection.ReliefFAttributeEval;
+import weka.attributeSelection.SymmetricalUncertAttributeEval;
 import weka.core.Instances;
 import weka.core.Utils;
 import input.CMDReader;
@@ -72,17 +78,49 @@ public class Exercise3 {
 			}
 
 			List<FeatureSelectorBaseRanker> _selectorBases = new LinkedList<FeatureSelectorBaseRanker>();
-			/*
+			
+				
 			_selectorBases.add(new MyFeatureSelectorRanker()
-					.setFeatureSelectorName("ReliefFAttributeEval-Ranker")
+				.setFeatureSelectorName("PrincipalComponents-Ranker")
+				.setEvaluator(new PrincipalComponents())
+				.setSearcher(new Ranker()).setResultThreshold(50));
+
+			_selectorBases.add(new MyFeatureSelectorRanker()
+				.setFeatureSelectorName("LatentSemanticAnalysis-Ranker")
+				.setEvaluator(new LatentSemanticAnalysis())
+				.setSearcher(new Ranker()).setResultThreshold(50));
+			
+			_selectorBases.add(new MyFeatureSelectorRanker()
+				.setFeatureSelectorName("SymmetricalUncertAttribute-Ranker")
+				.setEvaluator(new SymmetricalUncertAttributeEval())
+				.setSearcher(new Ranker()).setResultThreshold(50));
+
+			_selectorBases.add(new MyFeatureSelectorRanker()
+				.setFeatureSelectorName("OneRAttribute-Ranker")
+				.setEvaluator(new OneRAttributeEval())
+				.setSearcher(new Ranker()).setResultThreshold(50));
+
+			_selectorBases.add(new MyFeatureSelectorRanker()
+				.setFeatureSelectorName("GainRatioAttribute-Ranker")
+				.setEvaluator(new GainRatioAttributeEval())
+				.setSearcher(new Ranker()).setResultThreshold(50));
+	
+			_selectorBases.add(new MyFeatureSelectorRanker()
+				.setFeatureSelectorName("CfsSubset-BestFirst")
+				.setEvaluator(new CfsSubsetEval())
+				.setSearcher(new BestFirst()).setResultThreshold(50));
+
+			_selectorBases.add(new MyFeatureSelectorRanker()
+				.setFeatureSelectorName("InfoGain-Ranker")
+				.setEvaluator(new InfoGainAttributeEval())
+				.setSearcher(new Ranker()).setResultThreshold(50));
+
+			_selectorBases.add(new MyFeatureSelectorRanker()
+					.setFeatureSelectorName("ReliefFAttribute-Ranker")
 					.setEvaluator(new ReliefFAttributeEval())
 					.setSearcher(new Ranker()).setResultThreshold(50));
-			 */
-			_selectorBases.add(new MyFeatureSelectorRanker()
-					.setFeatureSelectorName("InfoGain-Ranker")
-					.setEvaluator(new InfoGainAttributeEval())
-					.setSearcher(new Ranker()).setResultThreshold(50));
-
+			
+			
 			String[] _instanceNames = ir.instaceAddresses
 					.toArray(new String[] {});
 			RunTests rt = new RunTests(l,
