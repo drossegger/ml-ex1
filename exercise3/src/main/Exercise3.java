@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.FeatureSelectionResult;
 import featureselectors.FeatureSelectorBaseRanker;
 import featureselectors.IFeatureSelector;
 import featureselectors.MyFeatureSelectorRanker;
@@ -17,6 +18,7 @@ import weka.core.Instances;
 import weka.core.Utils;
 import input.CMDReader;
 import input.InstanceReader;
+import input.ResultReader;
 
 public class Exercise3 {
 
@@ -40,7 +42,9 @@ public class Exercise3 {
 		} else if (cmd.useFeature()) {
 			runWithFeatures(cmd.getFeatures(), cmd.getInstanceDir());
 		}
-
+		else if (cmd.compareResult()) {
+			runComparisonOfResultFiles(cmd.getInstanceDir());
+		}
 		else
 			runWithFeatures(null, cmd.getInstanceDir());
 
@@ -68,12 +72,12 @@ public class Exercise3 {
 			}
 
 			List<FeatureSelectorBaseRanker> _selectorBases = new LinkedList<FeatureSelectorBaseRanker>();
-
+			/*
 			_selectorBases.add(new MyFeatureSelectorRanker()
 					.setFeatureSelectorName("ReliefFAttributeEval-Ranker")
 					.setEvaluator(new ReliefFAttributeEval())
 					.setSearcher(new Ranker()).setResultThreshold(50));
-
+			 */
 			_selectorBases.add(new MyFeatureSelectorRanker()
 					.setFeatureSelectorName("InfoGain-Ranker")
 					.setEvaluator(new InfoGainAttributeEval())
@@ -92,6 +96,23 @@ public class Exercise3 {
 			}
 		}
 
+	}
+	
+	public static void runComparisonOfResultFiles(String instancedir) {
+		ResultReader resultReader=new ResultReader(instancedir);
+		List<FeatureSelectionResult> r=null;
+		try {
+			r = resultReader.read();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		CompareResult cr = new CompareResult(r);
+		try {
+			cr.compareFeatures();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -32,11 +32,17 @@ public class CMDReader {
 				.withDescription(
 						"directory with instancefiles in csv or arff format")
 				.create("d");
+		Option compareresults = OptionBuilder
+				.withArgName("compare")
+				.withDescription(
+						"compare results and finding mutual features of result files inside a directory")
+				.create("c");
 
 		options = new Options();
 		options.addOption(featureSelectionTechnique);
 		options.addOption(listTechniques);
 		options.addOption(instancedir);
+		options.addOption(compareresults);
 	}
 
 	public void parse(String[] args) {
@@ -69,6 +75,9 @@ public class CMDReader {
 	public boolean isDirSet(){
 		return cli.hasOption("d");
 		
+	}
+	public boolean compareResult() {
+		return cli.hasOption("c");
 	}
 	public void printUsage(){
 		HelpFormatter formatter=new HelpFormatter();
