@@ -3,22 +3,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import com.sun.xml.internal.ws.util.StringUtils;
 
 import model.FeatureSelectionResult;
-import featureselectors.FeatureSelectorBaseRanker;
-import featureselectors.IFeatureSelector;
-import featureselectors.MyFeatureSelectorRanker;
-import weka.core.Instances;
-import weka.core.Utils;
 
 
 public class CompareResult {
@@ -67,17 +58,21 @@ public class CompareResult {
 		String algorithms = "";
 		for(int num=1;it.hasNext();num++){
 			FeatureSelectionResult inst=it.next();
-			algorithms+=inst.Name + ", ";
+			algorithms+=inst.getName() + ", ";
 			
-			System.out.println("Comparing selected features of "+inst.Name+"("+inst.Features.length+")");
+			System.out.println("Comparing selected features of "+inst.getName()+"("+inst.getFeatures().length+")");
 			
-			if (num == 1)
-				mutualFeatures=new ArrayList<Integer>(Arrays.asList(inst.Features));
+			if (num == 1){
+				mutualFeatures=new ArrayList<Integer>();
+				for (int i=0;i<inst.getFeatures().length;++i){
+					mutualFeatures.add(inst.getFeatures()[i]);
+				}
+			}
 			else
 			{
 				for (int i=0; i<mutualFeatures.size(); i++) {
 					Integer e = mutualFeatures.get(i);
-					if(!Arrays.asList(inst.Features).contains(e)){
+					if(!Arrays.asList(inst.getFeatures()).contains(e)){
 						mutualFeatures.remove(e);
 						i--;
 					}

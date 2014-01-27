@@ -6,9 +6,12 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
+import model.FeatureSelectionResult;
 
 import featureselectors.FeatureSelectorBaseRanker;
 import featureselectors.IFeatureSelector;
@@ -20,7 +23,11 @@ import weka.core.Utils;
 public class RunTests {
 	List <Instances> instances;
 	String[] instanceNames;
-	
+	private List <FeatureSelectionResult>[] results;
+	public List<FeatureSelectionResult>[] getResults() {
+		return results;
+	}
+
 	FeatureSelectorBaseRanker selectionmethods[]={};
 	String epoch = String.valueOf(System.currentTimeMillis()/1000);
 	Boolean isWriterInitiated = false;
@@ -33,11 +40,13 @@ public class RunTests {
 		instances=l;
 		selectionmethods=s;
 		this.instanceNames = instanceNames;
+		results=(List<FeatureSelectionResult>[])new List[l.size()];
 	}
 	
 	public RunTests(List<Instances> l, String[] instanceNames){
 		instances=l;
 		this.instanceNames = instanceNames;
+		results=(List<FeatureSelectionResult>[])new List[l.size()];
 	}
 	
 	
@@ -104,7 +113,7 @@ public class RunTests {
 		
 		for(int num=1;it.hasNext();num++){
 			Instances inst=it.next();
-			
+			results[num-1]=new ArrayList<FeatureSelectionResult>();
 			setCurrentInstance(num -1 );
 			
 			System.out.println("Performing feature selection on instance "+num+"/"+instances.size());
@@ -118,7 +127,7 @@ public class RunTests {
 						int selectedAttrib[]=selectionmethods[i].getSelectedAttributes();
 						
 						int[] selectedAttribThresh  = Arrays.copyOf(selectedAttrib, Math.min(selectedAttrib.length, selectionmethods[i].resultThreshold));
-						
+						results[num-1].add(new FeatureSelectionResult(selectionmethods[i].getName(),selectedAttribThresh));
 						WriteInTotalFile("--Selected attributes: "+Utils.arrayToString(selectedAttribThresh));
 						//selectionmethods[i].printResults();
 						WriteInTotalFile("--Attribute ranks: ");

@@ -38,17 +38,17 @@ public class ResultReader {
 				    if(s.startsWith("++"))
 					{
 				    	f = new FeatureSelectionResult();
-						f.Name = s.substring(2);
+						f.setName(s.substring(2));
 					}
 					else if(s.startsWith("--Selected attributes:"))
 					{
 						String[] items = s.substring("--Selected attributes:".length() + 1).split(",");
-						Integer[] results = new Integer[items.length];
+						int[] results = new int[items.length];
 
 						for (int i = 0; i < items.length; i++) {
 						    results[i] = Integer.parseInt(items[i]);
 						}
-						f.Features = results;
+						f.setFeatures(results);
 						
 						l.add(f);
 					}

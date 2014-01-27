@@ -142,6 +142,11 @@ public class Exercise3 {
 					_instanceNames);
 			try {
 				rt.featureSelection();
+				for(int i=0; i<rt.getResults().length;++i){
+					CompareResult cr=new CompareResult(rt.getResults()[i]);
+					cr.compareFeatures();
+				}
+				
 			} catch (FileNotFoundException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
