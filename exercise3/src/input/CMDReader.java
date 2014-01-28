@@ -42,12 +42,12 @@ public class CMDReader {
 		Option topn= OptionBuilder
 				.hasArg()
 				.withArgName("n")
-				.withDescription("use top <n> attributes")
+				.withDescription("use top <n> attributes, default: 10")
 				.create("n");
 		Option attribthresh=OptionBuilder
 				.hasArg()
 				.withArgName("f")
-				.withDescription("consider attributes appearing in f per cent of the result sets")
+				.withDescription("consider attributes appearing in f per cent of the result sets, default: 0.5")
 				.create("t");
 		options = new Options();
 		options.addOption(help);

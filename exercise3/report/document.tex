@@ -1,0 +1,72 @@
+\newcommand{\figurescaling}{0.7}
+\documentclass[a4paper,oneside,parskip=half]{scrartcl}
+
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{longtable}
+\usepackage{slashbox}
+\usepackage{multirow}
+\usepackage{minibox}
+\usepackage{placeins }
+\usepackage{booktabs}
+\usepackage[UKenglish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{pifont}
+\usepackage{paralist}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage[utf8]{inputenc}
+\usepackage{authblk}
+
+\title{Machine Learning WS2013}
+\subtitle{Assignment 3 \\[0.8cm] {\rmfamily\normalfont\Large}}
+
+\author[1]{Dino Rossegger}
+\author[2]{Navid Rekabsaz}
+\author[3]{Soroosh Mortezapoor}
+\affil[1]{e0926471@student.tuwien.ac.at}
+\affil[2]{e1129057@student.tuwien.ac.at}
+\affil[3]{soroosh.mortezapoor@student.tuwien.ac.at}
+
+\lstset{language=java,basicstyle=\ttfamily\footnotesize}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+\end{abstract}
+
+\section{Task}
+The task was to analyse the differences in different feature selection techniques, i.e. analyse the difference in the selected features of the techniques. Therefore a java program had to be developed using the weka library to run the feature selection techniques on different datasets supplied by the lectors.
+
+Furthermore a comparison of the results of k-nn using the top $n$ features of each feature selection technique and using mutual features was to be done. This was also implemented in the program using weka.
+
+\section{Program}
+The java program uses ant to allow easy building and running of the program. In the build file the two properties \lstinline$weka.dir$ and \lstinline$lib.dir$ (containing apache commons cli) need to be changed.
+Afterwards the program can be compiled using \lstinline$ant compile$, it is suggested to create a jar file using \lstinline$ant jar$.
+
+The program accepts a number of arguments, in Listing~\ref{list:helpoutput} the help output can be seen. The only obligatory flag is \lstinline$-d <directory>$ specifying the directory from which the instances should be read. The rest of the arguments are optional, the help output in Listing~\ref{list:helpoutput} should be enough aid in understanding the usage of the program.
+\begin{lstlisting}[caption=help output of the program, label=list:helpoutput]
+ -c               compare results and find mutual features of result files
+                   inside a directory
+ -d <directory>   directory with instancefiles in csv or arff format
+ -f <technique>   use specified feature selection technique
+ -h               display this usage information
+ -l               list all available feature selection techniques
+ -n <n>           use top <n> attributes, default: 10
+ -t <f>           consider attributes appearing in f per cent of the
+                   result sets, default: 0.5
+
+\end{lstlisting}
+First the specified techniques (or all implemented techniques if \lstinline$-f$ is not set) are applied to the datasets, then the selected attributes are compared. At last a classifier is run using the features obtained from the feature selection methods. The precision, recall and f1-scores of the runs are printed on standard output.
+
+\section{Technique Comparison}
+\section{Comparison on Classifier}
+\end{document}
