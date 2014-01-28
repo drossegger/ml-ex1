@@ -12,10 +12,17 @@ import java.util.List;
 import model.FeatureSelectionResult;
 import featureselectors.FeatureSelectorBaseRanker;
 import featureselectors.MyFeatureSelectorRanker;
+import weka.attributeSelection.BestFirst;
+import weka.attributeSelection.CfsSubsetEval;
+import weka.attributeSelection.ChiSquaredAttributeEval;
+import weka.attributeSelection.ConsistencySubsetEval;
 import weka.attributeSelection.FilteredAttributeEval;
 import weka.attributeSelection.GainRatioAttributeEval;
+import weka.attributeSelection.GreedyStepwise;
 import weka.attributeSelection.InfoGainAttributeEval;
+import weka.attributeSelection.LatentSemanticAnalysis;
 import weka.attributeSelection.OneRAttributeEval;
+import weka.attributeSelection.PrincipalComponents;
 import weka.attributeSelection.Ranker;
 import weka.attributeSelection.ReliefFAttributeEval;
 import weka.attributeSelection.SymmetricalUncertAttributeEval;
@@ -76,6 +83,19 @@ public class Exercise3 {
 				"InfoGainAttribute");
 		System.out.format("%1$15s%2$30s%3$50s\n", "rel-ranker", "Ranker",
 				"ReliefAttribute");
+		System.out.format("%1$15s%2$30s%3$50s\n", "rel-ranker", "Ranker",
+				"ReliefAttribute");
+		System.out.format("%1$15s%2$30s%3$50s\n", "cfs-greedy", "GreedyStepWise",
+				"CfsSubset");
+		System.out.format("%1$15s%2$30s%3$50s\n", "chis-ranker", "Ranker",
+				"ChiSquaredAttribute");
+		System.out.format("%1$15s%2$30s%3$50s\n", "cons-bestfirst", "BestFirst",
+				"ConsistencySubset");
+		System.out.format("%1$15s%2$30s%3$50s\n", "pca-ranker", "Ranker",
+				"PrincipalComponents");
+		System.out.format("%1$15s%2$30s%3$50s\n", "lsa-ranker", "Ranker",
+				"LatentSemanticAnalysis");
+		
 
 	}
 
@@ -91,35 +111,64 @@ public class Exercise3 {
 		}
 
 		if (features == null) {
-			// supervised
+			_selectorBases
+					.add(new MyFeatureSelectorRanker()
+							.setFeatureSelectorName(
+									"CfsSubset-Ranker-Supervised")
+							.setEvaluator(
+									new CfsSubsetEval())
+							.setSearcher(new GreedyStepwise())
+							.setResultThreshold(50));
 			_selectorBases.add(new MyFeatureSelectorRanker()
 					.setFeatureSelectorName(
-							"SymmetricalUncertAttribute-Ranker-Supervised")
-					.setEvaluator(new SymmetricalUncertAttributeEval())
+							"ChiSquaredAttribute-Ranker-Supervised")
+					.setEvaluator(new ChiSquaredAttributeEval())
 					.setSearcher(new Ranker()).setResultThreshold(50));
-
 			_selectorBases.add(new MyFeatureSelectorRanker()
-					.setFeatureSelectorName("OneRAttribute-Ranker-Supervised")
-					.setEvaluator(new OneRAttributeEval())
-					.setSearcher(new Ranker()).setResultThreshold(50));
-
+					.setFeatureSelectorName(
+							"ConsistencySubset-BestFirst-Supervised")
+					.setEvaluator(new ConsistencySubsetEval())
+					.setSearcher(new BestFirst()).setResultThreshold(50));
 			_selectorBases.add(new MyFeatureSelectorRanker()
 					.setFeatureSelectorName(
 							"GainRatioAttribute-Ranker-Supervised")
 					.setEvaluator(new GainRatioAttributeEval())
 					.setSearcher(new Ranker()).setResultThreshold(50));
-
 			_selectorBases.add(new MyFeatureSelectorRanker()
-					.setFeatureSelectorName("InfoGain-Ranker-Supervised")
+					.setFeatureSelectorName(
+							"InfoGain-Ranker-Supervised")
 					.setEvaluator(new InfoGainAttributeEval())
 					.setSearcher(new Ranker()).setResultThreshold(50));
-
+			_selectorBases.add(new MyFeatureSelectorRanker()
+					.setFeatureSelectorName(
+							"OneRAttribute-Ranker-Supervised")
+					.setEvaluator(new OneRAttributeEval())
+					.setSearcher(new Ranker()).setResultThreshold(50));
 			_selectorBases.add(new MyFeatureSelectorRanker()
 					.setFeatureSelectorName(
 							"ReliefFAttribute-Ranker-Supervised")
 					.setEvaluator(new ReliefFAttributeEval())
 					.setSearcher(new Ranker()).setResultThreshold(50));
+			_selectorBases
+					.add(new MyFeatureSelectorRanker()
+							.setFeatureSelectorName(
+									"SymmetricalUncertAttribute-Ranker-Supervised")
+							.setEvaluator(
+									new SymmetricalUncertAttributeEval())
+							.setSearcher(new Ranker())
+							.setResultThreshold(50));
+			_selectorBases.add(new MyFeatureSelectorRanker()
+					.setFeatureSelectorName(
+							"PrincipalComponents-Ranker-Unsupervised")
+					.setEvaluator(new PrincipalComponents())
+					.setSearcher(new Ranker()).setResultThreshold(50));
+			_selectorBases.add(new MyFeatureSelectorRanker()
+					.setFeatureSelectorName(
+							"LatentSemanticAnalysis-Ranker-Unsupervised")
+					.setEvaluator(new LatentSemanticAnalysis())
+					.setSearcher(new Ranker()).setResultThreshold(50));
 
+			/*
 			// unsupervised
 			FilteredAttributeEval f_SymmetricalUncertAttribute = new FilteredAttributeEval();
 			f_SymmetricalUncertAttribute
@@ -165,24 +214,30 @@ public class Exercise3 {
 					.setEvaluator(f_ReliefFAttributeEval)
 					.setSearcher(new Ranker()).setResultThreshold(50));
 
-			
+			*/
 		} else {
 			for (String s : features) {
-				if (s.equals("sua-ranker"))
+				if (s.equals("cfs-greedy"))
 					_selectorBases
 							.add(new MyFeatureSelectorRanker()
 									.setFeatureSelectorName(
-											"SymmetricalUncertAttribute-Ranker-Supervised")
+											"CfsSubset-Ranker-Supervised")
 									.setEvaluator(
-											new SymmetricalUncertAttributeEval())
-									.setSearcher(new Ranker())
+											new CfsSubsetEval())
+									.setSearcher(new GreedyStepwise())
 									.setResultThreshold(50));
-				else if (s.equals("oner-ranker"))
+				else if (s.equals("chis-ranker"))
 					_selectorBases.add(new MyFeatureSelectorRanker()
 							.setFeatureSelectorName(
-									"OneRAttribute-Ranker-Supervised")
-							.setEvaluator(new OneRAttributeEval())
+									"ChiSquaredAttribute-Ranker-Supervised")
+							.setEvaluator(new ChiSquaredAttributeEval())
 							.setSearcher(new Ranker()).setResultThreshold(50));
+				else if (s.equals("cons-bestfirst"))
+					_selectorBases.add(new MyFeatureSelectorRanker()
+							.setFeatureSelectorName(
+									"ConsistencySubset-BestFirst-Supervised")
+							.setEvaluator(new ConsistencySubsetEval())
+							.setSearcher(new BestFirst()).setResultThreshold(50));
 				else if (s.equals("gainr-ranker"))
 					_selectorBases.add(new MyFeatureSelectorRanker()
 							.setFeatureSelectorName(
@@ -195,13 +250,39 @@ public class Exercise3 {
 									"InfoGain-Ranker-Supervised")
 							.setEvaluator(new InfoGainAttributeEval())
 							.setSearcher(new Ranker()).setResultThreshold(50));
+				else if (s.equals("oner-ranker"))
+					_selectorBases.add(new MyFeatureSelectorRanker()
+							.setFeatureSelectorName(
+									"OneRAttribute-Ranker-Supervised")
+							.setEvaluator(new OneRAttributeEval())
+							.setSearcher(new Ranker()).setResultThreshold(50));
 				else if (s.equals("rel-ranker"))
 					_selectorBases.add(new MyFeatureSelectorRanker()
 							.setFeatureSelectorName(
 									"ReliefFAttribute-Ranker-Supervised")
 							.setEvaluator(new ReliefFAttributeEval())
 							.setSearcher(new Ranker()).setResultThreshold(50));
-
+				else if (s.equals("sua-ranker"))
+					_selectorBases
+							.add(new MyFeatureSelectorRanker()
+									.setFeatureSelectorName(
+											"SymmetricalUncertAttribute-Ranker-Supervised")
+									.setEvaluator(
+											new SymmetricalUncertAttributeEval())
+									.setSearcher(new Ranker())
+									.setResultThreshold(50));
+				else if (s.equals("pca-ranker"))
+					_selectorBases.add(new MyFeatureSelectorRanker()
+							.setFeatureSelectorName(
+									"PrincipalComponents-Ranker-Unsupervised")
+							.setEvaluator(new PrincipalComponents())
+							.setSearcher(new Ranker()).setResultThreshold(50));
+				else if (s.equals("lsa-ranker"))
+					_selectorBases.add(new MyFeatureSelectorRanker()
+							.setFeatureSelectorName(
+									"LatentSemanticAnalysis-Ranker-Unsupervised")
+							.setEvaluator(new LatentSemanticAnalysis())
+							.setSearcher(new Ranker()).setResultThreshold(50));
 			}
 
 		}
@@ -218,7 +299,6 @@ public class Exercise3 {
 			}
 
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
