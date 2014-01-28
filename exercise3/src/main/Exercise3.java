@@ -36,12 +36,9 @@ public class Exercise3 {
 	static float thresh=0.5f;
 	/**
 	 * @param args
-	 * @throws UnsupportedEncodingException
 	 * @throws Exception 
-	 * @throws FileNotFoundException
 	 */
-	public static void main(String[] args) throws FileNotFoundException,
-			UnsupportedEncodingException {
+	public static void main(String[] args) throws Exception {
 		CMDReader cmd = new CMDReader();
 		cmd.parse(args);
 		try {
