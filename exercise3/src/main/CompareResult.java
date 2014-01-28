@@ -11,6 +11,9 @@ import java.util.List;
 
 
 
+
+
+
 import model.FeatureSelectionResult;
 
 
@@ -98,7 +101,8 @@ public class CompareResult {
 				List<Integer> b=new ArrayList<Integer>(f2.getFeatures().length);
 				for(int i:f2.getFeatures())
 					b.add(i);
-				List<Integer> c=a;
+				@SuppressWarnings("unchecked")
+				ArrayList<Integer> c=(ArrayList<Integer>) ((ArrayList<Integer>)a).clone();
 				c.retainAll(b);
 				WriteInComparisonFile("mutual "+f1.getName()+ ","+f2.getName()+","+c.size()+","+c.toString(),fileName);
 				}
