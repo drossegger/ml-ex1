@@ -114,7 +114,7 @@ public class Exercise3 {
 			_selectorBases
 					.add(new MyFeatureSelectorRanker()
 							.setFeatureSelectorName(
-									"CfsSubset-Ranker-Supervised")
+									"CfsSubset-GreedyStepwise-Supervised")
 							.setEvaluator(
 									new CfsSubsetEval())
 							.setSearcher(new GreedyStepwise())
@@ -221,7 +221,7 @@ public class Exercise3 {
 					_selectorBases
 							.add(new MyFeatureSelectorRanker()
 									.setFeatureSelectorName(
-											"CfsSubset-Ranker-Supervised")
+											"CfsSubset-GreedyStepwise-Supervised")
 									.setEvaluator(
 											new CfsSubsetEval())
 									.setSearcher(new GreedyStepwise())
