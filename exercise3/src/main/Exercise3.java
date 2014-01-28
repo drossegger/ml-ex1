@@ -29,6 +29,7 @@ public class Exercise3 {
 	/**
 	 * @param args
 	 * @throws UnsupportedEncodingException
+	 * @throws Exception 
 	 * @throws FileNotFoundException
 	 */
 	public static void main(String[] args) throws FileNotFoundException,
@@ -63,7 +64,7 @@ public class Exercise3 {
 		System.out.format("%s%10s%10s", "name", "Search", "Eval");
 	}
 
-	public static void runWithFeatures(String[] features, String instancedir) {
+	public static void runWithFeatures(String[] features, String instancedir) throws Exception {
 		if (features == null) {
 			InstanceReader ir = new InstanceReader(instancedir);
 
@@ -147,8 +148,10 @@ public class Exercise3 {
 			try {
 				rt.featureSelection();
 				CompareResult cr=new CompareResult();
+				CompareWithClassification _cwc = new CompareWithClassification();
 				for(int i=0; i<rt.getResults().length;++i){
 					cr.compareFeatures(rt.getResults()[i], "");
+					List<List<Double>> _res = _cwc.compareFeatures(rt.getResults()[i], l.get(i));
 				}
 				
 			} catch (FileNotFoundException | UnsupportedEncodingException e) {
