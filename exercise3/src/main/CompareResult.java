@@ -46,7 +46,7 @@ public class CompareResult {
 		writer.close();	
 	}
 	
-	public void compareFeatures(List<FeatureSelectionResult> r, String fileName) throws FileNotFoundException, UnsupportedEncodingException{
+	public List<FeatureSelectionResult> compareFeatures(List<FeatureSelectionResult> r, String fileName) throws FileNotFoundException, UnsupportedEncodingException{
 		System.out.println("Starting comparison for "+fileName);
 		Iterator<FeatureSelectionResult> it=r.iterator();
 		
@@ -106,6 +106,7 @@ public class CompareResult {
 		isWriterInitiated = false;
 		System.out.println("Comparison done!");
 		
+		return r;
 	}
 
 }
