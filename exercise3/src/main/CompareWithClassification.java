@@ -21,7 +21,7 @@ import model.FeatureSelectionResult;
 
 public class CompareWithClassification {
 	
-	public List<List<Double>> compareFeatures(List<FeatureSelectionResult> r, Instances data) throws Exception{
+	public List<List<Double>> compareFeatures(List<FeatureSelectionResult> r, Instances data, int topN, float threshold) throws Exception{
 		{
 			LinkedList<List<Double>> _output = new LinkedList<List<Double>>();
 			
@@ -117,4 +117,5 @@ public class CompareWithClassification {
 		}
 	}
 
+	
 }
