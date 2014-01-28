@@ -146,9 +146,9 @@ public class Exercise3 {
 					_instanceNames);
 			try {
 				rt.featureSelection();
+				CompareResult cr=new CompareResult();
 				for(int i=0; i<rt.getResults().length;++i){
-					//CompareResult cr=new CompareResult(rt.getResults()[i]);
-					//cr.compareFeatures();
+					cr.compareFeatures(rt.getResults()[i], "");
 				}
 				
 			} catch (FileNotFoundException | UnsupportedEncodingException e) {
