@@ -48,11 +48,11 @@ The task was to analyse the differences in different feature selection technique
 
 Furthermore a comparison of the results of k-nn using the top $n$ features of each feature selection technique and using mutual features was to be done. This was also implemented in the program using weka.
 
-\section{Program}
+\section{Program Usage}
 The java program uses ant to allow easy building and running of the program. In the build file the two properties \lstinline$weka.dir$ and \lstinline$lib.dir$ (containing apache commons cli) need to be changed.
 Afterwards the program can be compiled using \lstinline$ant compile$, it is suggested to create a jar file using \lstinline$ant jar$.
 
-The program accepts a number of arguments, in Listing~\ref{list:helpoutput} the help output can be seen. The only obligatory flag is \lstinline$-d <directory>$ specifying the directory from which the instances should be read. The rest of the arguments are optional, the help output in Listing~\ref{list:helpoutput} should be enough aid in understanding the usage of the program.
+The program accepts a number of arguments, in Listing~\ref{list:helpoutput} the help output can be seen. The only obligatory flag is \lstinline$-d <directory>$, specifying the directory from which the instances should be read. The rest of the arguments are optional, the help output in Listing~\ref{list:helpoutput} should be enough aid in understanding the usage of the program.
 \begin{lstlisting}[caption=help output of the program, label=list:helpoutput]
  -c               compare results and find mutual features of result files
                    inside a directory
