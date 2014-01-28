@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -82,8 +83,29 @@ public class CompareResult {
 		String listString = mutualFeatures.toString();
 		listString = listString.substring(1, listString.length()-1); 
 		WriteInComparisonFile("++Mutual features:"+listString, fileName);
+		
+		it=r.iterator();
+		
+		while(it.hasNext()){
+			FeatureSelectionResult f1=it.next();
+			List<Integer> a=new ArrayList<Integer>(f1.getFeatures().length);
+			for (int i: f1.getFeatures())
+				a.add(i);
+			
+			for(Iterator<FeatureSelectionResult> it2=r.iterator();it2.hasNext();){
+				FeatureSelectionResult f2=it2.next();
+				
+				List<Integer> b=new ArrayList<Integer>(f2.getFeatures().length);
+				for(int i:f2.getFeatures())
+					b.add(i);
+				List<Integer> c=a;
+				c.retainAll(b);
+				WriteInComparisonFile("mutual "+f1.getName()+ ","+f2.getName()+","+c.size()+","+c.toString(),fileName);
+			}
+		}
 		isWriterInitiated = false;
 		System.out.println("Comparison done!");
+		
 	}
 
 }
