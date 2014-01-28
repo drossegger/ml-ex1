@@ -22,28 +22,57 @@ public class CompareWithClassification {
 			 if (data.classIndex() == -1)
 			   data.setClassIndex(data.numAttributes() - 1);
 			 
-			 {
-				 Classifier cls = new weka.classifiers.lazy.IBk();
-				 
-				 Instances _allTrain = data.trainCV(4, 1); // use 75% of data for training
-				 Instances _allTest = data.testCV(4, 1);
-				 
-				 
-				 //without anything
-				 cls.buildClassifier(_allTrain);
-				 // evaluate classifier and print some statistics
-				 Evaluation eval = new Evaluation(_allTrain);
-				 eval.evaluateModel(cls, _allTest);
-				 //System.out.println(eval.weightedFMeasure());
-				 
-				 LinkedList<Double> _results = new LinkedList<Double>();
-				 
-				 _results.add(eval.weightedPrecision());
-				 _results.add(eval.weightedRecall());
-				 _results.add(eval.weightedFMeasure());
-				 
-				 _output.add(_results);
-			 }
+				//Random
+				{
+					int _allAttr = data.numAttributes();
+					
+
+					Classifier cls = new weka.classifiers.lazy.IBk();
+					
+					List<Integer> _includeAttributes = new LinkedList<Integer>();
+					for(int i =0;i< 50 ; i++){
+						int _selected = (int)(Math.random() * _allAttr);
+						_includeAttributes.add(_selected);
+					}
+					
+					Collections.sort(_includeAttributes);
+					
+					
+					Instances _localTrain = data.trainCV(4, 1); // use 75% of data for training
+				    Instances _localTest = data.testCV(4, 1);
+				    
+				    for(int j = _localTrain.numAttributes()-2 ; j >= 0;j--){
+				    	boolean _delete = true;
+				    	for(int k = 0 ; k < _includeAttributes.size() ; k++){
+				    		
+				    		if(_includeAttributes.get(k) == j){
+				    			_delete = false;
+				    		}
+		
+				    	}
+			    		if(_delete){
+			    			_localTrain.deleteAttributeAt(j);
+			    			_localTest.deleteAttributeAt(j);
+			    		}
+				    }
+						 
+		
+					
+					 //with attribute selection
+					cls.buildClassifier(_localTrain);
+					// evaluate classifier and print some statistics
+					Evaluation eval = new Evaluation(_localTrain);
+					eval.evaluateModel(cls, _localTest);
+					//System.out.println(eval.weightedFMeasure());
+			
+					LinkedList<Double> _localResults = new LinkedList<Double>();
+					_localResults.add(eval.weightedPrecision());
+					_localResults.add(eval.weightedRecall());
+					_localResults.add(eval.weightedFMeasure());
+					 
+					_output.add(_localResults);
+				
+				}
 			 
 			// 10 classifications for each attrib selection result
 			for(int i = 0 ; i < r.size();i++){
