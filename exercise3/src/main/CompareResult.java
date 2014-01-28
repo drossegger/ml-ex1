@@ -6,27 +6,23 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+
+
 
 
 import model.FeatureSelectionResult;
 
 
 public class CompareResult {
-	List<FeatureSelectionResult> featureSelectionResults;
-	
 	List<Integer> mutualFeatures = null;
 	String epoch = String.valueOf(System.currentTimeMillis()/1000);
 	Boolean isWriterInitiated = false;
 	PrintWriter writer;
 	
-	public CompareResult(List<FeatureSelectionResult> r)
-	{
-		featureSelectionResults=r;
-	}
 	
-	
-	public void WriteInTotalFile(String toWrite) throws FileNotFoundException, UnsupportedEncodingException
+	public void WriteInComparisonFile(String toWrite, String fileName) throws FileNotFoundException, UnsupportedEncodingException
 	{
 		
 		if(!(new File("Result")).exists()){
@@ -38,7 +34,7 @@ public class CompareResult {
 			boolean success = (new File("Result/" + epoch)).mkdirs();
 		
 			
-			 writer = new PrintWriter("Result/" + epoch + "/"  + "Comparison.txt", "UTF-8");
+			 writer = new PrintWriter("Result/" + epoch + "/" + fileName  + "_Comparison.txt", "UTF-8");
 			 isWriterInitiated = true;
 		}
 		
@@ -51,9 +47,9 @@ public class CompareResult {
 		writer.close();	
 	}
 	
-	public void compareFeatures() throws FileNotFoundException, UnsupportedEncodingException{
-		
-		Iterator<FeatureSelectionResult> it=featureSelectionResults.iterator();
+	public void compareFeatures(List<FeatureSelectionResult> r, String fileName) throws FileNotFoundException, UnsupportedEncodingException{
+		System.out.println("Starting comparison for "+fileName);
+		Iterator<FeatureSelectionResult> it=r.iterator();
 		
 		String algorithms = "";
 		for(int num=1;it.hasNext();num++){
@@ -70,9 +66,13 @@ public class CompareResult {
 			}
 			else
 			{
+				List<Integer> features=new ArrayList<Integer>();
+				for(Integer obj : inst.getFeatures())
+					features.add(obj);
 				for (int i=0; i<mutualFeatures.size(); i++) {
 					Integer e = mutualFeatures.get(i);
-					if(!Arrays.asList(inst.getFeatures()).contains(e)){
+					
+					if(!features.contains(e)){
 						mutualFeatures.remove(e);
 						i--;
 					}
@@ -80,10 +80,12 @@ public class CompareResult {
 			}
 			
 		}
-		WriteInTotalFile("++Compared algorithms:"+algorithms);
+		WriteInComparisonFile("++Compared algorithms:"+algorithms, fileName);
 		String listString = mutualFeatures.toString();
 		listString = listString.substring(1, listString.length()-1); 
-		WriteInTotalFile("++Mutual features:"+listString);
+		WriteInComparisonFile("++Mutual features:"+listString, fileName);
+		isWriterInitiated = false;
+		System.out.println("Comparison done!");
 	}
 
 }

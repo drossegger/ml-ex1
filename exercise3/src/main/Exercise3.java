@@ -1,6 +1,10 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
@@ -143,8 +147,8 @@ public class Exercise3 {
 			try {
 				rt.featureSelection();
 				for(int i=0; i<rt.getResults().length;++i){
-					CompareResult cr=new CompareResult(rt.getResults()[i]);
-					cr.compareFeatures();
+					//CompareResult cr=new CompareResult(rt.getResults()[i]);
+					//cr.compareFeatures();
 				}
 				
 			} catch (FileNotFoundException | UnsupportedEncodingException e) {
@@ -156,20 +160,31 @@ public class Exercise3 {
 	}
 	
 	public static void runComparisonOfResultFiles(String instancedir) {
-		ResultReader resultReader=new ResultReader(instancedir);
-		List<FeatureSelectionResult> r=null;
-		try {
-			r = resultReader.read();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+		File path = new File(instancedir);
+		ResultReader resultReader=new ResultReader();
+		CompareResult cr = new CompareResult();
+		
+		for (final File file : path.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.toLowerCase().endsWith(".txt");
+			}
+		})) {
+			if (file.isFile()) {
+				List<FeatureSelectionResult> r=null;
+				try {
+					r = resultReader.read(file.getAbsolutePath());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 
-		CompareResult cr = new CompareResult(r);
-		try {
-			cr.compareFeatures();
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			e.printStackTrace();
+				String fileName=file.getName().replaceFirst("[.][^.]+$", "");
+				try {
+					cr.compareFeatures(r, fileName);
+				} catch (FileNotFoundException | UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+		    }
 		}
 	}
-
 }
