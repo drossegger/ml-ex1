@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
 
+import sun.awt.windows.ThemeReader;
 import model.FeatureSelectionResult;
 import featureselectors.FeatureSelectorBaseRanker;
 import featureselectors.MyFeatureSelectorRanker;
@@ -295,7 +296,7 @@ public class Exercise3 {
 				CompareWithClassification _cwc = new CompareWithClassification();
 				for(int i=0; i<rt.getResults().length;++i){
 					cr.compareFeatures(rt.getResults()[i], "");
-					List<List<Double>> _res = _cwc.compareFeatures(rt.getResults()[i], l.get(i));
+					List<List<Double>> _res = _cwc.compareFeatures(rt.getResults()[i], l.get(i), topn, thresh);
 				}
 				
 			} catch (FileNotFoundException | UnsupportedEncodingException e) {
