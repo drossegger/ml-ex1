@@ -1,22 +1,14 @@
 package main;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import weka.attributeSelection.AttributeSelection;
+import javax.swing.event.ListSelectionEvent;
+
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.core.Instances;
-import weka.core.converters.ConverterUtils.DataSource;
-import weka.filters.Filter;
-import weka.filters.unsupervised.attribute.Remove;
 import model.FeatureSelectionResult;
 
 public class CompareWithClassification {
@@ -30,18 +22,11 @@ public class CompareWithClassification {
 			 if (data.classIndex() == -1)
 			   data.setClassIndex(data.numAttributes() - 1);
 			 
-			 
-			 Instances train = data.trainCV(4, 0); // use 75% of data for training
-			 Instances test = data.testCV(4, 0); //use 25% of the data for testing
-			 
-			 // train classifier
-			 
-			 
 			 {
 				 Classifier cls = new weka.classifiers.lazy.IBk();
 				 
-				 Instances _allTrain = data.trainCV(4, 0); // use 75% of data for training
-				 Instances _allTest = data.testCV(4, 0);
+				 Instances _allTrain = data.trainCV(4, 1); // use 75% of data for training
+				 Instances _allTest = data.testCV(4, 1);
 				 
 				 
 				 //without anything
@@ -49,7 +34,7 @@ public class CompareWithClassification {
 				 // evaluate classifier and print some statistics
 				 Evaluation eval = new Evaluation(_allTrain);
 				 eval.evaluateModel(cls, _allTest);
-				 System.out.println(eval.weightedFMeasure());
+				 //System.out.println(eval.weightedFMeasure());
 				 
 				 LinkedList<Double> _results = new LinkedList<Double>();
 				 
@@ -60,23 +45,18 @@ public class CompareWithClassification {
 				 _output.add(_results);
 			 }
 			 
-			
+			// 10 classifications for each attrib selection result
 			for(int i = 0 ; i < r.size();i++){
 				
 				Classifier cls = new weka.classifiers.lazy.IBk();
 				
 				FeatureSelectionResult _f = r.get(i);
-
-				
-				
-				
 				int[] _res = _f.getFeatures();
 				
+				Arrays.sort(_res);
 				
-				 
-				 
-				Instances _localTrain = data.trainCV(4, 0); // use 75% of data for training
-			    Instances _localTest = data.testCV(4, 0);
+				Instances _localTrain = data.trainCV(4, 1); // use 75% of data for training
+			    Instances _localTest = data.testCV(4, 1);
 			    
 			    for(int j = _localTrain.numAttributes()-2 ; j >= 0;j--){
 			    	boolean _delete = true;
@@ -100,7 +80,7 @@ public class CompareWithClassification {
 				// evaluate classifier and print some statistics
 				Evaluation eval = new Evaluation(_localTrain);
 				eval.evaluateModel(cls, _localTest);
-				System.out.println(eval.weightedFMeasure());
+				//System.out.println(eval.weightedFMeasure());
 		
 				LinkedList<Double> _localResults = new LinkedList<Double>();
 				_localResults.add(eval.weightedPrecision());
@@ -112,6 +92,136 @@ public class CompareWithClassification {
 				
 			}
 			
+			//intersection
+			{
+				int _allAttr = data.numAttributes();
+				
+	
+				int [] _attrCount = new int[_allAttr];
+						
+				for(int i = 0 ; i < r.size();i++){
+					
+					
+					FeatureSelectionResult _f = r.get(i);
+					int[] _res = _f.getFeatures();
+					
+					for(int j = 0 ; j< _res.length;j++){
+						_attrCount[_res[j]]++;
+					}
+					
+					
+				}
+				
+				Classifier cls = new weka.classifiers.lazy.IBk();
+				
+				List<Integer> _includeAttributes = new LinkedList<Integer>();
+				
+				for(int i =0;i< _allAttr ; i++){
+					float _temp = (float)_attrCount[i]/r.size();
+					if(_temp>= threshold)
+						_includeAttributes.add(i);
+				}
+				
+				Collections.sort(_includeAttributes);
+				
+				
+				Instances _localTrain = data.trainCV(4, 1); // use 75% of data for training
+			    Instances _localTest = data.testCV(4, 1);
+			    
+			    for(int j = _localTrain.numAttributes()-2 ; j >= 0;j--){
+			    	boolean _delete = true;
+			    	for(int k = 0 ; k < _includeAttributes.size() ; k++){
+			    		
+			    		if(_includeAttributes.get(k) == j){
+			    			_delete = false;
+			    		}
+	
+			    	}
+		    		if(_delete){
+		    			_localTrain.deleteAttributeAt(j);
+		    			_localTest.deleteAttributeAt(j);
+		    		}
+			    }
+					 
+	
+				
+				 //with attribute selection
+				cls.buildClassifier(_localTrain);
+				// evaluate classifier and print some statistics
+				Evaluation eval = new Evaluation(_localTrain);
+				eval.evaluateModel(cls, _localTest);
+				//System.out.println(eval.weightedFMeasure());
+		
+				LinkedList<Double> _localResults = new LinkedList<Double>();
+				_localResults.add(eval.weightedPrecision());
+				_localResults.add(eval.weightedRecall());
+				_localResults.add(eval.weightedFMeasure());
+				 
+				_output.add(_localResults);
+			
+			}
+			
+			//union
+			{
+
+				Classifier cls = new weka.classifiers.lazy.IBk();
+				
+				List<Integer> _includeAttributes = new LinkedList<Integer>();
+				
+				for(int i = 0 ; i < r.size();i++){
+					
+					FeatureSelectionResult _f = r.get(i);
+					int[] _res = _f.getFeatures();
+					
+					for(int j=0;j< _res.length && j< topN; j++){
+						if(!_includeAttributes.contains(_res[j])){
+							_includeAttributes.add(_res[j]);
+						}
+					}
+										
+				}
+				
+				Collections.sort(_includeAttributes);
+				Instances _localTrain = data.trainCV(4, 1); // use 75% of data for training
+			    Instances _localTest = data.testCV(4, 1);
+			    
+			    for(int j = _localTrain.numAttributes()-2 ; j >= 0;j--){
+			    	boolean _delete = true;
+			    	for(int k = 0 ; k < _includeAttributes.size() ; k++){
+			    		
+			    		if(_includeAttributes.get(k) == j){
+			    			_delete = false;
+			    		}
+	
+			    	}
+		    		if(_delete){
+		    			_localTrain.deleteAttributeAt(j);
+		    			_localTest.deleteAttributeAt(j);
+		    		}
+			    }
+					 
+	
+				
+				 //with attribute selection
+				cls.buildClassifier(_localTrain);
+				// evaluate classifier and print some statistics
+				Evaluation eval = new Evaluation(_localTrain);
+				eval.evaluateModel(cls, _localTest);
+				//System.out.println(eval.weightedFMeasure());
+		
+				LinkedList<Double> _localResults = new LinkedList<Double>();
+				_localResults.add(eval.weightedPrecision());
+				_localResults.add(eval.weightedRecall());
+				_localResults.add(eval.weightedFMeasure());
+				 
+				_output.add(_localResults);
+				
+				
+			}
+			
+			for(int i= 0 ; i< _output.size();i++){
+				System.out.println(_output.get(i).get(0).toString() + ", " + _output.get(i).get(1).toString() + ", " + _output.get(i).get(2).toString());
+			}
 			
 			return _output;
 		}

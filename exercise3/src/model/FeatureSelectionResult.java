@@ -3,6 +3,8 @@ package model;
 public class FeatureSelectionResult {
 	private String name;
 	private int[] features;
+	private float[] weights;
+	
 	public FeatureSelectionResult(){
 	
 	}
@@ -22,5 +24,11 @@ public class FeatureSelectionResult {
 	}
 	public void setFeatures(int[] features) {
 		this.features = features;
+	}
+	public float[] getWeights() {
+		return weights;
+	}
+	public void setWeights(float[] weights) {
+		this.weights = weights;
 	}
 }
