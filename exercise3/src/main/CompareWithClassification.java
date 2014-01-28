@@ -15,6 +15,10 @@ public class CompareWithClassification {
 	
 	public List<List<Double>> compareFeatures(List<FeatureSelectionResult> r, Instances data, int topN, float threshold) throws Exception{
 		{
+			
+			System.out.format("%1$60s%2$15s%3$15s%4$15s\n", "Algorithm:", "Precision:",	"Recall", "F-Score");
+			
+			
 			LinkedList<List<Double>> _output = new LinkedList<List<Double>>();
 			
 			 // setting class attribute if the data format does not provide this information
@@ -71,6 +75,8 @@ public class CompareWithClassification {
 					_localResults.add(eval.weightedFMeasure());
 					 
 					_output.add(_localResults);
+					
+					System.out.format("%1$60s%2$15s%3$15s%4$15s\n", "Randomly chosen attributes" , String.format("%.5f", _localResults.get(0)), String.format("%.5f", _localResults.get(1)),	String.format("%.5f", _localResults.get(2)));
 				
 				}
 			 
@@ -118,6 +124,7 @@ public class CompareWithClassification {
 				 
 				_output.add(_localResults);
 				
+				System.out.format("%1$60s%2$15s%3$15s%4$15s\n", _f.getName() , String.format("%.5f", _localResults.get(0)), String.format("%.5f", _localResults.get(1)),	String.format("%.5f", _localResults.get(2)));
 				
 			}
 			
@@ -187,6 +194,8 @@ public class CompareWithClassification {
 				_localResults.add(eval.weightedFMeasure());
 				 
 				_output.add(_localResults);
+				
+				System.out.format("%1$60s%2$15s%3$15s%4$15s\n", "Most appearing attributes" , String.format("%.5f", _localResults.get(0)), String.format("%.5f", _localResults.get(1)),	String.format("%.5f", _localResults.get(2)));
 			
 			}
 			
@@ -245,12 +254,9 @@ public class CompareWithClassification {
 				 
 				_output.add(_localResults);
 				
-				
+				System.out.format("%1$60s%2$15s%3$15s%4$15s\n", "Union of selected Attributes" ,  String.format("%.5f", _localResults.get(0)), String.format("%.5f", _localResults.get(1)),	String.format("%.5f", _localResults.get(2)));
 			}
 			
-			for(int i= 0 ; i< _output.size();i++){
-				System.out.println(_output.get(i).get(0).toString() + ", " + _output.get(i).get(1).toString() + ", " + _output.get(i).get(2).toString());
-			}
 			
 			return _output;
 		}

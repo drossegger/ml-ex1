@@ -296,6 +296,8 @@ public class Exercise3 {
 				CompareWithClassification _cwc = new CompareWithClassification();
 				for(int i=0; i<rt.getResults().length;++i){
 					cr.compareFeatures(rt.getResults()[i], "");
+
+					System.out.println("Results for : " + (ir.getInstanceAddresses()).get(i));
 					List<List<Double>> _res = _cwc.compareFeatures(rt.getResults()[i], l.get(i), topn, thresh);
 				}
 				

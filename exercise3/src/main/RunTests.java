@@ -153,6 +153,7 @@ public class RunTests {
 				}
 				System.out.println("Done - "  + selectionmethods[i].getName() + " - " + num);
 			}
+			int k = 0;
 			
 		}
 	}
