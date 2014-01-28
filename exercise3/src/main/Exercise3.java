@@ -33,25 +33,28 @@ public class Exercise3 {
 	 */
 	public static void main(String[] args) throws FileNotFoundException,
 			UnsupportedEncodingException {
-		// TODO Auto-generated method stub
-		System.out.println("Started");
-
 		CMDReader cmd = new CMDReader();
 		cmd.parse(args);
-		if (cmd.isListTechniques()) {
-			printTechniques();
-		} else if (!cmd.isDirSet()) {
-			printErrorMsg("Instance directory not set");
-			cmd.printUsage();
-		} else if (cmd.useFeature()) {
-			runWithFeatures(cmd.getFeatures(), cmd.getInstanceDir());
+		try {
+			if (cmd.isHelp()) {
+				cmd.printUsage();
+				return;
+			}
+			if(cmd.isTopN());//TODO
+			if (cmd.isListTechniques()) {
+				printTechniques();
+			} else if (!cmd.isDirSet()) {
+				printErrorMsg("Instance directory not set");
+				cmd.printUsage();
+				return;
+			} else if (cmd.useFeature()) {
+				runWithFeatures(cmd.getFeatures(), cmd.getInstanceDir());
+			} else if (cmd.compareResult()) {
+				runComparisonOfResultFiles(cmd.getInstanceDir());
+			} else
+				runWithFeatures(null, cmd.getInstanceDir());
+		} catch (NullPointerException e) {
 		}
-		else if (cmd.compareResult()) {
-			runComparisonOfResultFiles(cmd.getInstanceDir());
-		}
-		else
-			runWithFeatures(null, cmd.getInstanceDir());
-
 	}
 
 	public static void printErrorMsg(String error) {
@@ -60,110 +63,170 @@ public class Exercise3 {
 	}
 
 	public static void printTechniques() {
-		System.out.format("%s%10s%10s", "name", "Search", "Eval");
+		System.out.format("%1$15s%2$30s%3$50s\n", "name", "Search", "Eval");
+		System.out.format("%1$15s%2$30s%3$50s\n", "sua-ranker", "Ranker",
+				"SelectedUncertAttribute");
+		System.out.format("%1$15s%2$30s%3$50s\n", "oner-ranker", "Ranker",
+				"OneRAttribute");
+		System.out.format("%1$15s%2$30s%3$50s\n", "gainr-ranker", "Ranker",
+				"GainRAttribute");
+		System.out.format("%1$15s%2$30s%3$50s\n", "ig-ranker", "Ranker",
+				"InfoGainAttribute");
+		System.out.format("%1$15s%2$30s%3$50s\n", "rel-ranker", "Ranker",
+				"ReliefAttribute");
+
 	}
 
 	public static void runWithFeatures(String[] features, String instancedir) {
+		InstanceReader ir = new InstanceReader(instancedir);
+		List<FeatureSelectorBaseRanker> _selectorBases = new LinkedList<FeatureSelectorBaseRanker>();
+		List<Instances> l = null;
+		try {
+			l = ir.read();
+		} catch (Exception e) {
+			printErrorMsg("Could not read instances");
+			printErrorMsg(e.getLocalizedMessage());
+		}
+
 		if (features == null) {
-			InstanceReader ir = new InstanceReader(instancedir);
-
-			List<Instances> l = null;
-			try {
-				l = ir.read();
-			} catch (Exception e) {
-				printErrorMsg("Could not read instances");
-				printErrorMsg(e.getLocalizedMessage());
-			}
-
-			List<FeatureSelectorBaseRanker> _selectorBases = new LinkedList<FeatureSelectorBaseRanker>();
-			
-			//supervised
+			// supervised
 			_selectorBases.add(new MyFeatureSelectorRanker()
-				.setFeatureSelectorName("SymmetricalUncertAttribute-Ranker-Supervised")
-				.setEvaluator(new SymmetricalUncertAttributeEval())
-				.setSearcher(new Ranker()).setResultThreshold(50));
+					.setFeatureSelectorName(
+							"SymmetricalUncertAttribute-Ranker-Supervised")
+					.setEvaluator(new SymmetricalUncertAttributeEval())
+					.setSearcher(new Ranker()).setResultThreshold(50));
 
 			_selectorBases.add(new MyFeatureSelectorRanker()
-				.setFeatureSelectorName("OneRAttribute-Ranker-Supervised")
-				.setEvaluator(new OneRAttributeEval())
-				.setSearcher(new Ranker()).setResultThreshold(50));
+					.setFeatureSelectorName("OneRAttribute-Ranker-Supervised")
+					.setEvaluator(new OneRAttributeEval())
+					.setSearcher(new Ranker()).setResultThreshold(50));
 
 			_selectorBases.add(new MyFeatureSelectorRanker()
-				.setFeatureSelectorName("GainRatioAttribute-Ranker-Supervised")
-				.setEvaluator(new GainRatioAttributeEval())
-				.setSearcher(new Ranker()).setResultThreshold(50));
+					.setFeatureSelectorName(
+							"GainRatioAttribute-Ranker-Supervised")
+					.setEvaluator(new GainRatioAttributeEval())
+					.setSearcher(new Ranker()).setResultThreshold(50));
 
 			_selectorBases.add(new MyFeatureSelectorRanker()
-				.setFeatureSelectorName("InfoGain-Ranker-Supervised")
-				.setEvaluator(new InfoGainAttributeEval())
-				.setSearcher(new Ranker()).setResultThreshold(50));
+					.setFeatureSelectorName("InfoGain-Ranker-Supervised")
+					.setEvaluator(new InfoGainAttributeEval())
+					.setSearcher(new Ranker()).setResultThreshold(50));
 
 			_selectorBases.add(new MyFeatureSelectorRanker()
-					.setFeatureSelectorName("ReliefFAttribute-Ranker-Supervised")
+					.setFeatureSelectorName(
+							"ReliefFAttribute-Ranker-Supervised")
 					.setEvaluator(new ReliefFAttributeEval())
 					.setSearcher(new Ranker()).setResultThreshold(50));
-			
-			//unsupervised
+
+			// unsupervised
 			FilteredAttributeEval f_SymmetricalUncertAttribute = new FilteredAttributeEval();
-			f_SymmetricalUncertAttribute.setAttributeEvaluator(new SymmetricalUncertAttributeEval());
+			f_SymmetricalUncertAttribute
+					.setAttributeEvaluator(new SymmetricalUncertAttributeEval());
 			_selectorBases.add(new MyFeatureSelectorRanker()
-				.setFeatureSelectorName("SymmetricalUncertAttribute-Ranker-Unsupervised")
-				.setEvaluator(f_SymmetricalUncertAttribute)
-				.setSearcher(new Ranker()).setResultThreshold(50));
-			
+					.setFeatureSelectorName(
+							"SymmetricalUncertAttribute-Ranker-Unsupervised")
+					.setEvaluator(f_SymmetricalUncertAttribute)
+					.setSearcher(new Ranker()).setResultThreshold(50));
+
 			FilteredAttributeEval f_OneRAttributeEval = new FilteredAttributeEval();
 			f_OneRAttributeEval.setAttributeEvaluator(new OneRAttributeEval());
-			_selectorBases.add(new MyFeatureSelectorRanker()
-				.setFeatureSelectorName("OneRAttribute-Ranker-Unsupervised")
-				.setEvaluator(f_OneRAttributeEval)
-				.setSearcher(new Ranker()).setResultThreshold(50));
-	
+			_selectorBases
+					.add(new MyFeatureSelectorRanker()
+							.setFeatureSelectorName(
+									"OneRAttribute-Ranker-Unsupervised")
+							.setEvaluator(f_OneRAttributeEval)
+							.setSearcher(new Ranker()).setResultThreshold(50));
+
 			FilteredAttributeEval f_GainRatioAttributeEval = new FilteredAttributeEval();
-			f_GainRatioAttributeEval.setAttributeEvaluator(new GainRatioAttributeEval());
+			f_GainRatioAttributeEval
+					.setAttributeEvaluator(new GainRatioAttributeEval());
 			_selectorBases.add(new MyFeatureSelectorRanker()
-				.setFeatureSelectorName("GainRatioAttribute-Ranker-Unsupervised")
-				.setEvaluator(f_GainRatioAttributeEval)
-				.setSearcher(new Ranker()).setResultThreshold(50));
-	
+					.setFeatureSelectorName(
+							"GainRatioAttribute-Ranker-Unsupervised")
+					.setEvaluator(f_GainRatioAttributeEval)
+					.setSearcher(new Ranker()).setResultThreshold(50));
+
 			FilteredAttributeEval f_InfoGainAttributeEval = new FilteredAttributeEval();
-			f_InfoGainAttributeEval.setAttributeEvaluator(new InfoGainAttributeEval());
+			f_InfoGainAttributeEval
+					.setAttributeEvaluator(new InfoGainAttributeEval());
 			_selectorBases.add(new MyFeatureSelectorRanker()
-				.setFeatureSelectorName("InfoGain-Ranker-Unsupervised")
-				.setEvaluator(f_InfoGainAttributeEval)
-				.setSearcher(new Ranker()).setResultThreshold(50));
-	
+					.setFeatureSelectorName("InfoGain-Ranker-Unsupervised")
+					.setEvaluator(f_InfoGainAttributeEval)
+					.setSearcher(new Ranker()).setResultThreshold(50));
+
 			FilteredAttributeEval f_ReliefFAttributeEval = new FilteredAttributeEval();
-			f_ReliefFAttributeEval.setAttributeEvaluator(new ReliefFAttributeEval());
+			f_ReliefFAttributeEval
+					.setAttributeEvaluator(new ReliefFAttributeEval());
 			_selectorBases.add(new MyFeatureSelectorRanker()
-					.setFeatureSelectorName("ReliefFAttribute-Ranker-Unspervised")
+					.setFeatureSelectorName(
+							"ReliefFAttribute-Ranker-Unspervised")
 					.setEvaluator(f_ReliefFAttributeEval)
 					.setSearcher(new Ranker()).setResultThreshold(50));
+
 			
-			String[] _instanceNames = ir.instaceAddresses
-					.toArray(new String[] {});
-			RunTests rt = new RunTests(l,
-					_selectorBases.toArray(new FeatureSelectorBaseRanker[] {}),
-					_instanceNames);
-			try {
-				rt.featureSelection();
-				CompareResult cr=new CompareResult();
-				for(int i=0; i<rt.getResults().length;++i){
-					cr.compareFeatures(rt.getResults()[i], "");
-				}
-				
-			} catch (FileNotFoundException | UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		} else {
+			for (String s : features) {
+				if (s.equals("sua-ranker"))
+					_selectorBases
+							.add(new MyFeatureSelectorRanker()
+									.setFeatureSelectorName(
+											"SymmetricalUncertAttribute-Ranker-Supervised")
+									.setEvaluator(
+											new SymmetricalUncertAttributeEval())
+									.setSearcher(new Ranker())
+									.setResultThreshold(50));
+				else if (s.equals("oner-ranker"))
+					_selectorBases.add(new MyFeatureSelectorRanker()
+							.setFeatureSelectorName(
+									"OneRAttribute-Ranker-Supervised")
+							.setEvaluator(new OneRAttributeEval())
+							.setSearcher(new Ranker()).setResultThreshold(50));
+				else if (s.equals("gainr-ranker"))
+					_selectorBases.add(new MyFeatureSelectorRanker()
+							.setFeatureSelectorName(
+									"GainRatioAttribute-Ranker-Supervised")
+							.setEvaluator(new GainRatioAttributeEval())
+							.setSearcher(new Ranker()).setResultThreshold(50));
+				else if (s.equals("ig-ranker"))
+					_selectorBases.add(new MyFeatureSelectorRanker()
+							.setFeatureSelectorName(
+									"InfoGain-Ranker-Supervised")
+							.setEvaluator(new InfoGainAttributeEval())
+							.setSearcher(new Ranker()).setResultThreshold(50));
+				else if (s.equals("rel-ranker"))
+					_selectorBases.add(new MyFeatureSelectorRanker()
+							.setFeatureSelectorName(
+									"ReliefFAttribute-Ranker-Supervised")
+							.setEvaluator(new ReliefFAttributeEval())
+							.setSearcher(new Ranker()).setResultThreshold(50));
+
 			}
+
+		}
+		String[] _instanceNames = ir.getInstanceAddresses()
+				.toArray(new String[] {});
+		RunTests rt = new RunTests(l,
+				_selectorBases.toArray(new FeatureSelectorBaseRanker[] {}),
+				_instanceNames);
+		try {
+			rt.featureSelection();
+			CompareResult cr = new CompareResult();
+			for (int i = 0; i < rt.getResults().length; ++i) {
+				cr.compareFeatures(rt.getResults()[i], "");
+			}
+
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
-	
+
 	public static void runComparisonOfResultFiles(String instancedir) {
 		File path = new File(instancedir);
-		ResultReader resultReader=new ResultReader();
+		ResultReader resultReader = new ResultReader();
 		CompareResult cr = new CompareResult();
-		
+
 		for (final File file : path.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
@@ -171,20 +234,20 @@ public class Exercise3 {
 			}
 		})) {
 			if (file.isFile()) {
-				List<FeatureSelectionResult> r=null;
+				List<FeatureSelectionResult> r = null;
 				try {
 					r = resultReader.read(file.getAbsolutePath());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 
-				String fileName=file.getName().replaceFirst("[.][^.]+$", "");
+				String fileName = file.getName().replaceFirst("[.][^.]+$", "");
 				try {
 					cr.compareFeatures(r, fileName);
 				} catch (FileNotFoundException | UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
-		    }
+			}
 		}
 	}
 }

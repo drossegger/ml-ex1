@@ -33,16 +33,25 @@ public class CMDReader {
 						"directory with instancefiles in csv or arff format")
 				.create("d");
 		Option compareresults = OptionBuilder
-				.withArgName("compare")
 				.withDescription(
 						"compare results and finding mutual features of result files inside a directory")
 				.create("c");
-
+		Option help= OptionBuilder
+				.withDescription("display this usage information")
+				.create("h");
+		Option topn= OptionBuilder
+				.hasArg()
+				.withArgName("n")
+				.withDescription("use top <n> attributes")
+				.create("n");
 		options = new Options();
+		options.addOption(help);
 		options.addOption(featureSelectionTechnique);
 		options.addOption(listTechniques);
 		options.addOption(instancedir);
+		options.addOption(topn);
 		options.addOption(compareresults);
+		
 	}
 
 	public void parse(String[] args) {
@@ -50,11 +59,21 @@ public class CMDReader {
 		try {
 			cli = parser.parse(options, args);
 		} catch (ParseException e) {
-			System.out.println("Error parsing command line options: "
-					+ e.getMessage());
+			System.out.println("Error parsing command line options: ");
+			printUsage();
 		}
+	
 	}
 
+	public boolean isTopN(){
+		return cli.hasOption("n");
+	}
+	public int getTopN(){
+		return Integer.parseInt(cli.getOptionValue("n"));
+	}
+	public boolean isHelp(){
+		return cli.hasOption("h");
+	}
 	public boolean useFeature() {
 		return cli.hasOption("f");
 	}
