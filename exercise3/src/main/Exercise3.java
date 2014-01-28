@@ -25,7 +25,8 @@ import input.InstanceReader;
 import input.ResultReader;
 
 public class Exercise3 {
-
+	static int topn=10;
+	static float thresh=0.5f;
 	/**
 	 * @param args
 	 * @throws UnsupportedEncodingException
@@ -40,7 +41,8 @@ public class Exercise3 {
 				cmd.printUsage();
 				return;
 			}
-			if(cmd.isTopN());//TODO
+			if(cmd.isTopN())topn=cmd.getTopN();
+			if(cmd.isAttThresh())thresh=cmd.getAttThresh();
 			if (cmd.isListTechniques()) {
 				printTechniques();
 			} else if (!cmd.isDirSet()) {
