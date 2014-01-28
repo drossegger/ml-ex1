@@ -85,7 +85,7 @@ public class CompareResult {
 		WriteInComparisonFile("++Compared algorithms:"+algorithms, fileName);
 		String listString = mutualFeatures.toString();
 		listString = listString.substring(1, listString.length()-1); 
-		WriteInComparisonFile("++Mutual features:"+listString, fileName);
+		WriteInComparisonFile("++Mutual features,"+mutualFeatures.size()+","+listString, fileName);
 		
 		it=r.iterator();
 		
