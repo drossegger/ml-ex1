@@ -94,13 +94,14 @@ public class CompareResult {
 			
 			for(Iterator<FeatureSelectionResult> it2=r.iterator();it2.hasNext();){
 				FeatureSelectionResult f2=it2.next();
-				
+				if(f1!=f2){
 				List<Integer> b=new ArrayList<Integer>(f2.getFeatures().length);
 				for(int i:f2.getFeatures())
 					b.add(i);
 				List<Integer> c=a;
 				c.retainAll(b);
 				WriteInComparisonFile("mutual "+f1.getName()+ ","+f2.getName()+","+c.size()+","+c.toString(),fileName);
+				}
 			}
 		}
 		isWriterInitiated = false;
