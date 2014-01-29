@@ -26,6 +26,33 @@ public class CompareWithClassification {
 			 if (data.classIndex() == -1)
 			   data.setClassIndex(data.numAttributes() - 1);
 			 
+			 //original
+			 
+				{
+					Classifier cls = new weka.classifiers.lazy.IBk();
+					
+					Instances _localTrain = data.trainCV(4, 1); // use 75% of data for training
+				    Instances _localTest = data.testCV(4, 1);
+					
+					 //with attribute selection
+					cls.buildClassifier(_localTrain);
+					// evaluate classifier and print some statistics
+					Evaluation eval = new Evaluation(_localTrain);
+					eval.evaluateModel(cls, _localTest);
+					//System.out.println(eval.weightedFMeasure());
+			
+					LinkedList<Double> _localResults = new LinkedList<Double>();
+					_localResults.add(eval.weightedPrecision());
+					_localResults.add(eval.weightedRecall());
+					_localResults.add(eval.weightedFMeasure());
+					 
+					_output.add(_localResults);
+					
+					System.out.format("%1$60s%2$15s%3$15s%4$15s\n", "Original with all attributes" , String.format("%.5f", _localResults.get(0)), String.format("%.5f", _localResults.get(1)),	String.format("%.5f", _localResults.get(2)));
+				
+				}
+				
+				
 				//Random
 				{
 					int _allAttr = data.numAttributes();
