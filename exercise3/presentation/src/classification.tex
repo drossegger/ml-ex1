@@ -1,7 +1,38 @@
-\begin{frame}{Datasets}
+\begin{frame}{Comparison in work}
 \bs
 \bi
-\mi ---
+\mi Four datasets
+\mi Three runs
+\begin{itemize}
+  \item \{ ChiSquaredAttribute, InfoGain,
+SymmetricalUncertAttribute, ReliefFAttribute, OneRAttribute, GainRatioAttribute
+\} $:$ $K=6$
+\item \{ ChiSquaredAttribute, InfoGain,
+SymmetricalUncertAttribute, ReliefFAttribute \} $:$ $K=3$
+\item \{ChiSquaredAttribute, InfoGain,
+SymmetricalUncertAttribute \} $:$ $K=2$
+\end{itemize} 
+\mi $4 + K$ classification rounds per run
+\begin{itemize}
+  \item $1$\{Original\} $+1$ \{Random $(50)$\} $+K$
+\{Single Rounds $(top \; 50)$\}
+\\
+$+1$ \{Intersection $(0.5)$\} $+1$\{Union $(top \; 10)$\} 
+\end{itemize}
+ 
+\ei
+
+\end{frame}
+
+
+\begin{frame}{Comparison in work - Results}
+\bs
+\bi
+\mi Original dataset has always better results
+\mi Intersection ({\it Most appearing}) never beats the best
+\mi Union of top most $N$ only better is one dataset and $(K=6)$
+\mi Best method depends on the data
+ 
 \ei
 
 \end{frame}
