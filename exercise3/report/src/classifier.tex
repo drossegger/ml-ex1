@@ -43,7 +43,9 @@ result of their single rounds.
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
-\hline Randomly chosen attributes & 0.02400 & 0.01200 & {\bf 0.01600}\\
+\hline Original dataset with all attributes  & 0.10400   &  0.05200  &
+{\bf 0.06933}\\
+\hline Randomly chosen attributes & 0.02400 & 0.01200 & 0.01600\\
 \hline ChiSquaredAttribute-Ranker-Supervised & 0.00000 & 0.00000 & 0.00000\\
 \hline InfoGain-Ranker-Supervised & 0.00000 & 0.00000 & 0.00000\\
 \hline SymmetricalUncertAttribute-Ranker-Supervised & 0.00000 & 0.00000 &
@@ -68,16 +70,21 @@ result of their single rounds.
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
+\hline Original dataset with all attributes  & 0.98255   &  0.80000  &
+ {\bf 0.86301}\\
 \hline Randomly chosen attributes & 0.96661 & 0.70959 & 0.79623\\
 \hline ChiSquaredAttribute-Ranker-Supervised & 0.69863 & 0.00000 & 0.80376\\
 \hline InfoGain-Ranker-Supervised & 0.98497 & 0.66027 & 0.77380\\
 \hline SymmetricalUncertAttribute-Ranker-Supervised & 0.98084 & 0.76271 &
 0.76271\\
-\hline ReliefFAttribute-Ranker-Supervised & 0.98636 & 0.70137 & {\bf 0.80834}\\
+\hline ReliefFAttribute-Ranker-Supervised & 0.98636 & 0.70137 & 0.80834\\
 \hline OneRAttribute-Ranker-Supervised & 0.98690 & 0.70137 & 0.79764\\
 \hline GainRatioAttribute-Ranker-Supervised & 0.98017 & 0.68219 & 0.77885\\
 \hline Most appearing attributes & 0.98122 & 0.67123 & 0.77661 $\searrow$\\
-\hline Union of selected Attributes & 0.96026 & 0.73151 & 0.82033 $\nearrow$\\
+\hline Union of selected Attributes & 0.96026 & 0.73151 & 0.82033 $\nearrow$
+\footnote{This is an improvement compared to other attribute selection
+methods although it is still worse than the result of the classification of
+the original dataset with all attributes.}\\
 
 \hline
 \end{tabular}
@@ -92,6 +99,8 @@ result of their single rounds.
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
+\hline Original dataset with all attributes  & 1.00000   &  0.12571  &
+ 0.21105\\
 \hline Randomly chosen attributes & 0.75446 & 0.12000 & 0.19154\\
 \hline ChiSquaredAttribute-Ranker-Supervised & 0.09714 & 0.00000 & 0.17239\\
 \hline InfoGain-Ranker-Supervised & 0.82679 & 0.13143 & {\bf 0.22677}\\
@@ -115,12 +124,14 @@ result of their single rounds.
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
+\hline Original dataset with all attributes  & 0.13437   &  0.13027  &
+ {\bf 0.11774}\\
 \hline Randomly chosen attributes & 0.10211 & 0.09181 & 0.07886\\
 \hline ChiSquaredAttribute-Ranker-Supervised & 0.07281 & 0.09057 & 0.06168\\
 \hline InfoGain-Ranker-Supervised & 0.06634 & 0.08437 & 0.05483\\
 \hline SymmetricalUncertAttribute-Ranker-Supervised & 0.06634 & 0.09926 &
 0.07051\\
-\hline ReliefFAttribute-Ranker-Supervised & 0.13408 & 0.10174 & {\bf 0.10043}\\
+\hline ReliefFAttribute-Ranker-Supervised & 0.13408 & 0.10174 & 0.10043\\
 \hline OneRAttribute-Ranker-Supervised & 0.07558 & 0.08561 & 0.05833\\
 \hline GainRatioAttribute-Ranker-Supervised & 0.06802 & 0.09801 & 0.06907\\
 \hline Most appearing attributes & 0.07239 & 0.08933 & 0.06056 $\searrow$\\
