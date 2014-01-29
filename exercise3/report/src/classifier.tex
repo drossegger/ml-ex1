@@ -4,24 +4,24 @@ ISMIRrhythm.rp.arff} and {\it LMD.rp.arff} with different methods of attribute
 selection are shown in Tables~\ref{table:classifier:GTZANO6} $\ldots$ \ref{table:classifier:LMD2}.
 
 Tests are conducted in a way that all four datasets are used for attribute
-selection with three different combination of attribute selector algorithms.
+selection with three different combinations of attribute selector algorithms.
 Once with a combination of \{ ChiSquaredAttribute, InfoGain,
 SymmetricalUncertAttribute, ReliefFAttribute, OneRAttribute, GainRatioAttribute
 \}, another time with \{ ChiSquaredAttribute, InfoGain,
 SymmetricalUncertAttribute, ReliefFAttribute \} and finally with \{ChiSquaredAttribute, InfoGain,
 SymmetricalUncertAttribute \}. 
 
-In order to have train/test sets, each dataset is broken to $2$ subsets, one
+In order to have train/test sets, each dataset is broken into $2$ subsets, one
 containing $\frac{3}{4}$ of the data as train set and one with the rest
 $\frac{1}{4}$ as a test set.
 
-In each run, firstly each dataset is classified
+In each run, at first each dataset is classified
 without attribute selection and with all attributes it has. Subsequently, each
-attribute selection method is used to find a subset of attributes, which in our
-case, top most $50$ selected attributes are used to perform the
+attribute selection method is used to find a subset of attributes, in our
+case the top most $50$ selected attributes are used to perform the
 classification task and hereafter we call them single rounds. Finally, two
-rounds, one with most appearing attributes in single rounds where here all
-attributes appearing at least in half of the selected sets of attributes and another round with a union of top most $N$ selected attributes
+rounds, one with most appearing attributes in single rounds where all
+attributes appear at least in half of the selected sets of attributes and another round with a union of top most $N$ selected attributes
 from each single run are performed.
 
 In Tables~\ref{table:classifier:GTZANO6} $\ldots$
@@ -33,10 +33,8 @@ second run and subsequently, Tables~\ref{table:classifier:GTZANO2} $\ldots$
 third run. $\searrow$ and $\nearrow$ indicate improvement or demotion of f-score
 results of most appearing and union approaches.
 
-As it is clear, except for one dataset, ISMIRgenre.rp.arff, in the first run,
-which has a better result with the union of $N$ top most selected attributes in
-single rounds, all other combination deliver worse results compared to the best
-result of their single rounds.
+It can be seen that, except for one dataset, all combinations deliver worse results compared to the best result of their single rounds. Only {\it ISMIRgenre.rp.arff}, has a better result with the union of $N$ top most selected attributes in
+single rounds.
 
 
 \begin{table}[p]

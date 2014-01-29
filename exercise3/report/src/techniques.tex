@@ -1,15 +1,15 @@
-In this section, we describe applied techniques and compare their selected attributed in order to understand how (dis)similar different algorithms are.
+In this section, we describe applied techniques and compare their selected attributed in order to understand how similar different algorithms are.
 
-Applied techniques are described in Table\ref{table:techniques}. As it is shown eight supervised as well as two unsupervised algorithms are developed and used.
+Applied techniques are described in Table~\ref{table:techniques}. As it is shown eight supervised as well as two unsupervised algorithms wereused.
 
-Since both unsupervised methods (PCI and LSA) reduce the input data to another matrix, the final attributes in reduced
-matrix are not comparable with input data. In the case of applying Ranker search method on any of unsupervised evaluators, the ranked attributes will be a sequence from one to the number of attributes. Therefore, we decided to focus more on behavior of supervised methods.
+Since both unsupervised methods (PCI and LSA) reduce the input data to another matrix, the final attributes in the reduced
+matrix are not comparable with input data. In the case of applying Ranker search method on any unsupervised evaluators, the ranked attributes will be a sequence from one to the number of attributes. Therefore, we decided to focus more on behavior of supervised methods.
 
-We apply program's algorithm comparison ($-c$ parameter) on the result of eight supervised algorithms. Using provided data, we understand the number of mutual attributes between each pair of algorithms. in order to apply clustering on the methods, distance matrix is created. In order to form the matrix, the number of mutual attributes for each pair are subtracted from $50$. The distance matrix of $GTZAN$ dataset is shown in Table\ref{table:distancematrix}.
+We apply program's algorithm comparison ($-c$ parameter) on the result of eight supervised algorithms. Using provided data, we understand the number of mutual attributes between each pair of algorithms. In order to apply clustering on the methods, a distance matrix is created. To form the matrix, the number of mutual attributes for each pair are subtracted from $50$. The distance matrix of $GTZAN$ dataset is shown in Table~\ref{table:distancematrix}.
 
-In the next step, by using R the methods are clustered based on Hierarchal Clustering algorithm. The clustering results of four datasets are shown in Figure\ref{fig:clustering}.
+In the next step, by using R the methods are clustered based on Hierarchal Clustering algorithm. The clustering results of four datasets are shown in Figure~\ref{fig:clustering}.
 
-Based on the diagrams, following results can be concluded:
+Based on the diagrams, the following results can be concluded:
 \begin{itemize}
 \item ChiSquaredAttribute and InfoGain tend to have very similar results.
 \item Besides ChiSquaredAttribute and InfoGain, SymmetricalUncertAttribute is the most similar one to them.
