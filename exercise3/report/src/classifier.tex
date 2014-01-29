@@ -1,22 +1,64 @@
+Detailed results of running a $k-$nearest neighbors classifier on $4$ different
+datasets, {\it GTZAN\_O.rp.arff}, {\it ISMIRgenre.rp.arff}, {\it
+ISMIRrhythm.rp.arff} and {\it LMD.rp.arff} with different methods of attribute
+selection are shown in Tables~\ref{table:classifier:GTZANO6} $\ldots$ \ref{table:classifier:LMD2}.
+
+Tests are conducted in a way that all four datasets are used for attribute
+selection with three different combination of attribute selector algorithms.
+Once with a combination of \{ ChiSquaredAttribute, InfoGain,
+SymmetricalUncertAttribute, ReliefFAttribute, OneRAttribute, GainRatioAttribute
+\}, another time with \{ ChiSquaredAttribute, InfoGain,
+SymmetricalUncertAttribute, ReliefFAttribute \} and finally with \{ChiSquaredAttribute, InfoGain,
+SymmetricalUncertAttribute \}. 
+
+In order to have train/test sets, each dataset is broken to $2$ subsets, one
+containing $\frac{3}{4}$ of the data as train set and one with the rest
+$\frac{1}{4}$ as a test set.
+
+In each run, firstly each dataset is classified
+without attribute selection and with all attributes it has. Subsequently, each
+attribute selection method is used to find a subset of attributes, which in our
+case, top most $50$ selected attributes are used to perform the
+classification task and hereafter we call them single rounds. Finally, two
+rounds, one with most appearing attributes in single rounds where here all
+attributes appearing at least in half of the selected sets of attributes and another round with a union of top most $N$ selected attributes
+from each single run are performed.
+
+In Tables~\ref{table:classifier:GTZANO6} $\ldots$
+\ref{table:classifier:LMD6}, gained results of all firstround, single rounds and
+final rounds are shown. Tables~\ref{table:classifier:GTZANO3} $\ldots$
+\ref{table:classifier:LMD3} also show the results of the final rounds for the
+second run and subsequently, Tables~\ref{table:classifier:GTZANO2} $\ldots$
+\ref{table:classifier:LMD2} represent the results of the final round for the
+third run. $\searrow$ and $\nearrow$ indicate improvement or demotion of f-score
+results of most appearing and union approaches.
+
+As it is clear, except for one dataset, ISMIRgenre.rp.arff, in the first run,
+which has a better result with the union of $N$ top most selected attributes in
+single rounds, all other combination deliver worse results compared to the best
+result of their single rounds.
+
+
 \begin{table}[p]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
-\hline Randomly chosen attributes & 0.02400 & 0.01200 & 0.01600\\
+\hline Randomly chosen attributes & 0.02400 & 0.01200 & {\bf 0.01600}\\
 \hline ChiSquaredAttribute-Ranker-Supervised & 0.00000 & 0.00000 & 0.00000\\
 \hline InfoGain-Ranker-Supervised & 0.00000 & 0.00000 & 0.00000\\
 \hline SymmetricalUncertAttribute-Ranker-Supervised & 0.00000 & 0.00000 &
 0.00000\\
 \hline ReliefFAttribute-Ranker-Supervised & 0.03333 & 0.00800 & 0.01290\\
 \hline OneRAttribute-Ranker-Supervised & 0.00000 & 0.00000 & 0.00000\\
-\hline GainRatioAttribute-Ranker-Supervised & 0.01250 & 0.00400 & 0.00606\\
-\hline Most appearing attributes & 0.00000 & 0.00000 & 0.00000\\
-\hline Union of selected Attributes & 0.00714 & 0.00400 & 0.00513\\
+\hline GainRatioAttribute-Ranker-Supervised & 0.01250 & 0.00400 & 0.00606
+\\
+\hline Most appearing attributes & 0.00000 & 0.00000 & 0.00000 $\searrow$\\
+\hline Union of selected Attributes & 0.00714 & 0.00400 & 0.00513 $\searrow$\\
 
 \hline
 \end{tabular}
 \caption{Results for GTZAN\_O.rp.arff with 6 attribute selection methods}
-\label{table:classifier:GTZAN\_O6}
+\label{table:classifier:GTZANO6}
 \end{center}
 \end{table}
 
@@ -31,11 +73,11 @@
 \hline InfoGain-Ranker-Supervised & 0.98497 & 0.66027 & 0.77380\\
 \hline SymmetricalUncertAttribute-Ranker-Supervised & 0.98084 & 0.76271 &
 0.76271\\
-\hline ReliefFAttribute-Ranker-Supervised & 0.98636 & 0.70137 & 0.80834\\
+\hline ReliefFAttribute-Ranker-Supervised & 0.98636 & 0.70137 & {\bf 0.80834}\\
 \hline OneRAttribute-Ranker-Supervised & 0.98690 & 0.70137 & 0.79764\\
 \hline GainRatioAttribute-Ranker-Supervised & 0.98017 & 0.68219 & 0.77885\\
-\hline Most appearing attributes & 0.98122 & 0.67123 & 0.77661\\
-\hline Union of selected Attributes & 0.96026 & 0.73151 & 0.82033\\
+\hline Most appearing attributes & 0.98122 & 0.67123 & 0.77661 $\searrow$\\
+\hline Union of selected Attributes & 0.96026 & 0.73151 & 0.82033 $\nearrow$\\
 
 \hline
 \end{tabular}
@@ -52,14 +94,14 @@
 \hline Algorithm: & Precision: & Recall & F-Score\\
 \hline Randomly chosen attributes & 0.75446 & 0.12000 & 0.19154\\
 \hline ChiSquaredAttribute-Ranker-Supervised & 0.09714 & 0.00000 & 0.17239\\
-\hline InfoGain-Ranker-Supervised & 0.82679 & 0.13143 & 0.22677\\
+\hline InfoGain-Ranker-Supervised & 0.82679 & 0.13143 & {\bf 0.22677}\\
 \hline SymmetricalUncertAttribute-Ranker-Supervised & 0.85219 & 0.11429 &
 0.20109\\
 \hline ReliefFAttribute-Ranker-Supervised & 0.55143 & 0.06286 & 0.11066\\
 \hline OneRAttribute-Ranker-Supervised & 0.92082 & 0.11429 & 0.19961\\
 \hline GainRatioAttribute-Ranker-Supervised & 0.76245 & 0.11429 & 0.19437\\
-\hline Most appearing attributes & 0.82945 & 0.12000 & 0.20956\\
-\hline Union of selected Attributes & 0.45543 & 0.03429 & 0.06247\\
+\hline Most appearing attributes & 0.82945 & 0.12000 & 0.20956 $\searrow$\\
+\hline Union of selected Attributes & 0.45543 & 0.03429 & 0.06247 $\searrow$\\
 
 \hline
 \end{tabular}
@@ -78,11 +120,11 @@
 \hline InfoGain-Ranker-Supervised & 0.06634 & 0.08437 & 0.05483\\
 \hline SymmetricalUncertAttribute-Ranker-Supervised & 0.06634 & 0.09926 &
 0.07051\\
-\hline ReliefFAttribute-Ranker-Supervised & 0.13408 & 0.10174 & 0.10043\\
+\hline ReliefFAttribute-Ranker-Supervised & 0.13408 & 0.10174 & {\bf 0.10043}\\
 \hline OneRAttribute-Ranker-Supervised & 0.07558 & 0.08561 & 0.05833\\
 \hline GainRatioAttribute-Ranker-Supervised & 0.06802 & 0.09801 & 0.06907\\
-\hline Most appearing attributes & 0.07239 & 0.08933 & 0.06056\\
-\hline Union of selected Attributes & 0.07349 & 0.08561 & 0.06733\\
+\hline Most appearing attributes & 0.07239 & 0.08933 & 0.06056 $\searrow$\\
+\hline Union of selected Attributes & 0.07349 & 0.08561 & 0.06733 $\searrow$\\
 
 \hline
 \end{tabular}
@@ -99,13 +141,13 @@
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
-\hline Most appearing attributes & 0.00000 & 0.00000 & 0.00000\\
-\hline Union of selected Attributes & 0.00667 & 0.00400 & 0.00500\\
+\hline Most appearing attributes & 0.00000 & 0.00000 & 0.00000 $\searrow$\\
+\hline Union of selected Attributes & 0.00667 & 0.00400 & 0.00500 $\searrow$\\
 
 \hline
 \end{tabular}
 \caption{Results for GTZAN\_O.rp.arff with 3 attribute selection methods}
-\label{table:classifier:GTZAN\_O3}
+\label{table:classifier:GTZANO3}
 \end{center}
 \end{table}
 
@@ -114,8 +156,8 @@
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
-\hline Most appearing attributes & 0.98562 & 0.67945 & 0.78850\\
-\hline Union of selected Attributes & 0.96893 & 0.61644 & 0.74669\\
+\hline Most appearing attributes & 0.98562 & 0.67945 & 0.78850 $\searrow$\\
+\hline Union of selected Attributes & 0.96893 & 0.61644 & 0.74669 $\searrow$\\
 
 \hline
 \end{tabular}
@@ -129,8 +171,8 @@
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
-\hline Most appearing attributes & 0.81524 & 0.10857 & 0.19120\\
-\hline Union of selected Attributes & 0.44571 & 0.02286 & 0.04348\\
+\hline Most appearing attributes & 0.81524 & 0.10857 & 0.19120 $\searrow$\\
+\hline Union of selected Attributes & 0.44571 & 0.02286 & 0.04348 $\searrow$\\
 
 \hline
 \end{tabular}
@@ -144,8 +186,8 @@
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
-\hline Most appearing attributes & 0.07194 & 0.09057 & 0.06151\\
-\hline Union of selected Attributes & 0.08266 & 0.07940 & 0.06291\\
+\hline Most appearing attributes & 0.07194 & 0.09057 & 0.06151 $\searrow$\\
+\hline Union of selected Attributes & 0.08266 & 0.07940 & 0.06291 $\searrow$\\
 
 \hline
 \end{tabular}
@@ -163,13 +205,13 @@
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
-\hline Most appearing attributes & 0.00000 & 0.00000 & 0.00000\\
-\hline Union of selected Attributes & 0.00667 & 0.00400 & 0.00500\\
+\hline Most appearing attributes & 0.00000 & 0.00000 & 0.00000 $\searrow$\\
+\hline Union of selected Attributes & 0.00667 & 0.00400 & 0.00500 $\searrow$\\
 
 \hline
 \end{tabular}
 \caption{Results for GTZAN\_O.rp.arff with 2 attribute selection methods}
-\label{table:classifier:GTZAN\_O2}
+\label{table:classifier:GTZANO2}
 \end{center}
 \end{table}
 
@@ -178,8 +220,8 @@
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
-\hline Most appearing attributes & 0.97608 & 0.69589 & 0.79594\\
-\hline Union of selected Attributes & 0.96861 & 0.61096 & 0.74280\\
+\hline Most appearing attributes & 0.97608 & 0.69589 & 0.79594 $\searrow$\\
+\hline Union of selected Attributes & 0.96861 & 0.61096 & 0.74280 $\searrow$\\
 
 \hline
 \end{tabular}
@@ -193,8 +235,8 @@
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
-\hline Most appearing attributes & 0.80204 & 0.10286 & 0.18210\\
-\hline Union of selected Attributes & 0.44571 & 0.01714 & 0.03302\\
+\hline Most appearing attributes & 0.80204 & 0.10286 & 0.18210 $\searrow$\\
+\hline Union of selected Attributes & 0.44571 & 0.01714 & 0.03302 $\searrow$\\
 
 \hline
 \end{tabular}
@@ -208,8 +250,8 @@
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline Algorithm: & Precision: & Recall & F-Score\\
-\hline Most appearing attributes & 0.07055 & 0.08933 & 0.06012\\
-\hline Union of selected Attributes & 0.06551 & 0.06948 & 0.04955\\
+\hline Most appearing attributes & 0.07055 & 0.08933 & 0.06012 $\searrow$\\
+\hline Union of selected Attributes & 0.06551 & 0.06948 & 0.04955 $\searrow$\\
 
 \hline
 \end{tabular}
